@@ -63,6 +63,6 @@ nb-configuration.xml
 .idea/jsLibraryMappings.xml
 
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
- modules.xml
+ .idea/modules.xml
  .idea/misc.xml
 
