@@ -54,3 +54,15 @@ nb-configuration.xml
 .sdkmanrc
 .envrc
 .jekyll-cache
+
+# inteliJ
+# User-specific stuff:
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+ modules.xml
+ .idea/misc.xml
+
