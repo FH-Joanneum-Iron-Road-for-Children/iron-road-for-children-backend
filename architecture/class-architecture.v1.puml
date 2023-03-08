@@ -1,0 +1,104 @@
+@startuml
+
+class EventCategory{
+    id
+    name : String
+    votable : Boolean
+    + get(id)
+    + getAll()
+    + post(id)
+    + put()
+    + delete(id)
+}
+
+class Event{
+    id
+    title : String
+    description : String
+    info : Info
+    image : Picture
+    startDateTime : DateTime
+    endDateTime : DateTime
+    location : Location
+    category : EventCategory
+        + get(id)
+        + getByLocation(location)
+        + getByTime(time: DateTime)
+        + getByCategory(category)
+        + getByTitlePart(titlePart:String)
+        + getAll()
+        + post(id)
+        + put()
+        + delete(id)
+        - updateInfo(info)
+        - deleteInfo(info)
+}
+
+class Info{
+    id
+    infoText : String
+    pictures : List<Picture>
+    - get(id)
+    - post(id)
+    - put()
+    - delete(id)
+}
+
+class Picture{
+    title : String
+    path : String
+    - put()
+    - delete(path)
+}
+
+class Location{
+    id
+    name : String
+    + getAll()
+    - put()
+    - delete(id)
+}
+
+class Vote{
+    votingCandidateID
+    userId
+    + put()
+}
+
+class VotingCandidate{
+    eventID
+    votingListId
+    + getByVotingListId(votingListId)
+}
+
+class VotingList{
+    id
+    title : String
+    eventCategoryId
+    + getAll() ?
+    + getByEventCategory(eventCategoryId)
+    + post(id) ?
+    + put() ?
+    + delete(id)
+}
+
+note "datatype of DateTime must be discussed" as N3
+note "datatype of ids must be discussed" as N2
+note "coming fom frontend" as N1
+
+Event::image -- Picture
+Event::Location -- Location
+Event::category -- EventCategory
+Event::info -- Info
+Info::pictures -- Picture
+Vote::votingCandidateID -- VotingCandidate::id
+Vote::userId -- N1
+VotingCandidate::eventID -- Event::id
+VotingCandidate::votingListId -- VotingList::id
+VotingList::eventCategoryId -- EventCategory::id
+
+
+
+
+
+@enduml

@@ -1,0 +1,68 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# env files
+.env
+
+# https://github.com/quarkusio/quarkus/blob/main/.gitignore
+.DS_Store
+target
+*.iml
+.idea
+!.idea/runConfigurations
+.settings
+.project
+.classpath
+.vscode/
+*~
+local-test
+out
+lib
+bin
+!devtools/cli/distribution/java-binary/bin
+dependency-reduced-pom.xml
+derby.log
+hotspot.log
+.directory
+.java-version
+.graal-install
+hs_err_pid*.log
+dumps
+*.orig
+*.rej
+.factorypath
+graph-output.dot
+*.swp
+*.swo
+ObjectStore
+.gradle
+docker/distroless/bazel-*
+/.apt_generated_tests/
+quarkus.log
+quarkus.log*
+replay_*.logß
+nbactions.xml
+nb-configuration.xml
+.cache
+/lsp/
+.sdkmanrc
+.envrc
+.jekyll-cache
+
+# inteliJ
+# User-specific stuff:
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+ .idea/modules.xml
+ .idea/misc.xml
+
