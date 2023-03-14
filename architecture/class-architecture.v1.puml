@@ -47,8 +47,13 @@ class Info{
 class Picture{
     title : String
     path : String
+    type : Enum
     - put()
     - delete(path)
+}
+
+enum Type{
+    ?
 }
 
 class Location{
@@ -61,6 +66,7 @@ class Location{
 
 class Vote{
     votingCandidateID
+    votingListId
     userId
     + put()
 }
@@ -96,6 +102,8 @@ Vote::userId -- N1
 VotingCandidate::eventID -- Event::id
 VotingCandidate::votingListId -- VotingList::id
 VotingList::eventCategoryId -- EventCategory::id
+Picture::type -- Type
+VotingList::votingListId -- Vote:votingListId
 
 
 
