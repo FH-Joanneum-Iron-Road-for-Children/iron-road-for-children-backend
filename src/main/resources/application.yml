@@ -1,0 +1,30 @@
+quarkus:
+  resteasy:
+    path: /api
+
+  datasource:
+    db-kind: postgresql
+
+  liquibase:
+    migrate-at-start: true
+
+#  TODO: kube-config; oidc; containerization
+
+"%prod":
+  container-image:
+    build: true
+    push: true
+  liquibase:
+    contexts: prod
+
+"%dev":
+  quarkus:
+    datasource:
+      username: test
+      password: test
+      devservices:
+        port: 5432
+
+    liquibase:
+      contexts: dev
+      migrate-at-start: true
