@@ -8,17 +8,41 @@ quarkus:
   liquibase:
     migrate-at-start: true
 
-#  TODO: kube-config; oidc; containerization
+#  kube-config; containerization
+  container-image:
+    registry: registry.gitlab.com
+    group: ???  #groupname
+    name: ???  #name
+    builder: jib
+
+  kubernetes-config:
+    enabled: false
+    namespace: ${KUBERNETES_NAMESPACE:default}
+
+  kubernetes-client:
+    namespace: ${KUBERNETES_NAMESPACE:default}
+
+#  TODO:  oidc;
 
 "%prod":
-  container-image:
-    build: true
-    push: true
-  liquibase:
-    contexts: prod
+  quarkus:
+    kubernetes-config:
+      enabled: true
+      config-maps:
+        - ??? #config-maps
+      secrets:
+        ~: ???? #secrets
+        enabled: true
+    container-image:
+      build: true
+      push: true
 
 "%dev":
   quarkus:
+    container-image:
+      build: false
+      push: false
+
     datasource:
       username: test
       password: test
