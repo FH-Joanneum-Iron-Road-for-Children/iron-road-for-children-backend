@@ -14,54 +14,43 @@ class EventCategory{
 class Event{
     id
     title : String
-    description : String
-    info : Info
-    image : Picture
+    eventInfo : EventInfo
+    image : EventPicture
     startDateTime : DateTime
     endDateTime : DateTime
-    location : Location
+    eventLocation : EventLocation
     category : EventCategory
-        + get(id)
-        + getByLocation(location)
-        + getByTime(time: DateTime)
-        + getByCategory(category)
-        + getByTitlePart(titlePart:String)
         + getAll()
         + post(id)
         + put()
         + delete(id)
-        - updateInfo(info)
-        - deleteInfo(info)
 }
 
-class Info{
+class EventInfo{
     id
     infoText : String
     pictures : List<Picture>
-    - get(id)
-    - post(id)
+    + get(id)
+    + post(id)
     - put()
     - delete(id)
 }
 
 class Picture{
+    id
     title : String
     path : String
-    type : Enum
     - put()
     - delete(path)
 }
 
-enum Type{
-    ?
-}
-
-class Location{
+class EventLocation{
     id
     name : String
+    + get(id)
     + getAll()
-    - put()
-    - delete(id)
+    + put()
+    + delete(id)
 }
 
 class Vote{
@@ -93,16 +82,15 @@ note "datatype of ids must be discussed" as N2
 note "coming fom frontend" as N1
 
 Event::image -- Picture
-Event::Location -- Location
+Event::eventLocation -- EventLocation
 Event::category -- EventCategory
-Event::info -- Info
-Info::pictures -- Picture
+Event::eventInfo -- EventInfo
+EventInfo::pictures -- Picture
 Vote::votingCandidateID -- VotingCandidate::id
 Vote::userId -- N1
 VotingCandidate::eventID -- Event::id
 VotingCandidate::votingListId -- VotingList::id
 VotingList::eventCategoryId -- EventCategory::id
-Picture::type -- Type
 VotingList::votingListId -- Vote:votingListId
 
 
