@@ -3,6 +3,8 @@ package at.fh.joanneum.irfc.service;
 import at.fh.joanneum.irfc.model.event.EventDTO;
 import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
+import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntity;
+import at.fh.joanneum.irfc.persistence.repository.EventLocationRepository;
 import at.fh.joanneum.irfc.persistence.repository.EventRepository;
 
 import javax.enterprise.context.RequestScoped;
@@ -20,6 +22,10 @@ public class EventService {
 
   @Inject
   EventRepository eventRepository;
+
+  @Inject
+  EventLocationRepository eventLocationRepository;
+
   public List<EventDTO> getAll() {
     return eventRepository.listAll().stream()
         .map(EventMapper.INSTANCE::toDto)
@@ -48,17 +54,22 @@ public class EventService {
     }
   }
 
-  private static void setValues(EventDTO eventDTOCreate, EventEntity newEntity) {
-    newEntity.setTitle(eventDTOCreate.getTitle());
-    newEntity.setEndDateTimeInUTC(eventDTOCreate.getEndDateTimeInUTC());
-    newEntity.setStartDateTimeInUTC(eventDTOCreate.getStartDateTimeInUTC());
-  }
-
   @Transactional
   public void delete(Long id) {
     if(!eventRepository.deleteById(id)){
       throw new RuntimeException("Event with id " + id + " not found");
     }
+  }
 
+  private void setValues(EventDTO eventDTOCreate, EventEntity newEntity) {
+    newEntity.setTitle(eventDTOCreate.getTitle());
+    newEntity.setEndDateTimeInUTC(eventDTOCreate.getEndDateTimeInUTC());
+    newEntity.setStartDateTimeInUTC(eventDTOCreate.getStartDateTimeInUTC());
+    Optional<EventLocationEntity> locationOptional = this.eventLocationRepository.findByIdOptional(eventDTOCreate.getEventLocation().getEventLocationId());
+    if(locationOptional.isEmpty()){
+      throw new RuntimeException("no EventLocation with id "+ eventDTOCreate.getEventLocation().getEventLocationId());
+    } else {
+      newEntity.setEventLocation(locationOptional.get());
+    }
   }
 }

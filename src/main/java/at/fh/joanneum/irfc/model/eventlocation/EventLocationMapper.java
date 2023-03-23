@@ -1,6 +1,6 @@
 package at.fh.joanneum.irfc.model.eventlocation;
 
-import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntiy;
+import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -14,11 +14,11 @@ public interface EventLocationMapper {
 
     EventLocationMapper INSTANCE = Mappers.getMapper(EventLocationMapper.class);
 
-    EventLocationDTO toDto(EventLocationEntiy entity);
+    EventLocationDTO toDto(EventLocationEntity entity);
 
     @InheritInverseConfiguration
-    EventLocationEntiy toEntity(EventLocationDTO dto);
+    EventLocationEntity toEntity(EventLocationDTO dto);
 
-    void update(EventLocationDTO dto, @MappingTarget EventLocationEntiy entity);
+    void update(EventLocationDTO dto, @MappingTarget EventLocationEntity entity);
 
 }
