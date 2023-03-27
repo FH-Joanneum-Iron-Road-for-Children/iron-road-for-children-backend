@@ -1,84 +1,108 @@
 @startuml
 
 class EventCategory{
-    id
+    id : Long
     name : String
-    votable : Boolean
     + get(id)
     + getAll()
-    + post(id)
-    + put()
+    + put(id?)
     + delete(id)
 }
 
 class Event{
-    id
+    id : Long
     title : String
     eventInfo : EventInfo
-    image : EventPicture
+    image : Picture
     startDateTime : DateTime
     endDateTime : DateTime
     eventLocation : EventLocation
     category : EventCategory
-        + getAll()
-        + post(id)
-        + put()
-        + delete(id)
+    isEditable : Boolean
+    + get(id)
+    + getAll()
+    + put(id?)
+    + delete(id)
 }
 
 class EventInfo{
-    id
+    id : Long
     infoText : String
     pictures : List<Picture>
     + get(id)
-    + post(id)
-    - put()
+    - put(id?)
     - delete(id)
 }
 
 class Picture{
-    id
+    id : Long
     title : String
     path : String
-    - put()
-    - delete(path)
+    + get(id)
+    + getBasePath()
+    + get(searchString)
+    + put()
+    + delete(name)
+    + delete(id)
+
 }
 
 class EventLocation{
-    id
+    id : Long
     name : String
     + get(id)
     + getAll()
-    + put()
+    + put(id?)
     + delete(id)
 }
 
 class Vote{
-    votingCandidateID
-    votingListId
-    userId
+    votingId : Long
+    eventId : Long
+    deviceId : String
     + put()
 }
 
-class VotingCandidate{
-    eventID
-    votingListId
-    + getByVotingListId(votingListId)
-}
-
-class VotingList{
-    id
+class Voting{
+    id : Long
     title : String
-    eventCategoryId
-    + getAll() ?
-    + getByEventCategory(eventCategoryId)
-    + post(id) ?
-    + put() ?
+    isActive : Boolean
+    isEditable : Boolean
+    events : List<Event>
+    eventCategoryId : Long
+    image : Picture
+    votingResult : VotingResult
+    + get(id)
+    + getAll()
+    + put(id?)
     + delete(id)
 }
 
-note "datatype of DateTime must be discussed" as N3
-note "datatype of ids must be discussed" as N2
+class VotingResult {
+    id : Long
+    title : String
+    endDate : DateTime
+    partialResults : List<VotingPartialResult>
+    + get(id)
+    +getAll()
+    +delete(id)
+    -put()
+}
+
+class VotingPartialResult {
+    id : Long
+    eventName : String
+    percentage : double
+    - put()
+}
+
+note "put without id means only create (no update)" as N8
+note "do not delete VotingResult if Voting gets deleted" as N7
+note "if voting result gets deleted, delete associated voting" as N6
+note "path is only in the dto not the entity" as N5
+note "isActive can only be set to true if no votes exist for this Voting" as N4
+note "VotingResult is created after a Voting has endet with more than a vote" as N3
+note "put is used as Create/Update call" as N2
 note "coming fom frontend" as N1
 
 Event::image -- Picture
@@ -86,12 +110,19 @@ Event::eventLocation -- EventLocation
 Event::category -- EventCategory
 Event::eventInfo -- EventInfo
 EventInfo::pictures -- Picture
-Vote::votingCandidateID -- VotingCandidate::id
 Vote::userId -- N1
-VotingCandidate::eventID -- Event::id
-VotingCandidate::votingListId -- VotingList::id
-VotingList::eventCategoryId -- EventCategory::id
-VotingList::votingListId -- Vote:votingListId
+Voting::eventCategoryId -- EventCategory::id
+Voting::votingId -- Vote
+Voting::isActive -- N4
+Voting::events -- Event
+Voting::image -- Picture
+Voting::votingResult -- VotingResult
+Picture::path -- N5
+VotingResult::partialResults -- VotingPartialResult
+VotingResult -- N3
+VotingResult -- N6
+VotingResult -- N7
+
 
 
 
