@@ -5,7 +5,8 @@ class EventCategory{
     name : String
     + get(id)
     + getAll()
-    + put(id?)
+    + post()
+    + put(id)
     + delete(id)
 }
 
@@ -21,7 +22,8 @@ class Event{
     isEditable : Boolean
     + get(id)
     + getAll()
-    + put(id?)
+    + post()
+    + put(id)
     + delete(id)
 }
 
@@ -30,7 +32,8 @@ class EventInfo{
     infoText : String
     pictures : List<Picture>
     + get(id)
-    - put(id?)
+    - post()
+    - put(id)
     - delete(id)
 }
 
@@ -41,7 +44,7 @@ class Picture{
     + get(id)
     + getBasePath()
     + get(searchString)
-    + put()
+    + post()
     + delete(name)
     + delete(id)
 
@@ -52,7 +55,8 @@ class EventLocation{
     name : String
     + get(id)
     + getAll()
-    + put(id?)
+    + post()
+    + put(id)
     + delete(id)
 }
 
@@ -60,7 +64,7 @@ class Vote{
     votingId : Long
     eventId : Long
     deviceId : String
-    + put()
+    + post()
 }
 
 class Voting{
@@ -74,7 +78,8 @@ class Voting{
     votingResult : VotingResult
     + get(id)
     + getAll()
-    + put(id?)
+    + post()
+    + put(id)
     + delete(id)
 }
 
@@ -86,23 +91,21 @@ class VotingResult {
     + get(id)
     +getAll()
     +delete(id)
-    -put()
+    - post()
 }
 
 class VotingPartialResult {
     id : Long
     eventName : String
     percentage : double
-    - put()
+    - post()
 }
 
-note "put without id means only create (no update)" as N8
 note "do not delete VotingResult if Voting gets deleted" as N7
 note "if voting result gets deleted, delete associated voting" as N6
 note "path is only in the dto not the entity" as N5
 note "isActive can only be set to true if no votes exist for this Voting" as N4
 note "VotingResult is created after a Voting has endet with more than a vote" as N3
-note "put is used as Create/Update call" as N2
 note "coming fom frontend" as N1
 
 Event::image -- Picture
