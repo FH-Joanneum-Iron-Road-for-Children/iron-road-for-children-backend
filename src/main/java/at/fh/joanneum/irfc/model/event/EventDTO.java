@@ -20,7 +20,7 @@ public class EventDTO {
     long startDateTimeInUTC;
     long endDateTimeInUTC;
     EventLocationDTO eventLocation;
-//  CategoryEntity eventLocation;
+//  CategoryEntityDTO eventLocation;
 
 
 }
