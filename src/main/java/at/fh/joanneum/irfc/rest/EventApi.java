@@ -26,11 +26,18 @@ public class EventApi {
     return eventService.getAll();
   }
 
+  @GET
+  @Path("/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public EventDTO get(@PathParam("id") Long id){
+    return eventService.get(id);
+  }
+
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public EventDTO create(EventDTO eventDTOCreate){
-    return eventService.create(eventDTOCreate);
+  public EventDTO create(EventDTO eventDTO){
+    return eventService.create(eventDTO);
   }
 
   @PUT

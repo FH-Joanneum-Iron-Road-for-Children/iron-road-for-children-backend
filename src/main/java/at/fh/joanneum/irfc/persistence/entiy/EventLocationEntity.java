@@ -19,7 +19,7 @@ public class EventLocationEntity {
 
     @Id
     @SequenceGenerator(
-            name = "event_id_seq",
+            name = "event_location_id_seq",
             sequenceName = "event_location_id_seq",
             allocationSize = 1
     )

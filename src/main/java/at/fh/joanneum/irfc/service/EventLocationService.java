@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @RequestScoped
 public class EventLocationService {
 
@@ -24,29 +26,33 @@ public class EventLocationService {
                 .collect(Collectors.toList());
     }
 
-
     public EventLocationDTO getById(Long id) {
         EventLocationEntity byId = eventLocationRepository.findById(id);
         return EventLocationMapper.INSTANCE.toDto(byId);
     }
 
     @Transactional
-    public EventLocationDTO create(EventLocationDTO eventLocationDTOcreate) {
+    public EventLocationDTO create(EventLocationDTO eventLocationDTO) {
+
+        checkIfNameIsNullOrEmpty(eventLocationDTO);
+
         EventLocationEntity newEntity = new EventLocationEntity();
-        setValues(eventLocationDTOcreate, newEntity);
+        setValues(eventLocationDTO, newEntity);
         eventLocationRepository.persist(newEntity);
         return EventLocationMapper.INSTANCE.toDto(newEntity);
     }
 
     @Transactional
-    public EventLocationDTO update(Long id, EventLocationDTO eventLocationDTOUpdate) {
+    public EventLocationDTO update(Long id, EventLocationDTO eventLocationDTO) {
         Optional<EventLocationEntity> byIdOptional = eventLocationRepository.findByIdOptional(id);
+
+        checkIfNameIsNullOrEmpty(eventLocationDTO);
 
         if(byIdOptional.isEmpty()){
             throw new RuntimeException("EventLocation with id " + id + " not found");
         } else {
             EventLocationEntity eventLocationEntity = byIdOptional.get();
-            setValues(eventLocationDTOUpdate, eventLocationEntity);
+            setValues(eventLocationDTO, eventLocationEntity);
             eventLocationRepository.persistAndFlush(eventLocationEntity);
             return EventLocationMapper.INSTANCE.toDto(eventLocationEntity);
         }
@@ -59,9 +65,14 @@ public class EventLocationService {
         }
     }
 
-    private static void setValues(EventLocationDTO eventLocationDTOcreate, EventLocationEntity newEntity) {
-        newEntity.setName(eventLocationDTOcreate.getName());
+    private static void checkIfNameIsNullOrEmpty(EventLocationDTO eventLocationDTO) {
+        if(isNull(eventLocationDTO.getName())|| eventLocationDTO.getName().isEmpty()){
+            throw new RuntimeException("EventLocation name must not be null");
+        }
     }
 
+    private static void setValues(EventLocationDTO eventLocationDTO, EventLocationEntity newEntity) {
+        newEntity.setName(eventLocationDTO.getName());
+    }
 
 }
