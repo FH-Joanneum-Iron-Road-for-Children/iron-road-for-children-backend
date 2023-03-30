@@ -12,7 +12,7 @@
             <column name="event_info_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="event_info_id_pk"/>
             </column>
-            <column name="infoText" type="varchar(255)"/>
+            <column name="event_info_text" type="varchar(255)"/>
             <column name="fk_image" type="bigint"/>
         </createTable>
 

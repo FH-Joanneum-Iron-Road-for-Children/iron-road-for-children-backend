@@ -29,7 +29,7 @@ public class EventInfoEntity {
     @Column(name = "event_info_id")
     private Long eventInfoId;
 
-    @Column
+    @Column(name = "event_info_text")
     private String infoText;
 
     @OneToMany
