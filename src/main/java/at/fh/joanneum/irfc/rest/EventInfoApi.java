@@ -1,0 +1,55 @@
+package at.fh.joanneum.irfc.rest;
+
+import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
+import at.fh.joanneum.irfc.service.EventInfoService;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
+
+/**
+ * @author gregor.wakonig@edu.fh-joanneum.at
+ **/
+@RequestScoped
+@Path("/eventInfos")
+public class EventInfoApi {
+
+    @Inject
+    EventInfoService eventInfoService;
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public EventInfoDTO get(@PathParam("id") Long id){
+        return eventInfoService.get(id);
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public EventInfoDTO create(EventInfoDTO eventDTOCreate){
+        return eventInfoService.create(eventDTOCreate);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public EventInfoDTO update(@PathParam("id") Long id, EventInfoDTO eventInfoDTOUpdate){
+        return eventInfoService.update(id, eventInfoDTOUpdate);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Long id){
+        eventInfoService.delete(id);
+        String message = "EventInfo with id "+id+" deleted";
+        return Response
+                .status(200, message)
+                .build();
+    }
+
+}
