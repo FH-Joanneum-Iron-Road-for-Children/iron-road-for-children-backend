@@ -8,11 +8,11 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
     <changeSet id="19-create-event-category-table" author="domi">
-        <createTable tableName="eventCategory">
+        <createTable tableName="event_category">
             <column name="event_category_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="event_category_id_pk"/>
             </column>
-            <column name="name" type="varchar(255)"/>
+            <column name="event_category_name" type="varchar(255)"/>
         </createTable>
 
         <createSequence sequenceName="event_category_id_seq"

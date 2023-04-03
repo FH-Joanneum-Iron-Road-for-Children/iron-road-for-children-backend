@@ -34,10 +34,9 @@ public class EventCategoryApi {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.APPLICATION_JSON)
   @Path("/{id}")
-  public EventCategoryDTO getById(@PathParam("id") Long id){
+  @Produces(MediaType.APPLICATION_JSON)
+  public EventCategoryDTO get(@PathParam("id") Long id){
     return eventCategoryService.get(id);
   }
 

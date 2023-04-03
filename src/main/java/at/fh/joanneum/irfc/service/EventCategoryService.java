@@ -26,6 +26,16 @@ public class EventCategoryService {
         .collect(Collectors.toUnmodifiableList());
   }
 
+  public EventCategoryDTO get(Long id) {
+    Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
+    if(byIdOptional.isEmpty()){
+      throw new RuntimeException("Event category with id " + id + " not found");
+    } else {
+      EventCategoryEntity byId = byIdOptional.get();
+      return EventCategoryMapper.INSTANCE.toDto(byId);
+    }
+  }
+
   @Transactional
   public EventCategoryDTO create(EventCategoryDTO eventCategoryDTOCreate) {
     EventCategoryEntity newEntity = new EventCategoryEntity();

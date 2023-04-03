@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "eventCategory")
+@Table(name = "event_category")
 public class EventCategoryEntity {
 
   @Id
@@ -26,9 +26,9 @@ public class EventCategoryEntity {
       strategy = GenerationType.SEQUENCE,
       generator = "event_category_id_seq"
   )
-  @Column(name = "event_category_id_seq")
+  @Column(name = "event_category_id")
   private Long eventCategoryId;
 
-  @Column
+  @Column(name = "event_category_name")
   private String name;
 }
