@@ -37,22 +37,22 @@ public class EventCategoryService {
   }
 
   @Transactional
-  public EventCategoryDTO create(EventCategoryDTO eventCategoryDTOCreate) {
+  public EventCategoryDTO create(EventCategoryDTO eventCategoryDTO) {
     EventCategoryEntity newEntity = new EventCategoryEntity();
-    setValues(eventCategoryDTOCreate, newEntity);
+    setValues(eventCategoryDTO, newEntity);
     eventCategoryRepository.persist(newEntity);
     return EventCategoryMapper.INSTANCE.toDto(newEntity);
   }
 
   @Transactional
-  public EventCategoryDTO update(Long id, EventCategoryDTO eventCategoryDTOUpdate) {
+  public EventCategoryDTO update(Long id, EventCategoryDTO eventCategoryDTO) {
     Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
 
     if(byIdOptional.isEmpty()){
       throw new RuntimeException("Event category with id " + id + " not found");
     } else {
       EventCategoryEntity byId = byIdOptional.get();
-      setValues(eventCategoryDTOUpdate, byId);
+      setValues(eventCategoryDTO, byId);
       eventCategoryRepository.persistAndFlush(byId);
       return EventCategoryMapper.INSTANCE.toDto(byId);
     }

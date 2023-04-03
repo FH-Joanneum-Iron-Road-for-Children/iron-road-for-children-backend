@@ -29,8 +29,8 @@ public class EventCategoryApi {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public EventCategoryDTO create(EventCategoryDTO eventCategoryDTOCreate){
-    return eventCategoryService.create(eventCategoryDTOCreate);
+  public EventCategoryDTO create(EventCategoryDTO eventCategoryDTO){
+    return eventCategoryService.create(eventCategoryDTO);
   }
 
   @GET
@@ -44,8 +44,8 @@ public class EventCategoryApi {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/{id}")
-  public EventCategoryDTO update(@PathParam("id") Long id, EventCategoryDTO eventCategoryDTOUpdate){
-    return eventCategoryService.update(id, eventCategoryDTOUpdate);
+  public EventCategoryDTO update(@PathParam("id") Long id, EventCategoryDTO eventCategoryDTO){
+    return eventCategoryService.update(id, eventCategoryDTO);
   }
 
   @DELETE
