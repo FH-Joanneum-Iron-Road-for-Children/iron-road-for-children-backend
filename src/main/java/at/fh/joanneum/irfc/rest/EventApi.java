@@ -44,8 +44,8 @@ public class EventApi {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/{id}")
-  public EventDTO update(@PathParam("id") Long id, EventDTO eventDTOUpdate){
-    return eventService.update(id, eventDTOUpdate);
+  public EventDTO update(@PathParam("id") Long id, EventDTO eventDTO){
+    return eventService.update(id, eventDTO);
   }
 
   @DELETE

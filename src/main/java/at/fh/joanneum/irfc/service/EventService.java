@@ -53,16 +53,16 @@ public class EventService {
   }
 
   @Transactional
-  public EventDTO update(Long id, EventDTO eventDTOUpdate) {
+  public EventDTO update(Long id, EventDTO eventDTO) {
     Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
 
-    checkDTOvalues(eventDTOUpdate);
+    checkDTOvalues(eventDTO);
 
     if(byIdOptional.isEmpty()){
       throw new RuntimeException("Event with id " + id + " not found");
     } else {
       EventEntity byId = byIdOptional.get();
-      setValues(eventDTOUpdate, byId);
+      setValues(eventDTO, byId);
       eventRepository.persistAndFlush(byId);
       return EventMapper.INSTANCE.toDto(byId);
     }
