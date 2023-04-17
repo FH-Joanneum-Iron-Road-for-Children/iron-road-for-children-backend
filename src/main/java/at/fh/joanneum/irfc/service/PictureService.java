@@ -1,7 +1,10 @@
 package at.fh.joanneum.irfc.service;
 
+import at.fh.joanneum.irfc.model.event.EventDTO;
+import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.model.picture.PictureMapper;
+import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.PictureRepository;
 import javax.enterprise.context.RequestScoped;
@@ -30,16 +33,13 @@ public class PictureService {
         }
     }
 
-    public List<PictureDTO> getByTitle(PictureDTO pictureDTO) {
-        if(isNull(pictureDTO.getTitle()) || pictureDTO.getTitle().isBlank()){
-            throw new RuntimeException("Title needs be provided");
-        }
-        List<PictureEntity> picturesByTitle = pictureRepository.listWhereTitleLike(pictureDTO.getTitle());
-        if(picturesByTitle.isEmpty()){
-            throw new RuntimeException("No Picture containing matching Title found");
+    public List<PictureDTO> search(String searchString) {
+        List<PictureEntity> pictures = pictureRepository.listWhereTitleLike(searchString);
+        if(pictures.isEmpty()){
+            throw new RuntimeException("No Picture with search \"" + searchString + "\"  found");
         } else {
             List<PictureDTO> l = new ArrayList<PictureDTO>();
-            for (PictureEntity p : picturesByTitle) {
+            for (PictureEntity p : pictures) {
                 l.add(PictureMapper.INSTANCE.toDto(p));
             }
             return l;
@@ -48,12 +48,9 @@ public class PictureService {
 
     @Transactional
     public PictureDTO create(PictureDTO pictureDTO) {
-//        if(isNull(pictureDTO.getEventInfo()) && isNull(pictureDTO.getEvent())){
-//            throw new RuntimeException("Either an Event or an Event Info must be provided to be associated with the image");
-//        }
-        if(isNull(pictureDTO.getTitle()) || pictureDTO.getTitle().isBlank()){
-            throw new RuntimeException("Title must be provided");
-        }
+
+        validateDto(pictureDTO);
+
         PictureEntity newEntity = new PictureEntity();
         setValues(pictureDTO, newEntity);
         pictureRepository.persist(newEntity);
@@ -62,6 +59,12 @@ public class PictureService {
 
     private static void setValues(PictureDTO pictureDTO, PictureEntity newEntity) {
         newEntity.setTitle(pictureDTO.getTitle());
+    }
+
+    private static void validateDto (PictureDTO pictureDTO) {
+        if(isNull(pictureDTO.getTitle()) || pictureDTO.getTitle().isBlank()){
+            throw new RuntimeException("Title must be provided");
+        }
     }
 
     @Transactional

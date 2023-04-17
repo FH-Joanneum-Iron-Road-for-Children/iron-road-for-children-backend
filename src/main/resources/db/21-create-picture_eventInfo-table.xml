@@ -7,17 +7,10 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="17-create-picture-table" author="gregor">
-        <createTable tableName="picture">
-            <column name="picture_id" type="bigint">
-                <constraints primaryKey="true" nullable="false" primaryKeyName="picture_id_pk"/>
-            </column>
-            <column name="title" type="varchar(255)"/>
+    <changeSet id="21-create-picture_eventInfo-table" author="lion">
+        <createTable tableName="picture_event_info">
+            <column name="fk_picture" type="bigint"/>
+            <column name="fk_event_info" type="bigint"/>
         </createTable>
-
-        <createSequence sequenceName="picture_id_seq"
-                        dataType="bigint"
-                        incrementBy="1"
-                        startValue="100"/>
     </changeSet>
 </databaseChangeLog>

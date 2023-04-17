@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,5 +21,4 @@ public class EventInfoDTO {
     private Long eventInfoId;
     private String infoText;
     private List<PictureDTO> pictures;
-    private EventDTO event;
 }

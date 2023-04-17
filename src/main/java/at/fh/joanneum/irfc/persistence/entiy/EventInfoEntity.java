@@ -32,7 +32,7 @@ public class EventInfoEntity {
     @Column(name = "event_info_text")
     private String infoText;
 
-    @OneToMany(mappedBy="eventInfo", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy="eventInfo", cascade = CascadeType.ALL)
     private List<PictureEntity> pictures;
 
     @OneToOne(mappedBy="eventInfo", cascade = CascadeType.ALL)

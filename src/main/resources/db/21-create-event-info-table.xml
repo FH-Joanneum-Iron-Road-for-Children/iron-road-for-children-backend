@@ -13,8 +13,6 @@
                 <constraints primaryKey="true" nullable="false" primaryKeyName="event_info_id_pk"/>
             </column>
             <column name="event_info_text" type="varchar(255)"/>
-            <column name="fk_picture" type="bigint"/>
-            <column name="fk_event" type="bigint"/>
         </createTable>
 
         <createSequence sequenceName="event_info_id_seq"

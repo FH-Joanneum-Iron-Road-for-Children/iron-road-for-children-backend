@@ -1,4 +1,4 @@
-package at.fh.joanneum.irfc.model.picture;
+package at.fh.joanneum.irfc.model.eventlocation;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @author gregor.wakonig@edu.fh-joanneum.at
+ * @author moe@softwaregaertner.at
  **/
 @NoArgsConstructor
 @Getter
 @Setter
 @RegisterForReflection
-public class PictureDTO {
-    private Long pictureId;
-    String title;
-    String path;
+public class EventLocationDTO {
+    private Long eventLocationId;
+    String name;
 }

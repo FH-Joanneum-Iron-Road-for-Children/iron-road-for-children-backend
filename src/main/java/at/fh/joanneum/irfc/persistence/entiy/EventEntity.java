@@ -31,7 +31,7 @@ public class EventEntity {
 
   @Column
   private String title;
-  @OneToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_picture", referencedColumnName = "picture_id")
   private PictureEntity picture;
   @OneToOne(cascade = CascadeType.ALL)
@@ -43,11 +43,12 @@ public class EventEntity {
   @Column(name = "end_date_time_in_utc")
   private long endDateTimeInUTC;
 
-//  @Column(name = "fk_event_location")
-//  private EventLocationEntity eventLocation;
+  @ManyToOne
+  @JoinColumn(name = "fk_event_location", nullable = false)
+  private EventLocationEntity eventLocation;
 
-//  @Column(name = "fk_category")
-//  private CategoryEntity eventLocation;
+  //  @Column(name = "fk_category")
+  //  private CategoryEntity eventLocation;
 
-
+  //bool isEditable; //TODO create Task and Implement
 }

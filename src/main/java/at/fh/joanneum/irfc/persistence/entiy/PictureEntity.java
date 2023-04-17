@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
@@ -31,14 +32,10 @@ public class PictureEntity {
     @Column
     private String title;
 
-    @Column
-    private String path;
+    @ManyToMany
+    @JoinTable(name = "picture_event_info", joinColumns = { @JoinColumn(name = "fk_picture") }, inverseJoinColumns = { @JoinColumn(name = "fk_event_info") })
+    private List<EventInfoEntity> eventInfo;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_event_info")
-    private EventInfoEntity eventInfo;
-
-    @OneToOne
-    @JoinColumn(name = "fk_event")
-    private EventEntity event;
+    @OneToMany(mappedBy = "picture")
+    private List<EventEntity> event;
 }

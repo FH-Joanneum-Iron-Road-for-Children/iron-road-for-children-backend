@@ -8,6 +8,7 @@ import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static java.util.Objects.isNull;
@@ -42,9 +43,6 @@ public class EventInfoService {
     private static void checkDTOvalues(EventInfoDTO eventInfoDTO) {
         if(isNull(eventInfoDTO.getInfoText()) || eventInfoDTO.getInfoText().isBlank()){
             throw new RuntimeException("Info Text must be provided");
-        }
-        if(eventInfoDTO.getPictures().size() < 1){
-            throw new RuntimeException("At least one Picture needs to be added");
         }
     }
 
