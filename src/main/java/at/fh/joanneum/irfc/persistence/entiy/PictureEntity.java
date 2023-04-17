@@ -40,5 +40,5 @@ public class PictureEntity {
 
     @OneToOne
     @JoinColumn(name = "fk_event")
-    private EventEntity eventEntity;
+    private EventEntity event;
 }

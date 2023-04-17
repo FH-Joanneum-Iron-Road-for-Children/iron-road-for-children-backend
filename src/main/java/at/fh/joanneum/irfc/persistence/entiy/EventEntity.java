@@ -31,11 +31,11 @@ public class EventEntity {
 
   @Column
   private String title;
-  @OneToOne
-  @Column(name = "fk_picture")
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "fk_picture", referencedColumnName = "picture_id")
   private PictureEntity picture;
-  @OneToOne
-  @Column(name = "fk_event_info")
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "fk_event_info", referencedColumnName = "event_info_id")
   private EventInfoEntity eventInfo;
 
   @Column(name = "start_date_time_in_utc")

@@ -26,6 +26,7 @@ public class PictureApi {
     public PictureDTO get(@PathParam("id") Long id){ return pictureService.get(id); }
 
     @POST
+    @Path("/getbytitle")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public List<PictureDTO> getByTitle(PictureDTO pictureDTO){
@@ -35,9 +36,7 @@ public class PictureApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public PictureDTO create(PictureDTO pictureDTO){
-        return pictureService.create(pictureDTO);
-    }
+    public PictureDTO create(PictureDTO pictureDTO){ return pictureService.create(pictureDTO); }
 
     @DELETE
     @Path("/{id}")

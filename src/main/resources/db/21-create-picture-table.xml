@@ -12,8 +12,8 @@
             <column name="picture_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="picture_id_pk"/>
             </column>
-            <column name="picture_title" type="varchar(255)"/>
-            <column name="picture_path" type="varchar(255)"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="path" type="varchar(255)"/>
             <column name="fk_event" type="bigint"/>
             <column name="fk_event_info" type="bigint"/>
         </createTable>
