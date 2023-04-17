@@ -16,5 +16,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - name: Build with Maven
-        run: mvn --errors --fail-at-end --batch-mode --update-snapshots package
+        run: mvn package
