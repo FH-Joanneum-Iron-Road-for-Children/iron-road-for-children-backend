@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 /**
  * @author dominik.jaeger@edu.fh-joanneum.at
  **/
@@ -38,6 +40,9 @@ public class EventCategoryService {
 
   @Transactional
   public EventCategoryDTO create(EventCategoryDTO eventCategoryDTO) {
+
+    checkDTOvalues(eventCategoryDTO);
+
     EventCategoryEntity newEntity = new EventCategoryEntity();
     setValues(eventCategoryDTO, newEntity);
     eventCategoryRepository.persist(newEntity);
@@ -47,6 +52,8 @@ public class EventCategoryService {
   @Transactional
   public EventCategoryDTO update(Long id, EventCategoryDTO eventCategoryDTO) {
     Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
+
+    checkDTOvalues(eventCategoryDTO);
 
     if(byIdOptional.isEmpty()){
       throw new RuntimeException("Event category with id " + id + " not found");
@@ -58,15 +65,20 @@ public class EventCategoryService {
     }
   }
 
-  private static void setValues(EventCategoryDTO eventCategoryDTOCreate, EventCategoryEntity newEntity) {
-    newEntity.setName(eventCategoryDTOCreate.getName());
-  }
-
   @Transactional
   public void delete(Long id) {
     if(!eventCategoryRepository.deleteById(id)){
       throw new RuntimeException("Event category with id " + id + " not found");
     }
+  }
 
+  private static void checkDTOvalues(EventCategoryDTO eventCategoryDTO) {
+    if(isNull(eventCategoryDTO.getName())|| eventCategoryDTO.getName().isBlank()){
+      throw new RuntimeException("Name must not be null or empty");
+    }
+  }
+
+  private static void setValues(EventCategoryDTO eventCategoryDTO, EventCategoryEntity newEntity) {
+    newEntity.setName(eventCategoryDTO.getName());
   }
 }
