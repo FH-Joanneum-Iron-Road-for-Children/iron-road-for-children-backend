@@ -41,7 +41,7 @@ public class EventCategoryService {
   @Transactional
   public EventCategoryDTO create(EventCategoryDTO eventCategoryDTO) {
 
-    checkDTOvalues(eventCategoryDTO);
+    validateDTOvalues(eventCategoryDTO);
 
     EventCategoryEntity newEntity = new EventCategoryEntity();
     setValues(eventCategoryDTO, newEntity);
@@ -53,7 +53,7 @@ public class EventCategoryService {
   public EventCategoryDTO update(Long id, EventCategoryDTO eventCategoryDTO) {
     Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
 
-    checkDTOvalues(eventCategoryDTO);
+    validateDTOvalues(eventCategoryDTO);
 
     if(byIdOptional.isEmpty()){
       throw new RuntimeException("Event category with id " + id + " not found");
@@ -72,7 +72,7 @@ public class EventCategoryService {
     }
   }
 
-  private static void checkDTOvalues(EventCategoryDTO eventCategoryDTO) {
+  private static void validateDTOvalues(EventCategoryDTO eventCategoryDTO) {
     if(isNull(eventCategoryDTO.getName())|| eventCategoryDTO.getName().isBlank()){
       throw new RuntimeException("Name must not be null or empty");
     }
