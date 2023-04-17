@@ -9,13 +9,15 @@ quarkus:
     migrate-at-start: true
 
 #  TODO: oidc
+
   container-image:
     builder: jib
     name: irfc-backend
-#    group: irfc
+    group: FH-Joanneum-Iron-Road-for-Children
     build: true
-    push: false
-#    regestry: registry.github.com
+    push: true
+    registry: ghcr.io
+    username: PhilipMoser
 
 #  kubernetes-config:
 #    enabled: false
@@ -25,11 +27,12 @@ quarkus:
 #    namespace: ${KUBERNETES_NAMESPACE:default}
 
 "%prod":
-  container-image:
-    build: true
-    push: true
-  liquibase:
-    contexts: prod
+  quarkus:
+#    container-image:
+#      build: true
+#      push: true
+    liquibase:
+      contexts: prod
 
 "%dev":
   quarkus:
@@ -42,3 +45,7 @@ quarkus:
     liquibase:
       contexts: dev
       migrate-at-start: true
+
+#    container-image:
+#      build: false
+#      push: false
