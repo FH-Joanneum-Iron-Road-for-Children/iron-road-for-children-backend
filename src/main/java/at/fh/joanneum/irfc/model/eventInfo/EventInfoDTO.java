@@ -1,6 +1,7 @@
 package at.fh.joanneum.irfc.model.eventInfo;
 
-import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
+import at.fh.joanneum.irfc.model.event.EventDTO;
+import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +19,6 @@ import java.util.List;
 public class EventInfoDTO {
     private Long eventInfoId;
     private String infoText;
-    private List<PictureEntity> pictures;
-    public Long getEventInfoId() {
-        return eventInfoId;
-    }
-    public List<PictureEntity> getPictures() {
-        return pictures;
-    }
-    public String getInfoText() {
-        return infoText;
-    }
+    private List<PictureDTO> pictures;
+    private EventDTO event;
 }

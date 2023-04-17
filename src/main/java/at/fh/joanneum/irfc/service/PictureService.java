@@ -48,9 +48,9 @@ public class PictureService {
 
     @Transactional
     public PictureDTO create(PictureDTO pictureDTO) {
-        if(isNull(pictureDTO.getEventInfo()) && isNull(pictureDTO.getEvent())){
-            throw new RuntimeException("Either an Event or an Event Info must be provided to be associated with the image");
-        }
+//        if(isNull(pictureDTO.getEventInfo()) && isNull(pictureDTO.getEvent())){
+//            throw new RuntimeException("Either an Event or an Event Info must be provided to be associated with the image");
+//        }
         if(isNull(pictureDTO.getTitle()) || pictureDTO.getTitle().isBlank()){
             throw new RuntimeException("Title must be provided");
         }

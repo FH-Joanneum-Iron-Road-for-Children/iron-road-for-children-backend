@@ -1,5 +1,6 @@
 package at.fh.joanneum.irfc.model.event;
 
+import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class EventDTO {
   String title;
   long startDateTimeInUTC;
   long endDateTimeInUTC;
+  PictureDTO picture;
   //  EventLocationEntity eventLocation;
 //  CategoryEntity eventLocation;
 

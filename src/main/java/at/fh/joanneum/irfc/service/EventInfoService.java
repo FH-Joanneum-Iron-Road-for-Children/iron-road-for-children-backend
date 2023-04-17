@@ -65,7 +65,7 @@ public class EventInfoService {
 
     private static void setValues(EventInfoDTO eventInfoDTOCreate, EventInfoEntity newEntity) {
         newEntity.setInfoText(eventInfoDTOCreate.getInfoText());
-        newEntity.setPictures(eventInfoDTOCreate.getPictures());
+//        newEntity.setPictures(eventInfoDTOCreate.getPictures());
     }
 
     @Transactional
