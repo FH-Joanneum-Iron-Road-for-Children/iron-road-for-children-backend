@@ -23,10 +23,11 @@ public class VoteService {
     @Inject
     VoteRepository voteRepository;
 
+
     public List<VoteDTO> getAll() {
         return voteRepository.listAll().stream()
                 .map(VoteMapper.INSTANCE::toDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public VoteDTO getById(Long id) {
@@ -36,15 +37,8 @@ public class VoteService {
 
     @Transactional
     public VoteDTO create(VoteDTO voteDTO) {
-
-        validateDTOvalues(voteDTO);
-
         VoteEntity newEntity = new VoteEntity();
-
-        newEntity.setEventId(voteDTO.getEventId());
-        newEntity.setDeviceId(voteDTO.getDeviceId());
-
-//        setValues(voteDTO, newEntity);
+        setValues(voteDTO, newEntity);
         voteRepository.persist(newEntity);
         return VoteMapper.INSTANCE.toDto(newEntity);
     }
@@ -56,7 +50,7 @@ public class VoteService {
         validateDTOvalues(voteDTO);
 
         if(byIdOptional.isEmpty()){
-            throw new RuntimeException("Vote with id " + id + " not found");
+            throw new RuntimeException("Voting with id " + id + " not found");
         } else {
             VoteEntity byId = byIdOptional.get();
             setValues(voteDTO, byId);
@@ -68,11 +62,14 @@ public class VoteService {
     @Transactional
     public void delete(Long id) {
         if(!voteRepository.deleteById(id)){
-            throw new RuntimeException("Vote with id " + id + " not found");
+            throw new RuntimeException("Voting with id " + id + " not found");
         }
     }
 
     private static void validateDTOvalues(VoteDTO voteDTO) {
+        if(isNull(voteDTO.getVotingId())){
+            throw new RuntimeException("Voting ID must not be null");
+        }
         if(isNull(voteDTO.getEventId())){
             throw new RuntimeException("Event ID must not be null");
         }
@@ -82,9 +79,8 @@ public class VoteService {
     }
 
     private void setValues(VoteDTO voteDTO, VoteEntity newEntity) {
+        newEntity.setVotingId(voteDTO.getVotingId());
         newEntity.setEventId(voteDTO.getEventId());
         newEntity.setDeviceId(voteDTO.getDeviceId());
     }
-
-
 }

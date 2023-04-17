@@ -14,7 +14,7 @@ import lombok.Setter;
 @RegisterForReflection
 public class VoteDTO {
 
-    private Long votingId;
+    Long votingId;
     Long eventId;
     String deviceId;
 }

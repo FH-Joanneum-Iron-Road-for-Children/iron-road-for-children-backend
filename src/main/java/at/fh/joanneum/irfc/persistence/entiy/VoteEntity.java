@@ -17,17 +17,10 @@ import javax.persistence.*;
 public class VoteEntity {
 
     @Id
-    @SequenceGenerator(
-            name = "vote_id_seq",
-            sequenceName = "vote_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "vote_id_seq"
-    )
+    @Column(name = "voting_id")
+    private Long votingId;
 
-    @JoinColumn(name = "fk_event_id", nullable = false)
+    @Column(name = "event_id")
     private Long eventId;
 
     @Column(name = "device_id")
