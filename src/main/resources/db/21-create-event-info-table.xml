@@ -7,13 +7,14 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="17-create-event-table" author="gregor">
+    <changeSet id="21-create-event-table" author="gregor">
         <createTable tableName="event_info">
             <column name="event_info_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="event_info_id_pk"/>
             </column>
             <column name="event_info_text" type="varchar(255)"/>
-            <column name="fk_image" type="bigint"/>
+            <column name="fk_picture" type="bigint"/>
+            <column name="fk_event" type="bigint"/>
         </createTable>
 
         <createSequence sequenceName="event_info_id_seq"

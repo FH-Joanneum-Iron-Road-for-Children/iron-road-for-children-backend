@@ -31,9 +31,14 @@ public class PictureEntity {
     @Column
     private String title;
 
+    @Column
+    private String path;
 
     @ManyToOne
     @JoinColumn(name = "fk_event_info")
-    private EventInfoEntity eventInfoEntity;
+    private EventInfoEntity eventInfo;
 
+    @OneToOne
+    @JoinColumn(name = "fk_event")
+    private EventEntity eventEntity;
 }

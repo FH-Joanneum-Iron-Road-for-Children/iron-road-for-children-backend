@@ -31,9 +31,12 @@ public class EventEntity {
 
   @Column
   private String title;
-
-//  @Column
-//  private Image image;
+  @OneToOne
+  @Column(name = "fk_picture")
+  private PictureEntity picture;
+  @OneToOne
+  @Column(name = "fk_event_info")
+  private EventInfoEntity eventInfo;
 
   @Column(name = "start_date_time_in_utc")
   private long startDateTimeInUTC;

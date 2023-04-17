@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 @RegisterForReflection
 public class EventInfoDTO {
-
     private Long eventInfoId;
     private String infoText;
     private List<PictureEntity> pictures;

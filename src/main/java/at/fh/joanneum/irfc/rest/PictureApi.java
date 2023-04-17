@@ -1,50 +1,49 @@
 package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
-import at.fh.joanneum.irfc.service.EventInfoService;
+import at.fh.joanneum.irfc.model.picture.PictureDTO;
+import at.fh.joanneum.irfc.service.PictureService;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
  **/
 @RequestScoped
-@Path("/eventInfos")
-public class EventInfoApi {
-
+@Path("/pictures")
+public class PictureApi {
     @Inject
-    EventInfoService eventInfoService;
+    PictureService pictureService;
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public EventInfoDTO get(@PathParam("id") Long id){
-        return eventInfoService.get(id);
+    public PictureDTO get(@PathParam("id") Long id){ return pictureService.get(id); }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<PictureDTO> getByTitle(PictureDTO pictureDTO){
+        return pictureService.getByTitle(pictureDTO);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public EventInfoDTO create(EventInfoDTO eventInfoDTO){
-        return eventInfoService.create(eventInfoDTO);
-    }
-
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
-    public EventInfoDTO update(@PathParam("id") Long id, EventInfoDTO eventInfoDTO){
-        return eventInfoService.update(id, eventInfoDTO);
+    public PictureDTO create(PictureDTO pictureDTO){
+        return pictureService.create(pictureDTO);
     }
 
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id){
-        eventInfoService.delete(id);
-        String message = "EventInfo with id "+id+" deleted";
+        pictureService.delete(id);
+        String message = "Picture with id "+id+" deleted";
         return Response
                 .status(200, message)
                 .build();
