@@ -8,7 +8,21 @@ quarkus:
   liquibase:
     migrate-at-start: true
 
-#  TODO: kube-config; oidc; containerization
+#  TODO: oidc
+  container-image:
+    builder: jib
+    name: irfc-backend
+#    group: irfc
+    build: true
+    push: false
+#    regestry: registry.github.com
+
+#  kubernetes-config:
+#    enabled: false
+#    namespace: ${KUBERNETES_NAMESPACE:default}
+#
+#  kubernetes-client:
+#    namespace: ${KUBERNETES_NAMESPACE:default}
 
 "%prod":
   container-image:
