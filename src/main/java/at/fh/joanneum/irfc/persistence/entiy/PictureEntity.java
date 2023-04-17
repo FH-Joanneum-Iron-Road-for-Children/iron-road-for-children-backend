@@ -33,7 +33,7 @@ public class PictureEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "fk_event_info", nullable = false)
+    @JoinColumn(name = "fk_event_info")
     private EventInfoEntity eventInfoEntity;
 
 }

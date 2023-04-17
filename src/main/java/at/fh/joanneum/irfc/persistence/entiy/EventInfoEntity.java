@@ -32,8 +32,7 @@ public class EventInfoEntity {
     @Column(name = "event_info_text")
     private String infoText;
 
-    @OneToMany
-    @JoinColumn(name = "fk_image", nullable = false)
+    @OneToMany(mappedBy="eventInfoEntity", cascade = CascadeType.ALL)
     private List<PictureEntity> pictures;
 
 }

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
  **/
@@ -32,22 +34,33 @@ public class EventInfoService {
     }
 
     @Transactional
-    public EventInfoDTO create(EventInfoDTO eventInfoDTOCreate) {
+    public EventInfoDTO create(EventInfoDTO eventInfoDTO) {
+        checkDTOvalues(eventInfoDTO);
         EventInfoEntity newEntity = new EventInfoEntity();
-        setValues(eventInfoDTOCreate, newEntity);
+        setValues(eventInfoDTO, newEntity);
         eventInfoRepository.persist(newEntity);
         return EventInfoMapper.INSTANCE.toDto(newEntity);
     }
 
+    private static void checkDTOvalues(EventInfoDTO eventInfoDTO) {
+        if(isNull(eventInfoDTO.getInfoText()) || eventInfoDTO.getInfoText().isBlank()){
+            throw new RuntimeException("Info Text must be provided");
+        }
+        if(eventInfoDTO.getPictures().size() < 1){
+            throw new RuntimeException("At least one Picture needs to be added");
+        }
+    }
+
     @Transactional
-    public EventInfoDTO update(Long id, EventInfoDTO eventInfoDTOUpdate) {
+    public EventInfoDTO update(Long id, EventInfoDTO eventInfoDTO) {
         Optional<EventInfoEntity> byIdOptional = eventInfoRepository.findByIdOptional(id);
 
         if(byIdOptional.isEmpty()){
             throw new RuntimeException("EventInfo with id " + id + " not found");
         } else {
+            checkDTOvalues(eventInfoDTO);
             EventInfoEntity byId = byIdOptional.get();
-            setValues(eventInfoDTOUpdate, byId);
+            setValues(eventInfoDTO, byId);
             eventInfoRepository.persistAndFlush(byId);
             return EventInfoMapper.INSTANCE.toDto(byId);
         }
