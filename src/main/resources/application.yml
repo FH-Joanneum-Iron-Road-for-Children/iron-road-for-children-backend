@@ -12,12 +12,11 @@ quarkus:
 
   container-image:
     builder: jib
+    registry: ghcr.io
     name: irfc-backend
-    group: FH-Joanneum-Iron-Road-for-Children
+    group: fh-joanneum-iron-road-for-children
     build: true
     push: true
-    registry: ghcr.io
-    username: PhilipMoser
 
 #  kubernetes-config:
 #    enabled: false
