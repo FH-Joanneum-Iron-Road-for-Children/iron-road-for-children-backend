@@ -17,6 +17,8 @@ quarkus:
     group: fh-joanneum-iron-road-for-children
     build: true
     push: true
+    tag: "latest"
+    additional-tags: [${quarkus.application.version:latest}]
 
   swagger-ui:
     always-include: true
