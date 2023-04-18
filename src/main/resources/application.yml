@@ -18,6 +18,9 @@ quarkus:
     build: true
     push: true
 
+  swagger-ui:
+    always-include: true
+
 #  kubernetes-config:
 #    enabled: false
 #    namespace: ${KUBERNETES_NAMESPACE:default}
