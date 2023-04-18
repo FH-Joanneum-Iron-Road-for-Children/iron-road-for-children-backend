@@ -8,14 +8,33 @@ quarkus:
   liquibase:
     migrate-at-start: true
 
-#  TODO: kube-config; oidc; containerization
+#  TODO: oidc
 
-"%prod":
   container-image:
+    builder: jib
+    registry: ghcr.io
+    name: irfc-backend
+    group: fh-joanneum-iron-road-for-children
     build: true
     push: true
-  liquibase:
-    contexts: prod
+
+  swagger-ui:
+    always-include: true
+
+#  kubernetes-config:
+#    enabled: false
+#    namespace: ${KUBERNETES_NAMESPACE:default}
+#
+#  kubernetes-client:
+#    namespace: ${KUBERNETES_NAMESPACE:default}
+
+"%prod":
+  quarkus:
+#    container-image:
+#      build: true
+#      push: true
+    liquibase:
+      contexts: prod
 
 "%dev":
   quarkus:
@@ -28,3 +47,7 @@ quarkus:
     liquibase:
       contexts: dev
       migrate-at-start: true
+
+#    container-image:
+#      build: false
+#      push: false
