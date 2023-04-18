@@ -18,9 +18,10 @@ public class VotingPartialResultEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="voting_partial_result_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="event_name")
     @NotBlank
     private String eventName;
 

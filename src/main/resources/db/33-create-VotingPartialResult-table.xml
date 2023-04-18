@@ -9,10 +9,10 @@
 
     <changeSet author="Arthur" id="create_VotingPartialResult_table">
         <createTable tableName="VotingPartialResult">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="voting_partial_result_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="eventName" type="VARCHAR(255)">
+            <column name="event_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="percentage" type="DOUBLE">
