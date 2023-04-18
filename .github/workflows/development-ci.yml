@@ -2,7 +2,7 @@ name: Build Quarkus Container
 run-name: ${{ github.actor }} builds quarkus container
 on:
   push:
-    branches: [ develop-#35-setup-ci-cd ]
+    branches: [ develop ]
     paths-ignore:
       - '.gitignore'
 jobs:
