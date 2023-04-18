@@ -30,7 +30,7 @@ public class PictureEntity {
     private Long pictureId;
 
     @Column
-    private String title;
+    private String altText;
 
     @ManyToMany
     @JoinTable(

@@ -1,8 +1,8 @@
 package at.fh.joanneum.irfc.rest;
 
-import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.service.PictureService;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -33,10 +33,22 @@ public class PictureApi {
         return pictureService.search(searchString);
     }
 
+    //TODO: there will be only MULTIPART as input with file and altText
+    // (see: https://quarkus.io/guides/rest-client-multipart)
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public PictureDTO create(@MultipartForm MultipartForm data){
+        return pictureService.create(data);
+    }
+
+
+    //just for testing
+    @POST
+    @Path("testInput")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public PictureDTO create(PictureDTO pictureDTO){ return pictureService.create(pictureDTO); }
+    public PictureDTO createTest(PictureDTO pictureDTO){ return pictureService.createTest(pictureDTO); }
 
     @DELETE
     @Path("/{id}")

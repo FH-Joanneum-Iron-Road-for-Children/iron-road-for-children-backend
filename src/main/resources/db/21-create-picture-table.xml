@@ -12,7 +12,8 @@
             <column name="picture_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="picture_id_pk"/>
             </column>
-            <column name="title" type="varchar(255)"/>
+            <column name="altText" type="varchar(255)"/>
+            <column name="path" type="varchar(255)"/>
         </createTable>
 
         <createSequence sequenceName="picture_id_seq"

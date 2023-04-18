@@ -1,12 +1,11 @@
 package at.fh.joanneum.irfc.service;
 
-import at.fh.joanneum.irfc.model.event.EventDTO;
-import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.model.picture.PictureMapper;
-import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.PictureRepository;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -47,7 +46,7 @@ public class PictureService {
     }
 
     @Transactional
-    public PictureDTO create(PictureDTO pictureDTO) {
+    public PictureDTO createTest(PictureDTO pictureDTO) {
 
         validateDto(pictureDTO);
 
@@ -58,11 +57,11 @@ public class PictureService {
     }
 
     private static void setValues(PictureDTO pictureDTO, PictureEntity newEntity) {
-        newEntity.setTitle(pictureDTO.getTitle());
+        newEntity.setAltText(pictureDTO.getAltText());
     }
 
     private static void validateDto (PictureDTO pictureDTO) {
-        if(isNull(pictureDTO.getTitle()) || pictureDTO.getTitle().isBlank()){
+        if(isNull(pictureDTO.getAltText()) || pictureDTO.getAltText().isBlank()){
             throw new RuntimeException("Title must be provided");
         }
     }
@@ -72,5 +71,11 @@ public class PictureService {
         if(!pictureRepository.deleteById(id)){
             throw new RuntimeException("Picture with id " + id + " not found");
         }
+    }
+
+    @Transactional
+    public PictureDTO create(MultipartForm data) {
+        //TODO: implement this
+        return null;
     }
 }
