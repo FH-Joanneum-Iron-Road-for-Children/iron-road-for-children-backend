@@ -14,6 +14,6 @@ import lombok.Setter;
 @RegisterForReflection
 public class PictureDTO {
     private Long pictureId;
-    String title;
-    String path;
+    private String title;
+    private String path;
 }

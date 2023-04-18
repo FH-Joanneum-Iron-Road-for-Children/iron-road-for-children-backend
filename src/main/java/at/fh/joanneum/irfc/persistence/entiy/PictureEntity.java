@@ -33,7 +33,10 @@ public class PictureEntity {
     private String title;
 
     @ManyToMany
-    @JoinTable(name = "picture_event_info", joinColumns = { @JoinColumn(name = "fk_picture") }, inverseJoinColumns = { @JoinColumn(name = "fk_event_info") })
+    @JoinTable(
+            name = "picture_event_info",
+            joinColumns = { @JoinColumn(name = "fk_picture") },
+            inverseJoinColumns = { @JoinColumn(name = "fk_event_info") })
     private List<EventInfoEntity> eventInfo;
 
     @OneToMany(mappedBy = "picture")

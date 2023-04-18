@@ -7,9 +7,9 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
     <changeSet id="21-add-picture-and-event-info-to-event" author="lion">
-        <insert tableName="event">
+        <addColumn tableName="event">
             <column name="fk_picture" type="bigint"/>
             <column name="fk_event_info" type="bigint"/>
-        </insert>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

@@ -37,5 +37,4 @@ public class EventInfoEntity {
 
     @OneToOne(mappedBy="eventInfo", cascade = CascadeType.ALL)
     private EventEntity eventEntity;
-
 }

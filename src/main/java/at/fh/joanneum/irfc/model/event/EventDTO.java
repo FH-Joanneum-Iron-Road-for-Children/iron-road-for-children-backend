@@ -17,12 +17,12 @@ import lombok.Setter;
 @RegisterForReflection
 public class EventDTO {
   private Long eventId;
-  String title;
-  EventInfoDTO eventInfo;
-  PictureDTO picture;
-  long startDateTimeInUTC;
-  long endDateTimeInUTC;
-  EventLocationDTO eventLocation;
-  //EventCategoryDTO eventCategory;
-  //bool isEditable;
+  private String title;
+  private EventInfoDTO eventInfo;
+  private PictureDTO picture;
+  private long startDateTimeInUTC;
+  private long endDateTimeInUTC;
+  private EventLocationDTO eventLocation;
+  //private EventCategoryDTO eventCategory;
+  //private bool isEditable;
 }

@@ -14,5 +14,5 @@ import lombok.Setter;
 @RegisterForReflection
 public class EventLocationDTO {
     private Long eventLocationId;
-    String name;
+    private String name;
 }

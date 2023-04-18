@@ -2,14 +2,17 @@ package at.fh.joanneum.irfc.service;
 
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoMapper;
+import at.fh.joanneum.irfc.model.picture.PictureDTO;
+import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.persistence.entiy.EventInfoEntity;
+import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
+import at.fh.joanneum.irfc.persistence.repository.PictureRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 
@@ -20,6 +23,8 @@ import static java.util.Objects.isNull;
 public class EventInfoService {
     @Inject
     EventInfoRepository eventInfoRepository;
+    @Inject
+    PictureRepository pictureRepository;
 
     public EventInfoDTO get(Long id) {
         Optional<EventInfoEntity> byIdOptional = eventInfoRepository.findByIdOptional(id);
@@ -61,9 +66,24 @@ public class EventInfoService {
         }
     }
 
-    private static void setValues(EventInfoDTO eventInfoDTOCreate, EventInfoEntity newEntity) {
-        newEntity.setInfoText(eventInfoDTOCreate.getInfoText());
-//        newEntity.setPictures(eventInfoDTOCreate.getPictures());
+    private void setValues(EventInfoDTO eventInfoDTO, EventInfoEntity newEntity) {
+        newEntity.setInfoText(eventInfoDTO.getInfoText());
+        for(PictureDTO picture : eventInfoDTO.getPictures()) {
+            Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(picture.getPictureId());
+            if(pictureOptional.isEmpty()){
+                throw new RuntimeException("no Picture with id "+ picture.getPictureId());
+            } else {
+                PictureEntity pictureEntity = PictureMapper.INSTANCE.toEntity(picture);
+                if(newEntity.getPictures() != null) {
+                    newEntity.getPictures().add(pictureEntity);
+                } else {
+                    List<PictureEntity> pictures = new ArrayList<>();
+                    pictures.add(pictureEntity);
+                    newEntity.setPictures(pictures);
+                }
+
+            }
+        }
     }
 
     @Transactional

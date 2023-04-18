@@ -17,8 +17,6 @@
             <column name="end_date_time_in_utc" type="bigint"/>
             <column name="fk_event_location" type="bigint"/>
             <column name="fk_category" type="bigint"/>
-            <column name="fk_picture" type="bigint"/>
-            <column name="fk_event_info" type="bigint"/>
         </createTable>
 
         <createSequence sequenceName="event_id_seq"
