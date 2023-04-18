@@ -1,6 +1,5 @@
 package at.fh.joanneum.irfc.model.event;
 
-import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VotingPartialResultEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
