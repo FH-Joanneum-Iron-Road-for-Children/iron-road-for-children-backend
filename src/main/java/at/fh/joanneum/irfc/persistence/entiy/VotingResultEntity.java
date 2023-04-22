@@ -16,20 +16,20 @@ public class VotingResultEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "votingResult_id")
+    @Column(name = "voting-result_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="title")
     @NotBlank
     private String title;
 
     @Column(nullable = false,
-            name = "end_date")
+            name = "end-date")
     @NotNull
     private long endDate;
 
 //    @Column(nullable = false,
-//    name = "partial_results_id")
+//    name = "partial-results-id")
 //    @NotNull
 //    @OneToOne
 //    private List<parialResults> partialResults;

@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet author="Arthur" id="create_votingResult_table">
+        <createTable tableName="VotingResult">
+            <column name="voting-result_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end-date" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <!-- Für später, wenn gemerged
+             <column name="partial-results-id" type="bigint">
+                 <constraints nullable="true"/>
+             </column>
+
+
+
+                          <constraints>
+                 <foreignKeyConstraint foreignTableName="VotingPartialResult"
+                                       baseColumnNames="id"
+                                       referencedTableName="VotingPartialResult"
+                                       referencedColumnNames="id"
+                                       constraintName="fk_partial_results"/>
+             </constraints>
+
+
+              -->
+
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

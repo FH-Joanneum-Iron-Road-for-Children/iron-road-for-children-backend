@@ -25,36 +25,4 @@
                         incrementBy="1"
                         startValue="100"/>
     </changeSet>
-
-    <changeSet author="Arthur" id="create_votingResult_table">
-        <createTable tableName="VotingResult">
-            <column name="votingResult_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="title" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="end_date" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="partial_results_id" type="bigint">
-                <constraints nullable="true"/>
-            </column>
-
-            <!-- Für später, wenn gemerged
-
-                         <constraints>
-                <foreignKeyConstraint foreignTableName="VotingPartialResult"
-                                      baseColumnNames="id"
-                                      referencedTableName="VotingPartialResult"
-                                      referencedColumnNames="id"
-                                      constraintName="fk_partial_results"/>
-            </constraints>
-
-
-             -->
-
-        </createTable>
-    </changeSet>
-
 </databaseChangeLog>
