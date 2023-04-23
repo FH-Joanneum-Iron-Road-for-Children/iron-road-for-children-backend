@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 /**
  * @author https://github.com/GoldNova
@@ -13,22 +12,26 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "VotingResult")
-
+@Table(name = "votingResult")
 public class VotingResultEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "voting-result_id_seq",
+            sequenceName = "voting-result_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "voting-result_id_seq"
+    )
     @Column(name = "voting-result_id")
-    private Long id;
+    private Long votingResultId;
 
-    @Column(nullable = false, name="title")
-    @NotBlank
+    @Column(name="title")
     private String title;
 
-    @Column(nullable = false,
-            name = "end-date")
-    @NotNull
+    @Column(name = "end-date")
     private long endDate;
 
 //    @Column(nullable = false,
