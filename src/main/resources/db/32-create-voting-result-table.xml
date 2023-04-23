@@ -7,17 +7,16 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet author="Arthur" id="create_votingResult_table">
-        <createTable tableName="VotingResult">
-            <column name="voting-result_id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+    <changeSet author="Arthur" id="32-create-voting-result-table">
+
+        <createTable tableName="votingResult">
+            <column name="voting-result_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="voting-result_id_pk"/>
             </column>
-            <column name="title" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="end-date" type="bigint">
-                <constraints nullable="false"/>
-            </column>
+            <column name="title" type="varchar(255)"/>
+            <column name="end-date" type="bigint"/>
+
+
             <!-- Für später, wenn gemerged
              <column name="partial-results-id" type="bigint">
                  <constraints nullable="true"/>
@@ -37,5 +36,10 @@
               -->
 
         </createTable>
+
+        <createSequence sequenceName="voting-result_id_seq"
+                        dataType="bigint"
+                        incrementBy="1"
+                        startValue="100"/>
     </changeSet>
 </databaseChangeLog>
