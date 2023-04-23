@@ -13,8 +13,8 @@
                 <constraints primaryKey="true" nullable="false" primaryKeyName="voting_id_pk"/>
             </column>
             <column name="title" type="varchar(255)"/>
-            <column name="isActive" type="bool"/>
-            <column name="isEditable" type="bool"/>
+            <column name="isActive" type="boolean"/>
+            <column name="isEditable" type="boolean"/>
         </createTable>
 
         <createSequence sequenceName="voting_id_seq"
