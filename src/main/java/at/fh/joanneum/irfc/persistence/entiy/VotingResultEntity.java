@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/**
+ * @author https://github.com/GoldNova
+ **/
 @Entity
 @NoArgsConstructor
 @Getter
