@@ -14,9 +14,9 @@ import lombok.Setter;
 @RegisterForReflection
 public class VotingResultDTO {
 
-    private Long VotingResultID;
-    String Title;
-    long startDateTimeInUTC;
+    private Long votingResultId;
+    String title;
+    long endDate;
     ///List<VotingPartialResult> partialResults;
 
 }
