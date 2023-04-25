@@ -14,6 +14,6 @@ import lombok.Setter;
 @RegisterForReflection
 public class EventCategoryDTO {
 
-  Long eventCategoryId;
-  String name;
+  private Long eventCategoryId;
+  private String name;
   }
