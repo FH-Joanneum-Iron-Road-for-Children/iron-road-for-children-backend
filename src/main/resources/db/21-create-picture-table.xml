@@ -12,8 +12,9 @@
             <column name="picture_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="picture_id_pk"/>
             </column>
-            <column name="altText" type="varchar(255)"/>
+            <column name="alt_text" type="varchar(255)"/>
             <column name="path" type="varchar(255)"/>
+            <column name="fk_event_info" type="bigint"/>
         </createTable>
 
         <createSequence sequenceName="picture_id_seq"

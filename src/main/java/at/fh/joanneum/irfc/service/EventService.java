@@ -99,26 +99,37 @@ public class EventService {
     newEntity.setTitle(eventDTOCreate.getTitle());
     newEntity.setEndDateTimeInUTC(eventDTOCreate.getEndDateTimeInUTC());
     newEntity.setStartDateTimeInUTC(eventDTOCreate.getStartDateTimeInUTC());
-
-    Optional<EventLocationEntity> locationOptional = this.eventLocationRepository.findByIdOptional(eventDTOCreate.getEventLocation().getEventLocationId());
-    if(locationOptional.isEmpty()){
-      throw new RuntimeException("no EventLocation with id "+ eventDTOCreate.getEventLocation().getEventLocationId());
+    if(eventDTOCreate.getEventLocation() != null) {
+      Optional<EventLocationEntity> locationOptional = this.eventLocationRepository.findByIdOptional(eventDTOCreate.getEventLocation().getEventLocationId());
+      if (locationOptional.isEmpty()) {
+        throw new RuntimeException("no EventLocation with id " + eventDTOCreate.getEventLocation().getEventLocationId());
+      } else {
+        newEntity.setEventLocation(locationOptional.get());
+      }
     } else {
-      newEntity.setEventLocation(locationOptional.get());
+      throw new RuntimeException("no EventLocation");
     }
 
-    Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(eventDTOCreate.getPicture().getPictureId());
-    if(pictureOptional.isEmpty()){
-      throw new RuntimeException("no Picture with id "+ eventDTOCreate.getPicture().getPictureId());
-    } else {
-      newEntity.setPicture(pictureOptional.get());
+    if(eventDTOCreate.getPicture() != null) {
+      Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(eventDTOCreate.getPicture().getPictureId());
+      if (pictureOptional.isEmpty()) {
+        throw new RuntimeException("no Picture with id " + eventDTOCreate.getPicture().getPictureId());
+      } else {
+        newEntity.setPicture(pictureOptional.get());
+      }
+     }else {
+      throw new RuntimeException("no Picture");
     }
 
-    Optional<EventInfoEntity> eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventDTOCreate.getEventInfo().getEventInfoId());
-    if(eventInfoOptional.isEmpty()){
-      throw new RuntimeException("no EventInfo with id "+ eventDTOCreate.getEventInfo().getEventInfoId());
+    if(eventDTOCreate.getEventInfo() != null) {
+      Optional<EventInfoEntity> eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventDTOCreate.getEventInfo().getEventInfoId());
+      if (eventInfoOptional.isEmpty()) {
+        throw new RuntimeException("no EventInfo with id " + eventDTOCreate.getEventInfo().getEventInfoId());
+      } else {
+        newEntity.setEventInfo(eventInfoOptional.get());
+      }
     } else {
-      newEntity.setEventInfo(eventInfoOptional.get());
+      throw new RuntimeException("no EventInfo");
     }
   }
 }

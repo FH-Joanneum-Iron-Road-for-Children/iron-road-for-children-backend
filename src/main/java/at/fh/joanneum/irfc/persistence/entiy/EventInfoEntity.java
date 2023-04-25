@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
@@ -32,8 +33,8 @@ public class EventInfoEntity {
     @Column(name = "event_info_text")
     private String infoText;
 
-    @ManyToMany(mappedBy="eventInfo", cascade = CascadeType.ALL)
-    private List<PictureEntity> pictures;
+    @OneToMany(mappedBy = "eventInfo")
+    private Set<PictureEntity> pictures;
 
     @OneToOne(mappedBy="eventInfo", cascade = CascadeType.ALL)
     private EventEntity eventEntity;

@@ -15,6 +15,6 @@ public class PictureRepository implements PanacheRepository<PictureEntity> {
 
         String searchInput = "%" + like + "%";
 
-        return list("title like ?1", searchInput );
+        return list("path like ?1", searchInput );
     }
 }

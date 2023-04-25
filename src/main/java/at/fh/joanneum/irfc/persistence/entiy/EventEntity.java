@@ -31,7 +31,7 @@ public class EventEntity {
 
   @Column
   private String title;
-  @ManyToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_picture", referencedColumnName = "picture_id")
   private PictureEntity picture;
   @OneToOne(cascade = CascadeType.ALL)

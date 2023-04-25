@@ -1,5 +1,6 @@
 package at.fh.joanneum.irfc.rest;
 
+import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.service.PictureService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -38,17 +39,9 @@ public class PictureApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public PictureDTO create(@MultipartForm MultipartForm data){
+    public PictureDTO create(@MultipartForm MultipartBody data){
         return pictureService.create(data);
     }
-
-
-    //just for testing
-    @POST
-    @Path("testInput")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public PictureDTO createTest(PictureDTO pictureDTO){ return pictureService.createTest(pictureDTO); }
 
     @DELETE
     @Path("/{id}")

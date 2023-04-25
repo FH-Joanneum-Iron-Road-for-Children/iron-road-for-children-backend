@@ -18,8 +18,8 @@ import lombok.Setter;
 public class EventDTO {
   private Long eventId;
   private String title;
-  private EventInfoDTO eventInfo;
   private PictureDTO picture;
+  private EventInfoDTO eventInfo;
   private long startDateTimeInUTC;
   private long endDateTimeInUTC;
   private EventLocationDTO eventLocation;

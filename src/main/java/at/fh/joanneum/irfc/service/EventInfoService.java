@@ -68,22 +68,24 @@ public class EventInfoService {
 
     private void setValues(EventInfoDTO eventInfoDTO, EventInfoEntity newEntity) {
         newEntity.setInfoText(eventInfoDTO.getInfoText());
+
+        Set<PictureEntity> pictures;
+        if(newEntity.getPictures() != null) {
+            pictures = newEntity.getPictures();
+        } else {
+            pictures = new HashSet<>();
+        }
+
         for(PictureDTO picture : eventInfoDTO.getPictures()) {
             Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(picture.getPictureId());
             if(pictureOptional.isEmpty()){
                 throw new RuntimeException("no Picture with id "+ picture.getPictureId());
             } else {
                 PictureEntity pictureEntity = PictureMapper.INSTANCE.toEntity(picture);
-                if(newEntity.getPictures() != null) {
-                    newEntity.getPictures().add(pictureEntity);
-                } else {
-                    List<PictureEntity> pictures = new ArrayList<>();
-                    pictures.add(pictureEntity);
-                    newEntity.setPictures(pictures);
-                }
-
+                pictures.add(pictureEntity);
             }
         }
+        newEntity.setPictures(pictures);
     }
 
     @Transactional

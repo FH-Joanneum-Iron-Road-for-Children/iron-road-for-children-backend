@@ -1,5 +1,6 @@
 package at.fh.joanneum.irfc.service;
 
+import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
@@ -9,9 +10,12 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import static java.util.Objects.isNull;
 
 /**
@@ -45,37 +49,60 @@ public class PictureService {
         }
     }
 
-    @Transactional
-    public PictureDTO createTest(PictureDTO pictureDTO) {
-
-        validateDto(pictureDTO);
-
-        PictureEntity newEntity = new PictureEntity();
-        setValues(pictureDTO, newEntity);
-        pictureRepository.persist(newEntity);
-        return PictureMapper.INSTANCE.toDto(newEntity);
-    }
-
     private static void setValues(PictureDTO pictureDTO, PictureEntity newEntity) {
         newEntity.setAltText(pictureDTO.getAltText());
+        newEntity.setPath(pictureDTO.getPath());
     }
 
     private static void validateDto (PictureDTO pictureDTO) {
         if(isNull(pictureDTO.getAltText()) || pictureDTO.getAltText().isBlank()){
-            throw new RuntimeException("Title must be provided");
+            throw new RuntimeException("Alt-Text must be provided");
         }
     }
 
     @Transactional
     public void delete(Long id) {
+        var pictureDto = get(id);
+        try
+        {
+            File f= new File(pictureDto.getPath());
+            if(!f.delete())
+            {
+                throw new RuntimeException("Picture with Path " + pictureDto.getPath() + " could not be deleted");
+            }
+        }
+        catch(Exception e)
+        {
+            throw new RuntimeException("Something went wrong deleting picture with path " + pictureDto.getPath() + ": " + e.getMessage());
+        }
         if(!pictureRepository.deleteById(id)){
             throw new RuntimeException("Picture with id " + id + " not found");
         }
     }
 
     @Transactional
-    public PictureDTO create(MultipartForm data) {
-        //TODO: implement this
-        return null;
+    public PictureDTO create(MultipartBody data)  {
+        PictureDTO pictureDTO = new PictureDTO();
+        pictureDTO.setAltText(data.getAltText());
+        validateDto(pictureDTO);
+
+        PictureEntity newEntity = new PictureEntity();
+
+        try {
+            //TODO add basePath to  config
+            //TODO add folder from root where to add pictures
+            File targetFile = new File(UUID.randomUUID() + "." + data.getFileEndingType().name().toLowerCase());
+            OutputStream outStream = new FileOutputStream(targetFile);
+            outStream.write(data.file.readAllBytes());
+            outStream.close();
+            pictureDTO.setPath(targetFile.getPath());
+        } catch (IOException e) {
+            throw new RuntimeException("Error storing Image");
+        }
+
+        setValues(pictureDTO, newEntity);
+
+        pictureRepository.persist(newEntity);
+        return PictureMapper.INSTANCE.toDto(newEntity);
     }
 }

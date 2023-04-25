@@ -29,16 +29,16 @@ public class PictureEntity {
     @Column(name = "picture_id")
     private Long pictureId;
 
-    @Column
+    @Column(name = "alt_text")
     private String altText;
 
-    @ManyToMany
-    @JoinTable(
-            name = "picture_event_info",
-            joinColumns = { @JoinColumn(name = "fk_picture") },
-            inverseJoinColumns = { @JoinColumn(name = "fk_event_info") })
-    private List<EventInfoEntity> eventInfo;
+    @Column(name = "path")
+    private String path;
 
-    @OneToMany(mappedBy = "picture")
-    private List<EventEntity> event;
+    @ManyToOne
+    @JoinColumn(name = "fk_event_info")
+    private EventInfoEntity eventInfo;
+
+    @OneToOne(mappedBy="picture", cascade = CascadeType.ALL)
+    private EventEntity event;
 }
