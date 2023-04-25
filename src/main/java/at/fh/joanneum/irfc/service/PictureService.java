@@ -72,7 +72,8 @@ public class PictureService {
         var pictureDto = get(id);
         try
         {
-            File f= new File(pictureDto.getPath());
+
+            File f= new File(pictureRootPath + pictureDto.getPath());
             if(!f.delete())
             {
                 throw new RuntimeException("Picture with Path " + pictureDto.getPath() + " could not be deleted");
@@ -98,11 +99,11 @@ public class PictureService {
         try {
             //TODO add basePath to  config
             //TODO add folder from root where to add pictures
-            File targetFile = new File(UUID.randomUUID() + "." + data.getFileEndingType().name().toLowerCase());
+            File targetFile = new File(pictureRootPath + UUID.randomUUID() + "." + data.getFileEndingType().name().toLowerCase());
             OutputStream outStream = new FileOutputStream(targetFile);
             outStream.write(data.file.readAllBytes());
             outStream.close();
-            pictureDTO.setPath(targetFile.getPath());
+            pictureDTO.setPath(pictureRootPath + targetFile.getPath());
         } catch (IOException e) {
             throw new RuntimeException("Error storing Image");
         }

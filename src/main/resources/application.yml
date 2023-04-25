@@ -31,4 +31,4 @@ quarkus:
 
 
 pictures:
-  root_path: ${PICTURES_ROOT_PATH:"C:/temp/pics"}
+  root_path: ${PICTURES_ROOT_PATH:"C:/temp/pics/"}
