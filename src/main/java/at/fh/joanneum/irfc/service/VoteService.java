@@ -37,6 +37,7 @@ public class VoteService {
 
     @Transactional
     public VoteDTO create(VoteDTO voteDTO) {
+        validateDTOvalues(voteDTO);
         VoteEntity newEntity = new VoteEntity();
         setValues(voteDTO, newEntity);
         voteRepository.persist(newEntity);
