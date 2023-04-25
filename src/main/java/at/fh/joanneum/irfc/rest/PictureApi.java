@@ -34,6 +34,13 @@ public class PictureApi {
         return pictureService.search(searchString);
     }
 
+    @GET
+    @Path("rootpath")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getRootPath(){
+        return pictureService.getRootpath();
+    }
+
     //TODO: there will be only MULTIPART as input with file and altText
     // (see: https://quarkus.io/guides/rest-client-multipart)
     @POST

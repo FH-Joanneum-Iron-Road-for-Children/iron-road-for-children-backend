@@ -5,12 +5,16 @@ import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.PictureRepository;
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+
 import javax.transaction.Transactional;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +29,9 @@ import static java.util.Objects.isNull;
 public class PictureService {
     @Inject
     PictureRepository pictureRepository;
+
+    @ConfigProperty(name="pictures.root_path")
+    String pictureRootPath;
 
     public PictureDTO get(Long id) {
         Optional<PictureEntity> byIdOptional = pictureRepository.findByIdOptional(id);
@@ -104,5 +111,9 @@ public class PictureService {
 
         pictureRepository.persist(newEntity);
         return PictureMapper.INSTANCE.toDto(newEntity);
+    }
+
+    public String getRootpath() {
+        return pictureRootPath;
     }
 }
