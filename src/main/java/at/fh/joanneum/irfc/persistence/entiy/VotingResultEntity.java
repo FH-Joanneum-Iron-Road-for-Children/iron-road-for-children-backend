@@ -12,26 +12,26 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "votingResult")
+@Table(name = "voting_result")
 public class VotingResultEntity {
 
     @Id
     @SequenceGenerator(
-            name = "voting-result_id_seq",
-            sequenceName = "voting-result_id_seq",
+            name = "voting_result_id_seq",
+            sequenceName = "voting_result_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "voting-result_id_seq"
+            generator = "voting_result_id_seq"
     )
-    @Column(name = "voting-result_id")
+    @Column(name = "voting_result_id")
     private Long votingResultId;
 
     @Column(name="title")
     private String title;
 
-    @Column(name = "end-date")
+    @Column(name = "end_date")
     private long endDate;
 
 //    @Column(nullable = false,
