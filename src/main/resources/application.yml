@@ -8,7 +8,15 @@ quarkus:
   liquibase:
     migrate-at-start: true
 
-#  TODO: kube-config; oidc; containerization
+  smallrye-jwt:
+    enabled: true
+
+
+  firebase:
+    admin:
+      credential-file-path: firebase_credentials.json
+
+  #  TODO: kube-config; oidc; containerization
 
 "%prod":
   container-image:

@@ -8,13 +8,13 @@
   <properties>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <maven.compiler.release>11</maven.compiler.release>
+    <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+    <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>2.16.4.Final</quarkus.platform.version>
-    <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
-    <org.projectlombok.version>1.18.24</org.projectlombok.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
   </properties>
@@ -50,7 +50,6 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-jackson</artifactId>
     </dependency>
-<!--    mapping and boilerplate-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -61,14 +60,10 @@
       <artifactId>mapstruct</artifactId>
       <version>${org.mapstruct.version}</version>
     </dependency>
-
-<!--    rest services-->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-swagger-ui</artifactId>
     </dependency>
-
-<!--    database-->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-postgresql</artifactId>
@@ -81,8 +76,24 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-liquibase</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-jsonb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-jwt-build</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-jwt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>7.3.0</version>
+    </dependency>
 
-<!--    testing-->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
@@ -133,9 +144,6 @@
               <version>${org.mapstruct.version}</version>
             </path>
           </annotationProcessorPaths>
-          <!--          <compilerArgs>-->
-          <!--            <arg>-parameters</arg>-->
-          <!--          </compilerArgs>-->
         </configuration>
       </plugin>
       <plugin>
