@@ -28,3 +28,7 @@ quarkus:
     liquibase:
       contexts: dev
       migrate-at-start: true
+
+    hibernate-orm:
+      log:
+        sql: true

@@ -32,9 +32,10 @@ public class VotingEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "isActive")
+    @Column(name = "is_active")
     private boolean isActive;
-    @Column(name = "isEditable")
+
+    @Column(name = "is_editable")
     private boolean isEditable;
 
 //    @Column(name = "events")
