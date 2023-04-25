@@ -6,5 +6,7 @@
 
     <include file="17-create-event-table.xml" relativeToChangelogFile="true"/>
     <include file="19-create-event-category-table.xml" relativeToChangelogFile="true"/>
+    <include file="19-create-event-location-table.xml" relativeToChangelogFile="true"/>
+
 
 </databaseChangeLog>

@@ -40,8 +40,9 @@ public class EventEntity {
   @Column(name = "end_date_time_in_utc")
   private long endDateTimeInUTC;
 
-//  @Column(name = "fk_event_location")
-//  private EventLocationEntity eventLocation;
+  @ManyToOne
+  @JoinColumn(name = "fk_event_location", nullable = false)
+  private EventLocationEntity eventLocation;
 
 //  @Column(name = "fk_category")
 //  private CategoryEntity eventLocation;
