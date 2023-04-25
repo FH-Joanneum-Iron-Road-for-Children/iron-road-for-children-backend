@@ -7,10 +7,10 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet author="Arthur" id="create_VotingPartialResult_table">
-        <createTable tableName="VotingPartialResult">
+    <changeSet author="Arthur" id="33-create-voting-partial-result_table">
+        <createTable tableName="voting_partial_result">
             <column name="voting_partial_result_id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false" primaryKeyName="voting_partial_result_id_pk"/>
             </column>
             <column name="event_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -19,6 +19,11 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
 
+        <createSequence sequenceName="voting_partial_result_id_seq"
+                        dataType="bigint"
+                        incrementBy="1"
+                        startValue="100"/>
+
+    </changeSet>
 </databaseChangeLog>

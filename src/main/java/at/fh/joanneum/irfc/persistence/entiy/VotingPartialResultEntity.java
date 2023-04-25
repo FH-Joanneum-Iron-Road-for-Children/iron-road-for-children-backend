@@ -13,20 +13,27 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "VotingPartialResult")
+@Table(name = "voting_partial_result")
 public class VotingPartialResultEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="voting_partial_result_id")
-    private Long id;
 
-    @Column(nullable = false, name="event_name")
-    @NotBlank
+    @SequenceGenerator(
+            name = "voting_partial_result_id_seq",
+            sequenceName = "voting_partial_result_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "voting_partial_result_id_seq"
+    )
+    @Column(name = "voting_partial_result_id")
+    private Long votingPartialResultId;
+
+    @Column(name="event_name")
     private String eventName;
 
-    @Column(nullable = false)
-    @NotNull
+    @Column
     private Double percentage;
 
 
