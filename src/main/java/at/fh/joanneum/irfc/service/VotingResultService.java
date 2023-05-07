@@ -9,7 +9,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 /**
  * @author https://github.com/GoldNova
@@ -41,6 +44,38 @@ public class VotingResultService {
         return VotingResultMapper.INSTANCE.toDto(newEntity);
     }
 
+    @Transactional
+    public VotingResultDTO update(Long id, VotingResultDTO votingResultDTO) {
+        /// Check for empty vals first
+        checkDTOvalues(votingResultDTO);
+
+        // get entity by id
+        Optional<VotingResultEntity> byIdOptional = votingResultRepository.findByIdOptional(id);
+
+        if(byIdOptional.isEmpty()){
+            throw new RuntimeException("VotingResult with id " + id + " not found");
+        } else {
+            VotingResultEntity byId = byIdOptional.get();
+            setValues(votingResultDTO, byId);
+            votingResultRepository.persistAndFlush(byId);
+            return VotingResultMapper.INSTANCE.toDto(byId);
+        }
+    }
+
+    public static void checkDTOvalues(VotingResultDTO votingResultDTO){
+        if (isNull(votingResultDTO.getTitle()) || votingResultDTO.getTitle().isEmpty()){
+            throw new RuntimeException("Title must not be null or empty");
+        }
+
+        if (isNull(votingResultDTO.getVotingResultId()) || (votingResultDTO.getVotingResultId() < 0L)){
+            throw new RuntimeException("Invalid ID");
+        }
+
+        if(isNull(votingResultDTO.getEndDate())){
+            throw new RuntimeException("End date required");
+        }
+
+    }
 //
 //    @Transactional
 //    public EventDTO update(Long id, EventDTO eventDTOUpdate) {
