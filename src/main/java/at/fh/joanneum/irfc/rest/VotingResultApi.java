@@ -26,6 +26,14 @@ public class VotingResultApi {
         return votingResultService.getAll();
     }
 
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public VotingResultDTO get(@PathParam("id") Long id){
+        return votingResultService.get(id);
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
