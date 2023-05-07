@@ -26,6 +26,13 @@ public class VotingResultService {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public VotingResultDTO get(Long id) {
+        VotingResultEntity eventEntity = votingResultRepository.findByIdOptional(id)
+                .orElseThrow(() -> new RuntimeException("VotingResult with id " + id + " not found"));
+
+        return VotingResultMapper.INSTANCE.toDto(eventEntity);
+    }
+
     @Transactional
     public VotingResultDTO create(VotingResultDTO votingResultDTOCreate) {
         VotingResultEntity newEntity = new VotingResultEntity();
@@ -33,6 +40,7 @@ public class VotingResultService {
         votingResultRepository.persist(newEntity);
         return VotingResultMapper.INSTANCE.toDto(newEntity);
     }
+
 //
 //    @Transactional
 //    public EventDTO update(Long id, EventDTO eventDTOUpdate) {
