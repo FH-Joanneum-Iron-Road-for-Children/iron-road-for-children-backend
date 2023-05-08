@@ -76,6 +76,15 @@ public class VotingResultService {
         }
 
     }
+
+    @Transactional
+    public void delete(Long id) {
+        if(!votingResultRepository.deleteById(id)){
+            throw new RuntimeException("VotingResult with id " + id + " not found");
+        }
+    }
+
+
 //
 //    @Transactional
 //    public EventDTO update(Long id, EventDTO eventDTOUpdate) {
