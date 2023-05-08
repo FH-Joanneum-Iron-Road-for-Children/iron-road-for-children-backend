@@ -49,7 +49,15 @@ public class VotingResultApi {
         return votingResultService.update(id, votingResultDTO);
     }
 
-
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Long id){
+        votingResultService.delete(id);
+        String message = "VotingResult with id "+id+" deleted";
+        return Response
+                .status(200, message)
+                .build();
+    }
 
 //    @PUT
 //    @Produces(MediaType.APPLICATION_JSON)
