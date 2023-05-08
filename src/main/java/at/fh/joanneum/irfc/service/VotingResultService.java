@@ -84,33 +84,10 @@ public class VotingResultService {
         }
     }
 
-
-//
-//    @Transactional
-//    public EventDTO update(Long id, EventDTO eventDTOUpdate) {
-//        Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
-//
-//        if(byIdOptional.isEmpty()){
-//            throw new RuntimeException("Event with id " + id + " not found");
-//        } else {
-//            EventEntity byId = byIdOptional.get();
-//            setValues(eventDTOUpdate, byId);
-//            eventRepository.persistAndFlush(byId);
-//            return EventMapper.INSTANCE.toDto(byId);
-//        }
-//    }
-//
     private static void setValues(VotingResultDTO votingResultDTOCreate, VotingResultEntity newEntity) {
         newEntity.setTitle(votingResultDTOCreate.getTitle());
         newEntity.setEndDate(votingResultDTOCreate.getEndDate());
 //       newEntity.setpartialResults(votingResultDTOCreate.getpartialResults());
     }
-//
-//    @Transactional
-//    public void delete(Long id) {
-//        if(!eventRepository.deleteById(id)){
-//            throw new RuntimeException("Event with id " + id + " not found");
-//        }
-//
-//    }
+
 }
