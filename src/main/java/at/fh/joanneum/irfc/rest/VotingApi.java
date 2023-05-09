@@ -40,5 +40,13 @@ public class VotingApi {
         return votingService.create(votingDTOCreate);
     }
 
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public VotingDTO update(@PathParam("id") Long id, VotingDTO votingResultDTO){
+        return votingService.update(id, votingResultDTO);
+    }
+
 
 }
