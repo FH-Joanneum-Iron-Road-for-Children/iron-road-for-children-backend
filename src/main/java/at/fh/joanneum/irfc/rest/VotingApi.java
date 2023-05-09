@@ -48,5 +48,15 @@ public class VotingApi {
         return votingService.update(id, votingResultDTO);
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Long id){
+        votingService.delete(id);
+        String message = "Voting with id "+id+" deleted";
+        return Response
+                .status(200, message)
+                .build();
+    }
+
 
 }
