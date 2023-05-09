@@ -9,6 +9,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -46,6 +47,24 @@ public class VotingService {
         setValues(votingDTOCreate, newEntity);
         votingRepository.persist(newEntity);
         return VotingMapper.INSTANCE.toDto(newEntity);
+    }
+
+    @Transactional
+    public VotingDTO update(Long id, VotingDTO votingResultDTO) {
+        /// Check for empty vals first
+        validateVoting(votingResultDTO);
+
+        // get entity by id
+        Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
+
+        if(byIdOptional.isEmpty()){
+            throw new RuntimeException("VotingResult with id " + id + " not found");
+        } else {
+            VotingEntity byId = byIdOptional.get();
+            setValues(votingResultDTO, byId);
+            votingRepository.persistAndFlush(byId);
+            return VotingMapper.INSTANCE.toDto(byId);
+        }
     }
 
     private static void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
