@@ -7,8 +7,11 @@ import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 /**
  * @author https://github.com/GoldNova
@@ -26,6 +29,40 @@ public class VotingService {
                 .map(VotingMapper.INSTANCE::toDto)
                 .collect(Collectors.toUnmodifiableList());
         return collect;
+    }
+
+    @Transactional
+    public VotingDTO create(VotingDTO votingDTOCreate) {
+        validateVoting(votingDTOCreate);
+
+        VotingEntity newEntity = new VotingEntity();
+        setValues(votingDTOCreate, newEntity);
+        votingRepository.persist(newEntity);
+        return VotingMapper.INSTANCE.toDto(newEntity);
+    }
+
+    private static void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
+        newEntity.setTitle(votingDTOCreate.getTitle());
+        newEntity.setActive(votingDTOCreate.isActive());
+        newEntity.setEditable(votingDTOCreate.isEditable());
+
+    }
+
+    // Validates the incoming voting DTO
+    public static void validateVoting(VotingDTO votingDTO){
+        if (isNull(votingDTO.getTitle()) || votingDTO.getTitle().isEmpty()){
+            throw new RuntimeException("Title must not be null or empty");
+        }
+
+        if (isNull(votingDTO.isActive())){
+            throw new RuntimeException("isActive attribute missing");
+        }
+
+        if(isNull(votingDTO.isEditable())){
+            throw new RuntimeException("isEditable attribute missing");
+        }
+
+        //TODO: Validate rest of the fields after merge
     }
 
 }
