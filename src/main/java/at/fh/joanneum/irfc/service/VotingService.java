@@ -58,12 +58,19 @@ public class VotingService {
         Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
 
         if(byIdOptional.isEmpty()){
-            throw new RuntimeException("VotingResult with id " + id + " not found");
+            throw new RuntimeException("Voting with id " + id + " not found");
         } else {
             VotingEntity byId = byIdOptional.get();
             setValues(votingResultDTO, byId);
             votingRepository.persistAndFlush(byId);
             return VotingMapper.INSTANCE.toDto(byId);
+        }
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        if(!votingRepository.deleteById(id)){
+            throw new RuntimeException("Voting with id " + id + " not found");
         }
     }
 
