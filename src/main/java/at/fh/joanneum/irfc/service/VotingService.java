@@ -31,6 +31,13 @@ public class VotingService {
         return collect;
     }
 
+    public VotingDTO get(Long id) {
+        VotingEntity eventEntity = votingRepository.findByIdOptional(id)
+                .orElseThrow(() -> new RuntimeException("Voting with id " + id + " not found"));
+
+        return VotingMapper.INSTANCE.toDto(eventEntity);
+    }
+
     @Transactional
     public VotingDTO create(VotingDTO votingDTOCreate) {
         validateVoting(votingDTOCreate);
