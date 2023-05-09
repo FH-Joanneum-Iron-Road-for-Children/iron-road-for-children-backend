@@ -26,4 +26,12 @@ public class VotingApi {
         return votingService.getAll();
     }
 
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public VotingDTO create(VotingDTO votingDTOCreate){
+        return votingService.create(votingDTOCreate);
+    }
+
 }
