@@ -33,10 +33,10 @@ public class VotingService {
     }
 
     public VotingDTO get(Long id) {
-        VotingEntity eventEntity = votingRepository.findByIdOptional(id)
+        VotingEntity votingEntity = votingRepository.findByIdOptional(id)
                 .orElseThrow(() -> new RuntimeException("Voting with id " + id + " not found"));
 
-        return VotingMapper.INSTANCE.toDto(eventEntity);
+        return VotingMapper.INSTANCE.toDto(votingEntity);
     }
 
     @Transactional
