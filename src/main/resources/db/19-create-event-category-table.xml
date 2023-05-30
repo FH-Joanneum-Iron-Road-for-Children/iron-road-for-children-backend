@@ -7,19 +7,15 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="17-create-event-table" author="moe">
-        <createTable tableName="event">
-            <column name="event_id" type="bigint">
-                <constraints primaryKey="true" nullable="false" primaryKeyName="event_id_pk"/>
+    <changeSet id="19-create-event-category-table" author="domi">
+        <createTable tableName="event_category">
+            <column name="event_category_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="event_category_id_pk"/>
             </column>
-            <column name="title" type="varchar(255)"/>
-            <column name="start_date_time_in_utc" type="bigint"/>
-            <column name="end_date_time_in_utc" type="bigint"/>
-            <column name="fk_event_location" type="bigint"/>
-            <column name="fk_category" type="bigint"/>
+            <column name="event_category_name" type="varchar(255)"/>
         </createTable>
 
-        <createSequence sequenceName="event_id_seq"
+        <createSequence sequenceName="event_category_id_seq"
                         dataType="bigint"
                         incrementBy="1"
                         startValue="100"/>
