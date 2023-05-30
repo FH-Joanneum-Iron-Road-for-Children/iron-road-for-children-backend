@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
 public class VotingPartialResultEntity {
 
     @Id
-
     @SequenceGenerator(
             name = "voting_partial_result_id_seq",
             sequenceName = "voting_partial_result_id_seq",
@@ -35,6 +34,4 @@ public class VotingPartialResultEntity {
 
     @Column
     private Double percentage;
-
-
 }
