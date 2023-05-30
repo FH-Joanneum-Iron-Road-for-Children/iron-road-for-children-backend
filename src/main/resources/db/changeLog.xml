@@ -7,6 +7,7 @@
     <include file="17-create-event-table.xml" relativeToChangelogFile="true"/>
     <include file="19-create-event-category-table.xml" relativeToChangelogFile="true"/>
     <include file="19-create-event-location-table.xml" relativeToChangelogFile="true"/>
-
-
+    <include file="21-create-event-info-table.xml" relativeToChangelogFile="true"/>
+    <include file="21-create-picture-table.xml" relativeToChangelogFile="true"/>
+    <include file="21-add-picture-and-event-info-to-event.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

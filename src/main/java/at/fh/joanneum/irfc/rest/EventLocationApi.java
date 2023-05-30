@@ -58,6 +58,4 @@ public class EventLocationApi {
                 .status(200, message)
                 .build();
     }
-
-
 }
