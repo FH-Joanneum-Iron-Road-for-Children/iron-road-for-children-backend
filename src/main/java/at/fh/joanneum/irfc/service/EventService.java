@@ -2,14 +2,8 @@ package at.fh.joanneum.irfc.service;
 
 import at.fh.joanneum.irfc.model.event.EventDTO;
 import at.fh.joanneum.irfc.model.event.EventMapper;
-import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
-import at.fh.joanneum.irfc.persistence.entiy.EventInfoEntity;
-import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntity;
-import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
-import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
-import at.fh.joanneum.irfc.persistence.repository.EventLocationRepository;
-import at.fh.joanneum.irfc.persistence.repository.EventRepository;
-import at.fh.joanneum.irfc.persistence.repository.PictureRepository;
+import at.fh.joanneum.irfc.persistence.entiy.*;
+import at.fh.joanneum.irfc.persistence.repository.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -35,6 +29,8 @@ public class EventService {
   PictureRepository pictureRepository;
   @Inject
   EventInfoRepository eventInfoRepository;
+  @Inject
+  EventCategoryRepository eventCategoryRepository;
 
   public List<EventDTO> getAll() {
     return eventRepository.listAll().stream()
@@ -130,6 +126,17 @@ public class EventService {
       }
     } else {
       throw new RuntimeException("no EventInfo");
+    }
+
+    if(eventDTOCreate.getEventCategory() != null) {
+      Optional<EventCategoryEntity> eventCategoryOptional = this.eventCategoryRepository.findByIdOptional(eventDTOCreate.getEventCategory().getEventCategoryId());
+      if (eventCategoryOptional.isEmpty()) {
+        throw new RuntimeException("no EventCategory with id " + eventDTOCreate.getEventCategory().getEventCategoryId());
+      } else {
+        newEntity.setEventCategory(eventCategoryOptional.get());
+      }
+    } else {
+      throw new RuntimeException("no EventCategory");
     }
   }
 }

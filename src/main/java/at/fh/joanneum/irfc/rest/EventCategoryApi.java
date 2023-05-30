@@ -1,6 +1,6 @@
 package at.fh.joanneum.irfc.rest;
 
-import at.fh.joanneum.irfc.model.event.EventCategoryDTO;
+import at.fh.joanneum.irfc.model.eventCategory.EventCategoryDTO;
 import at.fh.joanneum.irfc.service.EventCategoryService;
 
 import javax.enterprise.context.RequestScoped;

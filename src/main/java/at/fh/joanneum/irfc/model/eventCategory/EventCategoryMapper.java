@@ -1,4 +1,4 @@
-package at.fh.joanneum.irfc.model.event;
+package at.fh.joanneum.irfc.model.eventCategory;
 
 import at.fh.joanneum.irfc.persistence.entiy.EventCategoryEntity;
 import org.mapstruct.InheritInverseConfiguration;

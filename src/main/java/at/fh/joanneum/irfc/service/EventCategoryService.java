@@ -1,7 +1,7 @@
 package at.fh.joanneum.irfc.service;
 
-import at.fh.joanneum.irfc.model.event.EventCategoryDTO;
-import at.fh.joanneum.irfc.model.event.EventCategoryMapper;
+import at.fh.joanneum.irfc.model.eventCategory.EventCategoryDTO;
+import at.fh.joanneum.irfc.model.eventCategory.EventCategoryMapper;
 import at.fh.joanneum.irfc.persistence.entiy.EventCategoryEntity;
 import at.fh.joanneum.irfc.persistence.repository.EventCategoryRepository;
 

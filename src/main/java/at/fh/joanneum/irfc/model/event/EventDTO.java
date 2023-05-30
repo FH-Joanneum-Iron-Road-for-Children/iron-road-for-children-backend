@@ -1,5 +1,6 @@
 package at.fh.joanneum.irfc.model.event;
 
+import at.fh.joanneum.irfc.model.eventCategory.EventCategoryDTO;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.model.eventlocation.EventLocationDTO;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
@@ -23,6 +24,6 @@ public class EventDTO {
   private long startDateTimeInUTC;
   private long endDateTimeInUTC;
   private EventLocationDTO eventLocation;
-  //private EventCategoryDTO eventCategory;
-  //private bool isEditable;
+  private EventCategoryDTO eventCategory;
+  //private bool isEditable;  //TODO check if we need this
 }

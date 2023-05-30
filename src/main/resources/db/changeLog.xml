@@ -3,6 +3,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <include file="15-create-voting-table.xml" relativeToChangelogFile="true"/>
     <include file="17-create-event-table.xml" relativeToChangelogFile="true"/>
     <include file="19-create-event-category-table.xml" relativeToChangelogFile="true"/>
     <include file="19-create-event-location-table.xml" relativeToChangelogFile="true"/>
@@ -10,6 +11,7 @@
     <include file="21-create-event-info-table.xml" relativeToChangelogFile="true"/>
     <include file="21-create-picture-table.xml" relativeToChangelogFile="true"/>
     <include file="21-add-picture-and-event-info-to-event.xml" relativeToChangelogFile="true"/>
+    <include file="15-update-event-table.xml" relativeToChangelogFile="true"/>
     <include file="32-create-voting-result-table.xml" relativeToChangelogFile="true"/>
     <include file="33-create-VotingPartialResult-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

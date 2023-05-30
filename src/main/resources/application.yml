@@ -48,7 +48,9 @@ quarkus:
     liquibase:
       contexts: dev
       migrate-at-start: true
-
+    hibernate-orm:
+      log:
+        sql: true
 
 pictures:
   root_path: ${PICTURES_ROOT_PATH:"C:/temp/pics/"}
