@@ -49,6 +49,11 @@ quarkus:
       contexts: dev
       migrate-at-start: true
 
+
+pictures:
+  root_path: ${PICTURES_ROOT_PATH:"C:/temp/pics/"}
+
+
 #    container-image:
 #      build: false
 #      push: false

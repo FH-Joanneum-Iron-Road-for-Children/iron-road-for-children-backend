@@ -73,6 +73,6 @@ public class EventLocationService {
 
     private static void setValues(EventLocationDTO eventLocationDTO, EventLocationEntity newEntity) {
         newEntity.setName(eventLocationDTO.getName());
-    }
 
+    }
 }

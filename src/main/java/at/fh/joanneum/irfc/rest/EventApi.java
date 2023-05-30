@@ -57,5 +57,4 @@ public class EventApi {
         .status(200, message)
         .build();
   }
-
 }

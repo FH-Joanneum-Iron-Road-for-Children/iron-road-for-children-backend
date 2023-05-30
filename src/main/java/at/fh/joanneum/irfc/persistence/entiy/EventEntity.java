@@ -31,9 +31,12 @@ public class EventEntity {
 
   @Column
   private String title;
-
-//  @Column
-//  private Image image;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "fk_picture", referencedColumnName = "picture_id")
+  private PictureEntity picture;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "fk_event_info", referencedColumnName = "event_info_id")
+  private EventInfoEntity eventInfo;
 
   @Column(name = "start_date_time_in_utc")
   private long startDateTimeInUTC;
@@ -44,8 +47,8 @@ public class EventEntity {
   @JoinColumn(name = "fk_event_location", nullable = false)
   private EventLocationEntity eventLocation;
 
-//  @Column(name = "fk_category")
-//  private CategoryEntity eventLocation;
+  //  @Column(name = "fk_category")
+  //  private CategoryEntity eventLocation;
 
-
+  //bool isEditable; //TODO create Task and Implement
 }
