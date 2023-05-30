@@ -3,9 +3,13 @@ package at.fh.joanneum.irfc.service;
 import at.fh.joanneum.irfc.model.event.EventDTO;
 import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
+import at.fh.joanneum.irfc.persistence.entiy.EventInfoEntity;
 import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntity;
+import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
+import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
 import at.fh.joanneum.irfc.persistence.repository.EventLocationRepository;
 import at.fh.joanneum.irfc.persistence.repository.EventRepository;
+import at.fh.joanneum.irfc.persistence.repository.PictureRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -27,6 +31,10 @@ public class EventService {
 
   @Inject
   EventLocationRepository eventLocationRepository;
+  @Inject
+  PictureRepository pictureRepository;
+  @Inject
+  EventInfoRepository eventInfoRepository;
 
   public List<EventDTO> getAll() {
     return eventRepository.listAll().stream()
@@ -85,22 +93,43 @@ public class EventService {
     if(eventDTO.getStartDateTimeInUTC()> eventDTO.getEndDateTimeInUTC()){
       throw new RuntimeException("Start date must be before end date");
     }
-    if(isNull(eventDTO.getEventLocation())){
-      throw new RuntimeException("EventLocation must not be null");
-    }
   }
 
   private void setValues(EventDTO eventDTOCreate, EventEntity newEntity) {
     newEntity.setTitle(eventDTOCreate.getTitle());
     newEntity.setEndDateTimeInUTC(eventDTOCreate.getEndDateTimeInUTC());
     newEntity.setStartDateTimeInUTC(eventDTOCreate.getStartDateTimeInUTC());
-    Optional<EventLocationEntity> locationOptional = this.eventLocationRepository.findByIdOptional(eventDTOCreate.getEventLocation().getEventLocationId());
-    if(locationOptional.isEmpty()){
-      throw new RuntimeException("no EventLocation with id "+ eventDTOCreate.getEventLocation().getEventLocationId());
+    if(eventDTOCreate.getEventLocation() != null) {
+      Optional<EventLocationEntity> locationOptional = this.eventLocationRepository.findByIdOptional(eventDTOCreate.getEventLocation().getEventLocationId());
+      if (locationOptional.isEmpty()) {
+        throw new RuntimeException("no EventLocation with id " + eventDTOCreate.getEventLocation().getEventLocationId());
+      } else {
+        newEntity.setEventLocation(locationOptional.get());
+      }
     } else {
-      newEntity.setEventLocation(locationOptional.get());
+      throw new RuntimeException("no EventLocation");
+    }
+
+    if(eventDTOCreate.getPicture() != null) {
+      Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(eventDTOCreate.getPicture().getPictureId());
+      if (pictureOptional.isEmpty()) {
+        throw new RuntimeException("no Picture with id " + eventDTOCreate.getPicture().getPictureId());
+      } else {
+        newEntity.setPicture(pictureOptional.get());
+      }
+     }else {
+      throw new RuntimeException("no Picture");
+    }
+
+    if(eventDTOCreate.getEventInfo() != null) {
+      Optional<EventInfoEntity> eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventDTOCreate.getEventInfo().getEventInfoId());
+      if (eventInfoOptional.isEmpty()) {
+        throw new RuntimeException("no EventInfo with id " + eventDTOCreate.getEventInfo().getEventInfoId());
+      } else {
+        newEntity.setEventInfo(eventInfoOptional.get());
+      }
+    } else {
+      throw new RuntimeException("no EventInfo");
     }
   }
-
-
 }

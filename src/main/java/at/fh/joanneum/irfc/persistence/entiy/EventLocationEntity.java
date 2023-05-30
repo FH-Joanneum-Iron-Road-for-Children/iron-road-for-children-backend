@@ -35,5 +35,4 @@ public class EventLocationEntity {
 
     @OneToMany(mappedBy = "eventLocation")
     private Set<EventEntity> event;
-
 }
