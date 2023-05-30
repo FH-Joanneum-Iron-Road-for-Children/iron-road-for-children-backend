@@ -7,21 +7,23 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="17-create-event-table" author="moe">
-        <createTable tableName="event">
-            <column name="event_id" type="bigint">
-                <constraints primaryKey="true" nullable="false" primaryKeyName="event_id_pk"/>
+    <changeSet author="Arthur" id="33-create-voting-partial-result_table">
+        <createTable tableName="voting_partial_result">
+            <column name="voting_partial_result_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="voting_partial_result_id_pk"/>
             </column>
-            <column name="title" type="varchar(255)"/>
-            <column name="start_date_time_in_utc" type="bigint"/>
-            <column name="end_date_time_in_utc" type="bigint"/>
-            <column name="fk_event_location" type="bigint"/>
-            <column name="fk_category" type="bigint"/>
+            <column name="event_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="percentage" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
-        <createSequence sequenceName="event_id_seq"
+
+        <createSequence sequenceName="voting_partial_result_id_seq"
                         dataType="bigint"
                         incrementBy="1"
                         startValue="100"/>
-    </changeSet>
 
+    </changeSet>
 </databaseChangeLog>
