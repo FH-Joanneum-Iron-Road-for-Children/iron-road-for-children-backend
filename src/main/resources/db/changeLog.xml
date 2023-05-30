@@ -5,7 +5,7 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
     <include file="17-create-event-table.xml" relativeToChangelogFile="true"/>
-    <include file="20-create-vote-table.xml" relativeToChangelogFile="true"/>
+    <include file="19-create-event-category-table.xml" relativeToChangelogFile="true"/>
     <include file="19-create-event-location-table.xml" relativeToChangelogFile="true"/>
-
+    <include file="20-create-vote-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
