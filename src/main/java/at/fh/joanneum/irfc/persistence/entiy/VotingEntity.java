@@ -38,12 +38,12 @@ public class VotingEntity {
     @Column(name = "is_editable")
     private boolean isEditable;
 
-//    @Column(name = "events")
-//    private List<Event> events;
-//
-//    @Column(name = "eventCategoryId")
-//    private long eventCategoryId;
-//
+    //@ManyToMany //TODO check if we need many to many here
+    //@Column(name = "events")
+    //private List<EventEntity> events;
+
+    //TODO check if we need EventCategory
+
 //    @Column(name = "votingResult")
 //    private VotingResult votingResult;
 

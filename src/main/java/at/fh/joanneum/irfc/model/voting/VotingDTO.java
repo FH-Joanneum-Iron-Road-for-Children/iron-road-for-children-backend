@@ -2,9 +2,12 @@ package at.fh.joanneum.irfc.model.voting;
 
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import jdk.jfr.Event;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * @author https://github.com/GoldNova
@@ -15,14 +18,10 @@ import lombok.Setter;
 @Setter
 @RegisterForReflection
 public class VotingDTO {
-
     private Long votingId;
     private String title;
     private boolean isActive;
     private boolean isEditable;
-
-//    private List<Event> events;
-//    private long eventCategoryId;
-//    private VotingResult votingResult;
-
+    private List<Event> events;
+   // private VotingResult votingResult;
 }

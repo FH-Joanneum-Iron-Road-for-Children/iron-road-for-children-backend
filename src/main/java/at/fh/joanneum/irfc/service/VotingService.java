@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.service;
 
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.model.voting.VotingMapper;
+import at.fh.joanneum.irfc.persistence.entiy.EventCategoryEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VotingEntity;
 import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
 
@@ -78,7 +79,7 @@ public class VotingService {
         newEntity.setTitle(votingDTOCreate.getTitle());
         newEntity.setActive(votingDTOCreate.isActive());
         newEntity.setEditable(votingDTOCreate.isEditable());
-
+        //TODO add events and votingResults
     }
 
     // Validates the incoming voting DTO

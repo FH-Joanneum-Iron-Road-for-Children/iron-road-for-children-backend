@@ -1,4 +1,4 @@
-package at.fh.joanneum.irfc.model.event;
+package at.fh.joanneum.irfc.model.eventCategory;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
@@ -13,7 +13,6 @@ import lombok.Setter;
 @Setter
 @RegisterForReflection
 public class EventCategoryDTO {
-
   private Long eventCategoryId;
   private String name;
-  }
+}
