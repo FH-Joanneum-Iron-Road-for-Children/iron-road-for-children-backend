@@ -18,10 +18,10 @@
             <column name="fk_event_location" type="bigint"/>
             <column name="fk_category" type="bigint"/>
         </createTable>
+
         <createSequence sequenceName="event_id_seq"
                         dataType="bigint"
                         incrementBy="1"
                         startValue="100"/>
     </changeSet>
-
 </databaseChangeLog>
