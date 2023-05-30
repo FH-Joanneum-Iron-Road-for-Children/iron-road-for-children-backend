@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 public class VotingPartialResultService {
     @Inject
     VotingPartialResultRepository votingPartialResultRepository;
+    
     @Transactional
     public VotingPartialResultDTO create(VotingPartialResultDTO votingPartialResultDTOCreate) {
         VotingPartialResultEntity newEntity = new VotingPartialResultEntity();
@@ -23,6 +24,7 @@ public class VotingPartialResultService {
         votingPartialResultRepository.persist(newEntity);
         return VotingPartialResultMapper.INSTANCE.toDto(newEntity);
     }
+    
     private static void setValues(VotingPartialResultDTO votingPartialResultDTOCreate, VotingPartialResultEntity newEntity) {
         newEntity.setEventName(votingPartialResultDTOCreate.getEventName());
         newEntity.setPercentage(votingPartialResultDTOCreate.getPercentage());
