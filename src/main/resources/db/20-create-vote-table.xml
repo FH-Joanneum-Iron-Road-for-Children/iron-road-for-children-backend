@@ -9,8 +9,8 @@
 
     <changeSet id="20-create-vote-table" author="domi">
         <createTable tableName="vote">
-            <column name="voting_id" type="bigint">
-                <constraints primaryKey="true" nullable="false" primaryKeyName="voting_id_pk"/>
+            <column name="vote_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="vote_id_pk"/>
             </column>
             <column name="event_id" type="bigint"/>
             <column name="device_id" type="varchar(255)"/>

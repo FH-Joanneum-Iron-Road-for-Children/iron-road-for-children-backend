@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class VoteEntity {
 
     @Id
-    @Column(name = "voting_id")
+    @Column(name = "vote_id")
     private Long votingId;
 
     @Column(name = "event_id")
