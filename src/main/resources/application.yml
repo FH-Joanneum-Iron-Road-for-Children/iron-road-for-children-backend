@@ -22,11 +22,11 @@ quarkus:
   swagger-ui:
     always-include: true
 
-  http:
-    cors:
-      access-control-allow-credentials: true
-      origins: *
-      headers: Access-Control-Allow-Origin
+#  http:
+#    cors:
+#      access-control-allow-credentials: true
+#      origins: *
+#      headers: Access-Control-Allow-Origin
 
 #  kubernetes-config:
 #    enabled: false
