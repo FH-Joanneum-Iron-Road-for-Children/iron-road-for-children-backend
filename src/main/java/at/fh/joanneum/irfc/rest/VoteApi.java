@@ -26,9 +26,4 @@ public class VoteApi {
     public VoteDTO create(VoteDTO voteDTO){
         return voteService.create(voteDTO);
     }
-
-
-
-
-
 }
