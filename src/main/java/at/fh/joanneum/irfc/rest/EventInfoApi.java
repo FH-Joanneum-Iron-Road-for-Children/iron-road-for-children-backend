@@ -25,6 +25,8 @@ public class EventInfoApi {
         return eventInfoService.get(id);
     }
 
+    //TODO add a getAll
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

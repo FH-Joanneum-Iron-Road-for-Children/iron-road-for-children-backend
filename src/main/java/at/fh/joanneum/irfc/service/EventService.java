@@ -139,7 +139,7 @@ public class EventService {
       throw new RuntimeException("no EventCategory");
     }
 
-    if(newEntity.getIsEditable() !=  eventDTOCreate.getIsEditable()) {
+    if(newEntity.getIsEditable() !=  eventDTOCreate.getIsEditable()  && newEntity.getEventId() != null) {
       throw new RuntimeException("IsEditable can't be changed");
     }
   }

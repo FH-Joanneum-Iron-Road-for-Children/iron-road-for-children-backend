@@ -8,7 +8,7 @@
 
     <changeSet id="53-add-fields" author="lion">
         <addColumn tableName="event">
-            <column name="is_editable" type="bool"/>
+            <column name="is_editable" type="boolean"/>
         </addColumn>
 
         <addColumn tableName="voting">
@@ -18,5 +18,28 @@
         <addColumn tableName="voting_partial_result">
             <column name="fk_voting_result" type="bigint"/>
         </addColumn>
+
+        <dropColumn tableName="event">
+            <column name="fk_category" type="boolean"/>
+        </dropColumn>
+
+        <createTable tableName="voting_event">
+            <column name="voting_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="voting_event" baseColumnNames="voting_id"
+                                 referencedTableName="voting" referencedColumnNames="voting_id"
+                                 constraintName="fk_voting_event_voting" onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="voting_event" baseColumnNames="event_id"
+                                 referencedTableName="event" referencedColumnNames="event_id"
+                                 constraintName="fk_voting_event_event" onDelete="CASCADE"/>
+        
+        <addUniqueConstraint tableName="voting_event" columnNames="voting_id, event_id"/>
     </changeSet>
 </databaseChangeLog>

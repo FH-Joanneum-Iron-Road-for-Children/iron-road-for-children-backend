@@ -1,6 +1,8 @@
 package at.fh.joanneum.irfc.model.voting;
 
 
+import at.fh.joanneum.irfc.model.VotingResult.VotingResultDTO;
+import at.fh.joanneum.irfc.model.event.EventDTO;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jdk.jfr.Event;
 import lombok.Getter;
@@ -22,6 +24,6 @@ public class VotingDTO {
     private String title;
     private boolean isActive;
     private boolean isEditable;
-    private List<Event> events;
-   // private VotingResult votingResult;
+    private List<EventDTO> events;
+    private VotingResultDTO votingResult;
 }

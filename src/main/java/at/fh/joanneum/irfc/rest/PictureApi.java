@@ -26,13 +26,14 @@ public class PictureApi {
     @Produces(MediaType.APPLICATION_JSON)
     public PictureDTO get(@PathParam("id") Long id){ return pictureService.get(id); }
 
-    @GET
-    @Path("/search/{searchString}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public List<PictureDTO> getByTitle(@PathParam("searchString") String searchString){
-        return pictureService.search(searchString);
-    }
+    //TODO make a getAll cause why not
+//    @GET
+//    @Path("/search/{searchString}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public List<PictureDTO> getByTitle(@PathParam("searchString") String searchString){
+//        return pictureService.search(searchString);
+//    }
 
     @GET
     @Path("rootpath")

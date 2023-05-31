@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author moe@softwaregaertner.at
@@ -56,4 +58,7 @@ public class EventEntity {
 
   @Column(name =  "is_editable")
   private Boolean isEditable;
+
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events")
+  private Set<VotingEntity> votings = new HashSet<>();
 }

@@ -1,16 +1,25 @@
 package at.fh.joanneum.irfc.service;
 
+import at.fh.joanneum.irfc.model.event.EventDTO;
+import at.fh.joanneum.irfc.model.event.EventMapper;
+import at.fh.joanneum.irfc.model.picture.PictureDTO;
+import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.model.voting.VotingMapper;
 import at.fh.joanneum.irfc.persistence.entiy.EventCategoryEntity;
+import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
+import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VotingEntity;
+import at.fh.joanneum.irfc.persistence.repository.EventRepository;
 import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -22,6 +31,9 @@ import static java.util.Objects.isNull;
 public class VotingService {
     @Inject
     VotingRepository votingRepository;
+
+    @Inject
+    EventRepository eventRepository;
 
     public List<VotingDTO> getAll() {
 
@@ -75,10 +87,37 @@ public class VotingService {
         }
     }
 
-    private static void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
+    private void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
         newEntity.setTitle(votingDTOCreate.getTitle());
         newEntity.setActive(votingDTOCreate.isActive());
         newEntity.setEditable(votingDTOCreate.isEditable());
+
+        Set<EventEntity> events;
+        if(newEntity.getEvents() != null) {
+            events = newEntity.getEvents();
+        } else {
+            events = new HashSet<>();
+        }
+
+        for(EventDTO event : votingDTOCreate.getEvents()) {
+            Optional<EventEntity> eventOptional = this.eventRepository.findByIdOptional(event.getEventId());
+            if(eventOptional.isEmpty()){
+                throw new RuntimeException("no event with id "+ event.getEventId());
+            } else {
+                EventEntity eventEntity = EventMapper.INSTANCE.toEntity(event);
+                events.add(eventEntity);
+            }
+        }
+
+        newEntity.setEvents(events);
+
+        if(newEntity.isEditable() !=  votingDTOCreate.isEditable() && newEntity.getVotingId() != null) {
+            throw new RuntimeException("IsEditable can't be changed");
+        }
+
+        if(newEntity.isActive() !=  votingDTOCreate.isActive() && newEntity.getVotingId() != null) {
+            throw new RuntimeException("IsActive can't be changed");
+        }
         //TODO add events and votingResults
     }
 
@@ -88,15 +127,8 @@ public class VotingService {
             throw new RuntimeException("Title must not be null or empty");
         }
 
-        if (isNull(votingDTO.isActive())){
-            throw new RuntimeException("isActive attribute missing");
-        }
 
-        if(isNull(votingDTO.isEditable())){
-            throw new RuntimeException("isEditable attribute missing");
-        }
-
-        //TODO: Validate rest of the fields after merge
+        //TODO: Validate min of 2 events
     }
 
 }

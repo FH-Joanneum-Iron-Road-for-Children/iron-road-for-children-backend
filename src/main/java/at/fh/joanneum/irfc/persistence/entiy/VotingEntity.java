@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author https://github.com/GoldNova
@@ -41,4 +43,10 @@ public class VotingEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id")
     private VotingResultEntity votingResult;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "voting_event",
+            joinColumns = @JoinColumn(name = "voting_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private Set<EventEntity> events = new HashSet<>();
 }
