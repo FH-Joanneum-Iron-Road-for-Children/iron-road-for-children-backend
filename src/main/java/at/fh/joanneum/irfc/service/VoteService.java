@@ -86,6 +86,8 @@ public class VoteService {
     }
 
     private void setValues(VoteDTO voteDTO, VoteEntity newEntity) {
+        newEntity.setEventId(voteDTO.getEventId());
+        newEntity.setDeviceId(voteDTO.getDeviceId());
         if(voteDTO.getVoting() != null) {
             Optional<VotingEntity> votingOptional = this.votingRepository.findByIdOptional(voteDTO.getVoting().getVotingId());
             if (votingOptional.isEmpty()) {
@@ -96,7 +98,5 @@ public class VoteService {
         } else {
             throw new RuntimeException("no EventLocation");
         }
-        newEntity.setEventId(voteDTO.getEventId());
-        newEntity.setDeviceId(voteDTO.getDeviceId());
     }
 }

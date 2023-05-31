@@ -57,7 +57,7 @@ public class EventEntity {
   private EventCategoryEntity eventCategory;
 
   @Column(name =  "is_editable")
-  private Boolean isEditable;
+  private Boolean isEditable; //TODO set default value to true
 
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events")
   private Set<VotingEntity> votings = new HashSet<>();

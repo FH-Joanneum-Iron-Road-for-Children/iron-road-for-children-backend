@@ -13,6 +13,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -34,6 +35,12 @@ public class EventInfoService {
             EventInfoEntity byId = byIdOptional.get();
             return EventInfoMapper.INSTANCE.toDto(byId);
         }
+    }
+
+    public List<EventInfoDTO> getAll() {
+        return eventInfoRepository.listAll().stream()
+                .map(EventInfoMapper.INSTANCE::toDto)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Transactional

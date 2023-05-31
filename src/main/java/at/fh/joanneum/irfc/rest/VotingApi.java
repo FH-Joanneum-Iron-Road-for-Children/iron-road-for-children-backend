@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.service.VotingService;
+import org.apache.commons.lang3.NotImplementedException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -46,6 +47,23 @@ public class VotingApi {
     @Path("/{id}")
     public VotingDTO update(@PathParam("id") Long id, VotingDTO votingResultDTO){
         return votingService.update(id, votingResultDTO);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public VotingDTO startVoting(@PathParam("id") Long id){
+        throw new NotImplementedException();
+        //TODO create function to setIsActive to true and set isEditable to false and set isEditable in all Events to false
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public VotingDTO endVoting(@PathParam("id") Long id){
+        throw new NotImplementedException();
+        //TODO create function to setIsActive to false and generate votingResults
+        //TODO also define if voting and or events should be editable after a voting
     }
 
     @DELETE

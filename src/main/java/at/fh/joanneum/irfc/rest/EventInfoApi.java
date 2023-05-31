@@ -1,12 +1,14 @@
 package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
+import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.service.EventInfoService;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
@@ -25,7 +27,11 @@ public class EventInfoApi {
         return eventInfoService.get(id);
     }
 
-    //TODO add a getAll
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<EventInfoDTO> getAll(){
+        return eventInfoService.getAll();
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

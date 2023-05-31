@@ -35,10 +35,10 @@ public class VotingEntity {
     private String title;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private boolean isActive; //TODO set default value to false
 
     @Column(name = "is_editable")
-    private boolean isEditable;
+    private boolean isEditable; //TODO set default value to true
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id")

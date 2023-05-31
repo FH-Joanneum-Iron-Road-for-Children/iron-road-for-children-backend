@@ -118,7 +118,6 @@ public class VotingService {
         if(newEntity.isActive() !=  votingDTOCreate.isActive() && newEntity.getVotingId() != null) {
             throw new RuntimeException("IsActive can't be changed");
         }
-        //TODO add events and votingResults
     }
 
     // Validates the incoming voting DTO
@@ -126,9 +125,7 @@ public class VotingService {
         if (isNull(votingDTO.getTitle()) || votingDTO.getTitle().isEmpty()){
             throw new RuntimeException("Title must not be null or empty");
         }
-
-
-        //TODO: Validate min of 2 events
+        //TODO: Validate that there is a min of 2 events
     }
 
 }
