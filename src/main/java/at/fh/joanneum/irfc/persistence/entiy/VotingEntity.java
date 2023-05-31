@@ -49,4 +49,7 @@ public class VotingEntity {
             joinColumns = @JoinColumn(name = "voting_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<EventEntity> events = new HashSet<>();
+
+    @OneToMany(mappedBy = "voting")
+    private Set<VoteEntity> votes;
 }

@@ -2,8 +2,11 @@ package at.fh.joanneum.irfc.service;
 
 import at.fh.joanneum.irfc.model.vote.VoteDTO;
 import at.fh.joanneum.irfc.model.vote.VoteMapper;
+import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VoteEntity;
+import at.fh.joanneum.irfc.persistence.entiy.VotingEntity;
 import at.fh.joanneum.irfc.persistence.repository.VoteRepository;
+import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -22,6 +25,9 @@ public class VoteService {
 
     @Inject
     VoteRepository voteRepository;
+
+    @Inject
+    VotingRepository votingRepository;
 
 
     public List<VoteDTO> getAll() {
@@ -68,8 +74,8 @@ public class VoteService {
     }
 
     private static void validateDTOvalues(VoteDTO voteDTO) {
-        if(isNull(voteDTO.getVotingId())){
-            throw new RuntimeException("Voting ID must not be null");
+        if(voteDTO.getVoting() == null){
+            throw new RuntimeException("Voting must not be null");
         }
         if(isNull(voteDTO.getEventId())){
             throw new RuntimeException("Event ID must not be null");
@@ -80,7 +86,16 @@ public class VoteService {
     }
 
     private void setValues(VoteDTO voteDTO, VoteEntity newEntity) {
-        newEntity.setVotingId(voteDTO.getVotingId());
+        if(voteDTO.getVoting() != null) {
+            Optional<VotingEntity> votingOptional = this.votingRepository.findByIdOptional(voteDTO.getVoting().getVotingId());
+            if (votingOptional.isEmpty()) {
+                throw new RuntimeException("no EventLocation with id " + voteDTO.getVoting().getVotingId());
+            } else {
+                newEntity.setVoting(votingOptional.get());
+            }
+        } else {
+            throw new RuntimeException("no EventLocation");
+        }
         newEntity.setEventId(voteDTO.getEventId());
         newEntity.setDeviceId(voteDTO.getDeviceId());
     }

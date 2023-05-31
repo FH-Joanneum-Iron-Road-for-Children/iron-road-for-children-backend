@@ -1,5 +1,6 @@
 package at.fh.joanneum.irfc.model.vote;
 
+import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,8 @@ import lombok.Setter;
 @Setter
 @RegisterForReflection
 public class VoteDTO {
-    private Long votingId;
+    private Long voteId;
+    private VotingDTO voting;
     private Long eventId;
     private String deviceId;
 }
