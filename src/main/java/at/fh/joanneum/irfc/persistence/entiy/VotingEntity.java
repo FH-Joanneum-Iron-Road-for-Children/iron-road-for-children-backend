@@ -38,13 +38,7 @@ public class VotingEntity {
     @Column(name = "is_editable")
     private boolean isEditable;
 
-    //@ManyToMany //TODO check if we need many to many here
-    //@Column(name = "events")
-    //private List<EventEntity> events;
-
-    //TODO check if we need EventCategory
-
-//    @Column(name = "votingResult")
-//    private VotingResult votingResult;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id")
+    private VotingResultEntity votingResult;
 }

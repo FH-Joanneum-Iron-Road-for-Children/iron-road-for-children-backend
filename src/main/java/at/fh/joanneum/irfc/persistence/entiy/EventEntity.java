@@ -54,6 +54,6 @@ public class EventEntity {
   @JoinColumn(name = "fk_event_category", nullable = false)
   private EventCategoryEntity eventCategory;
 
-  //@Column(name =  "is_editable")
-  // private boolean isEditable; //TODO create Task and Implement
+  @Column(name =  "is_editable")
+  private Boolean isEditable;
 }

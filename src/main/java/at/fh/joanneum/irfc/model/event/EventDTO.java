@@ -25,5 +25,5 @@ public class EventDTO {
   private long endDateTimeInUTC;
   private EventLocationDTO eventLocation;
   private EventCategoryDTO eventCategory;
-  //private bool isEditable;  //TODO check if we need this
+  private Boolean isEditable;
 }

@@ -1,4 +1,4 @@
-package at.fh.joanneum.irfc.model.event;
+package at.fh.joanneum.irfc.model.votingPartialResult;
 
 import at.fh.joanneum.irfc.persistence.entiy.VotingPartialResultEntity;
 import org.mapstruct.InheritInverseConfiguration;

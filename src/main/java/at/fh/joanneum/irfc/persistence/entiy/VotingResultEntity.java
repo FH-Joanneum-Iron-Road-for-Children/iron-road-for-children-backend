@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @author https://github.com/GoldNova
@@ -34,11 +35,9 @@ public class VotingResultEntity {
     @Column(name = "end_date")
     private long endDate;
 
-//    @Column(nullable = false,
-//    name = "partial-results-id")
-//    @NotNull
-//    @OneToOne
-//    private List<parialResults> partialResults;
+    @OneToOne(cascade = CascadeType.ALL)
+    private VotingEntity voting;
 
-
+    @OneToMany(mappedBy = "votingResult")
+    private Set<VotingPartialResultEntity> partialResults;
 }

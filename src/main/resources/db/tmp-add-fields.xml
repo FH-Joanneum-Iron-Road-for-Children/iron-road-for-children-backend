@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="tmp-add-fields" author="lion">
+        <addColumn tableName="event">
+            <column name="is_editable" type="bool"/>
+        </addColumn>
+
+        <addColumn tableName="voting">
+            <column name="fk_voting_result" type="bigint"/>
+        </addColumn>
+
+        <addColumn tableName="voting_partial_result">
+            <column name="fk_voting_result" type="bigint"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
