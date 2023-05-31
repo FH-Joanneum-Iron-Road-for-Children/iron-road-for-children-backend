@@ -14,5 +14,5 @@
     <include file="15-update-event-table.xml" relativeToChangelogFile="true"/>
     <include file="32-create-voting-result-table.xml" relativeToChangelogFile="true"/>
     <include file="33-create-VotingPartialResult-table.xml" relativeToChangelogFile="true"/>
-    <include file="tmp-add-fields.xml" relativeToChangelogFile="true"/>
+    <include file="53-add-fields.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

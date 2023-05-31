@@ -6,7 +6,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="tmp-add-fields" author="lion">
+    <changeSet id="53-add-fields" author="lion">
         <addColumn tableName="event">
             <column name="is_editable" type="bool"/>
         </addColumn>
