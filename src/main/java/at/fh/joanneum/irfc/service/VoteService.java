@@ -2,9 +2,11 @@ package at.fh.joanneum.irfc.service;
 
 import at.fh.joanneum.irfc.model.vote.VoteDTO;
 import at.fh.joanneum.irfc.model.vote.VoteMapper;
+import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
 import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VoteEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VotingEntity;
+import at.fh.joanneum.irfc.persistence.repository.EventRepository;
 import at.fh.joanneum.irfc.persistence.repository.VoteRepository;
 import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
 
@@ -28,6 +30,9 @@ public class VoteService {
 
     @Inject
     VotingRepository votingRepository;
+
+    @Inject
+    EventRepository eventRepository;
 
 
     public List<VoteDTO> getAll() {
@@ -74,11 +79,11 @@ public class VoteService {
     }
 
     private static void validateDTOvalues(VoteDTO voteDTO) {
-        if(voteDTO.getVoting() == null){
+        if(isNull(voteDTO.getVoting())){
             throw new RuntimeException("Voting must not be null");
         }
-        if(isNull(voteDTO.getEventId())){
-            throw new RuntimeException("Event ID must not be null");
+        if(isNull(voteDTO.getEvent())){
+            throw new RuntimeException("Event must not be null");
         }
         if(isNull(voteDTO.getDeviceId())){
             throw new RuntimeException("Device ID must not be null");
@@ -86,17 +91,30 @@ public class VoteService {
     }
 
     private void setValues(VoteDTO voteDTO, VoteEntity newEntity) {
-        newEntity.setEventId(voteDTO.getEventId());
         newEntity.setDeviceId(voteDTO.getDeviceId());
+
+        if(voteDTO.getEvent() != null) {
+            Optional<EventEntity> eventOptional = this.eventRepository.findByIdOptional(voteDTO.getEvent().getEventId());
+            if (eventOptional.isEmpty()) {
+                throw new RuntimeException("no Event with id " + voteDTO.getEvent().getEventId());
+            } else {
+                newEntity.setEvent(eventOptional.get());
+            }
+        } else {
+            throw new RuntimeException("no Event");
+        }
+
         if(voteDTO.getVoting() != null) {
             Optional<VotingEntity> votingOptional = this.votingRepository.findByIdOptional(voteDTO.getVoting().getVotingId());
             if (votingOptional.isEmpty()) {
-                throw new RuntimeException("no EventLocation with id " + voteDTO.getVoting().getVotingId());
+                throw new RuntimeException("no Voting with id " + voteDTO.getVoting().getVotingId());
             } else {
-                newEntity.setVoting(votingOptional.get());
+                if(this.votingRepository.containsEventId(votingOptional.get(), voteDTO.getEvent().getEventId())){
+                    newEntity.setVoting(votingOptional.get());
+                }
             }
         } else {
-            throw new RuntimeException("no EventLocation");
+            throw new RuntimeException("no Voting");
         }
     }
 }

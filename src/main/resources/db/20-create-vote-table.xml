@@ -9,12 +9,17 @@
 
     <changeSet id="20-create-vote-table" author="domi">
         <createTable tableName="vote">
+            <column name="vote_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="vote_id_pk"/>
+            </column>
             <column name="fk_voting" type="bigint"/>
-            <column name="event_id" type="bigint"/>
+            <column name="fk_event" type="bigint"/>
             <column name="device_id" type="varchar(255)"/>
         </createTable>
 
-        <addPrimaryKey tableName="vote" columnNames="fk_voting, event_id, device_id"/>
-
+        <createSequence sequenceName="vote_id_seq"
+                        dataType="bigint"
+                        incrementBy="1"
+                        startValue="100"/>
     </changeSet>
 </databaseChangeLog>

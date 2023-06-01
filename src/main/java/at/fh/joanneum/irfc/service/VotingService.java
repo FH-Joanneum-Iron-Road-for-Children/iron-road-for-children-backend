@@ -89,8 +89,6 @@ public class VotingService {
 
     private void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
         newEntity.setTitle(votingDTOCreate.getTitle());
-        newEntity.setActive(votingDTOCreate.isActive());
-        newEntity.setEditable(votingDTOCreate.isEditable());
 
         Set<EventEntity> events;
         if(newEntity.getEvents() != null) {
@@ -118,14 +116,22 @@ public class VotingService {
         if(newEntity.isActive() !=  votingDTOCreate.isActive() && newEntity.getVotingId() != null) {
             throw new RuntimeException("IsActive can't be changed");
         }
+
+        //TODO this is a quick hack cause default values doesn't seem to work (pls fix)
+        if(newEntity.getVotingId() == null) {
+            newEntity.setEditable(true);
+            newEntity.setActive(false);
+        }
     }
 
-    // Validates the incoming voting DTO
     public static void validateVoting(VotingDTO votingDTO){
         if (isNull(votingDTO.getTitle()) || votingDTO.getTitle().isEmpty()){
             throw new RuntimeException("Title must not be null or empty");
         }
-        //TODO: Validate that there is a min of 2 events
+
+        if(votingDTO.getEvents().size() < 2) {
+            throw new RuntimeException("There has to be at least to events for a voting");
+        }
     }
 
 }

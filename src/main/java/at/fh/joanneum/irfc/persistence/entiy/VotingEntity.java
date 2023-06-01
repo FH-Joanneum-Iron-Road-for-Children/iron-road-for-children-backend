@@ -28,20 +28,20 @@ public class VotingEntity {
             strategy = GenerationType.SEQUENCE,
             generator = "voting_id_seq"
     )
-    @Column(name = "voting_id")
+    @Column(name = "voting_id", nullable = false)
     private Long votingId;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "is_active")
-    private boolean isActive; //TODO set default value to false
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 
-    @Column(name = "is_editable")
-    private boolean isEditable; //TODO set default value to true
+    @Column(name = "is_editable", nullable = false)
+    private boolean isEditable;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id")
+    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id", nullable = true)
     private VotingResultEntity votingResult;
 
     @ManyToMany(fetch = FetchType.LAZY)

@@ -142,5 +142,10 @@ public class EventService {
     if(newEntity.getIsEditable() !=  eventDTOCreate.getIsEditable()  && newEntity.getEventId() != null) {
       throw new RuntimeException("IsEditable can't be changed");
     }
+
+    //TODO this is a quick hack cause default values doesn't seem to work (pls fix)
+    if(newEntity.getEventId() == null) {
+      newEntity.setIsEditable(true);
+    }
   }
 }

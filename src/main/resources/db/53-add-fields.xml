@@ -8,7 +8,7 @@
 
     <changeSet id="53-add-fields" author="lion">
         <addColumn tableName="event">
-            <column name="is_editable" type="boolean"/>
+            <column name="is_editable" type="boolean" defaultValue="true"/>
         </addColumn>
 
         <addColumn tableName="voting">

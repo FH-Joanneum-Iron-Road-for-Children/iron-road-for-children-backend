@@ -87,7 +87,6 @@ public class VotingResultService {
     private static void setValues(VotingResultDTO votingResultDTOCreate, VotingResultEntity newEntity) {
         newEntity.setTitle(votingResultDTOCreate.getTitle());
         newEntity.setEndDate(votingResultDTOCreate.getEndDate());
-//       newEntity.setpartialResults(votingResultDTOCreate.getpartialResults());
     }
 
 }
