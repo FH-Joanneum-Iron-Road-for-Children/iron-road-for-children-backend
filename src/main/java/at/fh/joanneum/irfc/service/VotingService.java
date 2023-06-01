@@ -122,6 +122,7 @@ public class VotingService {
             }
             byId.setActive(false);
             VotingResultEntity votingResult = new VotingResultEntity();
+            votingResult.setTitle(byId.getTitle());
             votingResult.setVoting(byId);
             votingResult.setEndDate(Instant.now().toEpochMilli()); //TODO check if this is correct
             votingResultRepository.persist(votingResult);

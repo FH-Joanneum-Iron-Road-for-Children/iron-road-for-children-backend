@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.service;
 
 import at.fh.joanneum.irfc.model.event.EventDTO;
 import at.fh.joanneum.irfc.model.event.EventMapper;
+import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.persistence.entiy.*;
 import at.fh.joanneum.irfc.persistence.repository.*;
 
@@ -31,8 +32,10 @@ public class EventService {
   EventInfoRepository eventInfoRepository;
   @Inject
   EventCategoryRepository eventCategoryRepository;
+  @Inject
+  EventInfoService eventInfoService;
 
-  public List<EventDTO> getAll() {
+  public List<EventDTO> getAll() { //TODO throws exception (pls fix)
     return eventRepository.listAll().stream()
         .map(EventMapper.INSTANCE::toDto)
         .collect(Collectors.toUnmodifiableList());
@@ -47,7 +50,6 @@ public class EventService {
 
   @Transactional
   public EventDTO create(EventDTO eventDTO) {
-
     checkDTOvalues(eventDTO);
 
     EventEntity newEntity = new EventEntity();
@@ -126,12 +128,16 @@ public class EventService {
     }
 
     if(eventDTOCreate.getEventInfo() != null) {
-      Optional<EventInfoEntity> eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventDTOCreate.getEventInfo().getEventInfoId());
-      if (eventInfoOptional.isEmpty()) {
-        throw new RuntimeException("no EventInfo with id " + eventDTOCreate.getEventInfo().getEventInfoId());
-      } else {
-        newEntity.setEventInfo(eventInfoOptional.get());
+      Long eventInfoId = eventDTOCreate.getEventInfo().getEventInfoId();
+      if(isNull(eventInfoId)) {
+        eventInfoId = 0l;
       }
+      Optional<EventInfoEntity> eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventInfoId);
+      if (eventInfoOptional.isEmpty()) {
+        EventInfoDTO eventInfoDto= this.eventInfoService.create(eventDTOCreate.getEventInfo());
+        eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventInfoDto.getEventInfoId());
+      }
+      newEntity.setEventInfo(eventInfoOptional.get());
     } else {
       throw new RuntimeException("no EventInfo");
     }

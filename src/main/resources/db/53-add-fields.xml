@@ -38,5 +38,9 @@
                                  constraintName="fk_voting_event_event" onDelete="CASCADE"/>
         
         <addUniqueConstraint tableName="voting_event" columnNames="voting_id, event_id"/>
+
+        <addUniqueConstraint columnNames="event_id, fk_event_info"
+                             constraintName="event_info_constraint"
+                             tableName="event"/>
     </changeSet>
 </databaseChangeLog>

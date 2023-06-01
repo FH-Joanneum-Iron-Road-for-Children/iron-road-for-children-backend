@@ -60,6 +60,7 @@ quarkus:
 
 pictures:
   root_path: ${PICTURES_ROOT_PATH:C:/temp/pics/}
+  url: https://tmp.at/
 
 
 #    container-image:

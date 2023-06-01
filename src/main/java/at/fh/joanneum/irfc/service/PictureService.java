@@ -36,6 +36,9 @@ public class PictureService {
     @ConfigProperty(name="pictures.root_path")
     String pictureRootPath;
 
+    @ConfigProperty(name="pictures.url") //TODO replace this with an .env var
+    String pictureUrl;
+
     public PictureDTO get(Long id) {
         Optional<PictureEntity> byIdOptional = pictureRepository.findByIdOptional(id);
         if(byIdOptional.isEmpty()){
@@ -83,7 +86,7 @@ public class PictureService {
         try
         {
 
-            File f= new File(pictureRootPath + pictureDto.getPath());
+            File f= new File(pictureDto.getPath().replace(pictureUrl, pictureRootPath));
             if(!f.delete())
             {
                 throw new RuntimeException("Picture with Path " + pictureDto.getPath() + " could not be deleted");
@@ -107,11 +110,12 @@ public class PictureService {
         PictureEntity newEntity = new PictureEntity();
 
         try {
-            File targetFile = new File(pictureRootPath + UUID.randomUUID() + "." + data.getFileEndingType().name().toLowerCase());
+            String fileName = UUID.randomUUID() + "." + data.getFileEndingType().name().toLowerCase();
+            File targetFile = new File(pictureRootPath + fileName);
             OutputStream outStream = new FileOutputStream(targetFile);
             outStream.write(data.file.readAllBytes());
             outStream.close();
-            pictureDTO.setPath(pictureRootPath + targetFile.getPath());
+            pictureDTO.setPath(pictureUrl + fileName);
         } catch (IOException e) {
             throw new RuntimeException("Error storing Image");
         }
