@@ -21,5 +21,9 @@
                         dataType="bigint"
                         incrementBy="1"
                         startValue="100"/>
+
+        <addUniqueConstraint columnNames="fk_voting, fk_event, device_id"
+                             constraintName="vote_uniqe_constraint"
+                             tableName="vote"/>
     </changeSet>
 </databaseChangeLog>

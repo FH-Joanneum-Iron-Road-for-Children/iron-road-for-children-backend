@@ -15,26 +15,6 @@
             </column>
             <column name="title" type="varchar(255)"/>
             <column name="end_date" type="bigint"/>
-
-
-            <!-- Für später, wenn gemerged
-             <column name="partial-results-id" type="bigint">
-                 <constraints nullable="true"/>
-             </column>
-
-
-
-                          <constraints>
-                 <foreignKeyConstraint foreignTableName="VotingPartialResult"
-                                       baseColumnNames="id"
-                                       referencedTableName="VotingPartialResult"
-                                       referencedColumnNames="id"
-                                       constraintName="fk_partial_results"/>
-             </constraints>
-
-
-              -->
-
         </createTable>
 
         <createSequence sequenceName="voting_result_id_seq"

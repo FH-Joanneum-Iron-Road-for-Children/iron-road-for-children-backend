@@ -40,16 +40,15 @@ public class VotingEntity {
     @Column(name = "is_editable", nullable = false)
     private boolean isEditable;
 
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id", nullable = true)
+    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id")
     private VotingResultEntity votingResult;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "voting_event",
-            joinColumns = @JoinColumn(name = "voting_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    @JoinTable(name = "voting_event", joinColumns = @JoinColumn(name = "voting_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<EventEntity> events = new HashSet<>();
 
-    @OneToMany(mappedBy = "voting")
+     @OneToMany(mappedBy = "voting")
     private Set<VoteEntity> votes;
 }

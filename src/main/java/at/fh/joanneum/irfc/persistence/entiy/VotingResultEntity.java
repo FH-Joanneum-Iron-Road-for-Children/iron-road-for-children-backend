@@ -35,7 +35,7 @@ public class VotingResultEntity {
     @Column(name = "end_date")
     private long endDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy="votingResult", cascade = CascadeType.ALL)
     private VotingEntity voting;
 
     @OneToMany(mappedBy = "votingResult")
