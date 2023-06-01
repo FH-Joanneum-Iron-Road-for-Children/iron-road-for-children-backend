@@ -10,4 +10,11 @@ import javax.enterprise.context.RequestScoped;
  **/
 @RequestScoped
 public class VoteRepository implements PanacheRepository<VoteEntity> {
+    public long countVotesByEventAndVoting(Long eventId, Long votingId) {
+        return count("event.id = ?1 and voting.id = ?2", eventId, votingId);
+    }
+
+    public long countVotesByVoting(Long votingId) {
+        return count("voting.id = ?1", votingId);
+    }
 }

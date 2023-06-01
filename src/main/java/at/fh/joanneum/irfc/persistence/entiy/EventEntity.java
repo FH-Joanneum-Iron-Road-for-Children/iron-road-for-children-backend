@@ -56,9 +56,6 @@ public class EventEntity {
   @JoinColumn(name = "fk_event_category", nullable = false)
   private EventCategoryEntity eventCategory;
 
-  @Column(name =  "is_editable", nullable = false)
-  private Boolean isEditable;
-
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events")
   private Set<VotingEntity> votings = new HashSet<>();
 

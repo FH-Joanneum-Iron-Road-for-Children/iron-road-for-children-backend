@@ -6,20 +6,15 @@ import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.model.voting.VotingMapper;
-import at.fh.joanneum.irfc.persistence.entiy.EventCategoryEntity;
-import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
-import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
-import at.fh.joanneum.irfc.persistence.entiy.VotingEntity;
-import at.fh.joanneum.irfc.persistence.repository.EventRepository;
-import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
+import at.fh.joanneum.irfc.persistence.entiy.*;
+import at.fh.joanneum.irfc.persistence.repository.*;
+import org.apache.james.mime4j.dom.datetime.DateTime;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.Instant;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -34,6 +29,15 @@ public class VotingService {
 
     @Inject
     EventRepository eventRepository;
+
+    @Inject
+    VoteRepository voteRepository;
+
+    @Inject
+    VotingPartialResultRepository votingPartialResultRepository;
+
+    @Inject
+    VotingResultRepository votingResultRepository;
 
     public List<VotingDTO> getAll() {
 
@@ -85,6 +89,63 @@ public class VotingService {
         if(!votingRepository.deleteById(id)){
             throw new RuntimeException("Voting with id " + id + " not found");
         }
+    }
+
+    @Transactional
+    public VotingDTO startVoting(Long id) {
+        Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
+
+        if(byIdOptional.isEmpty()){
+            throw new RuntimeException("Voting with id " + id + " not found");
+        } else {
+            VotingEntity byId = byIdOptional.get();
+            if(byId.isActive() == true || byId.isEditable() == false) {
+                throw new RuntimeException("Voting can't be started because it's either already started or has already been endet");
+            }
+            byId.setActive(true);
+            byId.setEditable(false);
+        }
+
+        return VotingMapper.INSTANCE.toDto(byIdOptional.get());
+    }
+
+    @Transactional
+    public VotingDTO endVoting(Long id) {
+        Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
+
+        if(byIdOptional.isEmpty()){
+            throw new RuntimeException("Voting with id " + id + " not found");
+        } else {
+            VotingEntity byId = byIdOptional.get();
+            if(byId.isActive() == false) {
+                throw new RuntimeException("Voting is not Active");
+            }
+            byId.setActive(false);
+            VotingResultEntity votingResult = new VotingResultEntity();
+            votingResult.setVoting(byId);
+            votingResult.setEndDate(Instant.now().toEpochMilli()); //TODO check if this is correct
+            votingResultRepository.persist(votingResult);
+
+            Set<VotingPartialResultEntity> partialResults = new HashSet<>();
+            double numOfVotes = this.voteRepository.countVotesByVoting(id);
+            for (EventEntity event : byId.getEvents()) {
+                long numOfVotesForEvent = this.voteRepository.countVotesByEventAndVoting(event.getEventId(), id);
+                VotingPartialResultEntity partialResult = new VotingPartialResultEntity();
+                partialResult.setEventName(event.getTitle());
+                partialResult.setPercentage(numOfVotes != 0 ? (numOfVotesForEvent / numOfVotes * 1.0) : 0);
+                partialResult.setVotingResult(votingResult);
+                partialResults.add(partialResult);
+
+                votingPartialResultRepository.persist(partialResult);
+            }
+            votingResult.setPartialResults(partialResults);
+
+
+
+            byId.setVotingResult(votingResult);
+        }
+
+        return VotingMapper.INSTANCE.toDto(byIdOptional.get());
     }
 
     private void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {

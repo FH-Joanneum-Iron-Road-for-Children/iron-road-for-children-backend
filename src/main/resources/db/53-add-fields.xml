@@ -7,9 +7,6 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
     <changeSet id="53-add-fields" author="lion">
-        <addColumn tableName="event">
-            <column name="is_editable" type="boolean" defaultValue="true"/>
-        </addColumn>
 
         <addColumn tableName="voting">
             <column name="fk_voting_result" type="bigint"/>

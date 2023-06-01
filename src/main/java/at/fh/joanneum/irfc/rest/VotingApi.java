@@ -51,19 +51,17 @@ public class VotingApi {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
+    @Path("/startVoting/{id}")
     public VotingDTO startVoting(@PathParam("id") Long id){
-        throw new NotImplementedException();
-        //TODO create function to setIsActive to true and set isEditable to false and set isEditable in all Events to false
+        return votingService.startVoting(id);
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
+    @Path("/endVoting/{id}")
     public VotingDTO endVoting(@PathParam("id") Long id){
-        throw new NotImplementedException();
-        //TODO create function to setIsActive to false and generate votingResults
-        //TODO also define if voting and or events should be editable after a voting
+        return votingService.endVoting(id);
+
     }
 
     @DELETE

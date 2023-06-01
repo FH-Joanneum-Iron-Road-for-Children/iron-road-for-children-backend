@@ -22,7 +22,7 @@
                         incrementBy="1"
                         startValue="100"/>
 
-        <addUniqueConstraint columnNames="fk_voting, fk_event, device_id"
+        <addUniqueConstraint columnNames="fk_voting, device_id"
                              constraintName="vote_uniqe_constraint"
                              tableName="vote"/>
     </changeSet>

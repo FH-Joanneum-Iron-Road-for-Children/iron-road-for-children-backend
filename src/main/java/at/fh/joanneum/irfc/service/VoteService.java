@@ -48,6 +48,7 @@ public class VoteService {
 
     @Transactional
     public VoteDTO create(VoteDTO voteDTO) {
+        //TODO check if voting is active
         validateDTOvalues(voteDTO);
         VoteEntity newEntity = new VoteEntity();
         setValues(voteDTO, newEntity);
@@ -109,9 +110,11 @@ public class VoteService {
             if (votingOptional.isEmpty()) {
                 throw new RuntimeException("no Voting with id " + voteDTO.getVoting().getVotingId());
             } else {
-                if(this.votingRepository.containsEventId(votingOptional.get(), voteDTO.getEvent().getEventId())){
+                VotingEntity voting = votingOptional.get();
+                if(this.votingRepository.containsEventId(voting, voteDTO.getEvent().getEventId()) && voting.isActive()){
                     newEntity.setVoting(votingOptional.get());
-                }
+                } else {
+                    throw new RuntimeException("Either Voting isn't running or the eventId isn't in the voting");                }
             }
         } else {
             throw new RuntimeException("no Voting");

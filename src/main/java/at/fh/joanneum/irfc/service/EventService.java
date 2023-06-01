@@ -64,7 +64,9 @@ public class EventService {
 
     if(byIdOptional.isEmpty()){
       throw new RuntimeException("Event with id " + id + " not found");
-    } else {
+    } else if(eventRepository.hasActiveVoting(id)) {
+      throw new RuntimeException("There is an active Voting running.");
+    }else {
       EventEntity byId = byIdOptional.get();
       setValues(eventDTO, byId);
       eventRepository.persistAndFlush(byId);
@@ -74,6 +76,12 @@ public class EventService {
 
   @Transactional
   public void delete(Long id) {
+    Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
+
+    if(eventRepository.hasActiveVoting(id)) {
+      throw new RuntimeException("There is an active Voting running.");
+    }
+
     if(!eventRepository.deleteById(id)){
       throw new RuntimeException("Event with id " + id + " not found");
     }
@@ -137,15 +145,6 @@ public class EventService {
       }
     } else {
       throw new RuntimeException("no EventCategory");
-    }
-
-    if(newEntity.getIsEditable() !=  eventDTOCreate.getIsEditable()  && newEntity.getEventId() != null) {
-      throw new RuntimeException("IsEditable can't be changed");
-    }
-
-    //TODO this is a quick hack cause default values doesn't seem to work (pls fix)
-    if(newEntity.getEventId() == null) {
-      newEntity.setIsEditable(true);
     }
   }
 }
