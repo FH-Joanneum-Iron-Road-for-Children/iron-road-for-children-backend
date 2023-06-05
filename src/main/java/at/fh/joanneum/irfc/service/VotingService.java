@@ -1,16 +1,20 @@
 package at.fh.joanneum.irfc.service;
 
+import at.fh.joanneum.irfc.model.event.EventDTO;
+import at.fh.joanneum.irfc.model.event.EventMapper;
+import at.fh.joanneum.irfc.model.picture.PictureDTO;
+import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.model.voting.VotingMapper;
-import at.fh.joanneum.irfc.persistence.entiy.EventCategoryEntity;
-import at.fh.joanneum.irfc.persistence.entiy.VotingEntity;
-import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
+import at.fh.joanneum.irfc.persistence.entiy.*;
+import at.fh.joanneum.irfc.persistence.repository.*;
+import org.apache.james.mime4j.dom.datetime.DateTime;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.time.Instant;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -22,6 +26,18 @@ import static java.util.Objects.isNull;
 public class VotingService {
     @Inject
     VotingRepository votingRepository;
+
+    @Inject
+    EventRepository eventRepository;
+
+    @Inject
+    VoteRepository voteRepository;
+
+    @Inject
+    VotingPartialResultRepository votingPartialResultRepository;
+
+    @Inject
+    VotingResultRepository votingResultRepository;
 
     public List<VotingDTO> getAll() {
 
@@ -75,28 +91,109 @@ public class VotingService {
         }
     }
 
-    private static void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
-        newEntity.setTitle(votingDTOCreate.getTitle());
-        newEntity.setActive(votingDTOCreate.isActive());
-        newEntity.setEditable(votingDTOCreate.isEditable());
-        //TODO add events and votingResults
+    @Transactional
+    public VotingDTO startVoting(Long id) {
+        Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
+
+        if(byIdOptional.isEmpty()){
+            throw new RuntimeException("Voting with id " + id + " not found");
+        } else {
+            VotingEntity byId = byIdOptional.get();
+            if(byId.isActive() == true || byId.isEditable() == false) {
+                throw new RuntimeException("Voting can't be started because it's either already started or has already been endet");
+            }
+            byId.setActive(true);
+            byId.setEditable(false);
+        }
+
+        return VotingMapper.INSTANCE.toDto(byIdOptional.get());
     }
 
-    // Validates the incoming voting DTO
+    @Transactional
+    public VotingDTO endVoting(Long id) {
+        Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
+
+        if(byIdOptional.isEmpty()){
+            throw new RuntimeException("Voting with id " + id + " not found");
+        } else {
+            VotingEntity byId = byIdOptional.get();
+            if(byId.isActive() == false) {
+                throw new RuntimeException("Voting is not Active");
+            }
+            byId.setActive(false);
+            VotingResultEntity votingResult = new VotingResultEntity();
+            votingResult.setTitle(byId.getTitle());
+            votingResult.setVoting(byId);
+            votingResult.setEndDate(Instant.now().toEpochMilli()); //TODO check if this is correct
+            votingResultRepository.persist(votingResult);
+
+            Set<VotingPartialResultEntity> partialResults = new HashSet<>();
+            double numOfVotes = this.voteRepository.countVotesByVoting(id);
+            for (EventEntity event : byId.getEvents()) {
+                long numOfVotesForEvent = this.voteRepository.countVotesByEventAndVoting(event.getEventId(), id);
+                VotingPartialResultEntity partialResult = new VotingPartialResultEntity();
+                partialResult.setEventName(event.getTitle());
+                partialResult.setPercentage(numOfVotes != 0 ? (numOfVotesForEvent / numOfVotes * 1.0) : 0);
+                partialResult.setVotingResult(votingResult);
+                partialResults.add(partialResult);
+
+                votingPartialResultRepository.persist(partialResult);
+            }
+            votingResult.setPartialResults(partialResults);
+
+
+
+            byId.setVotingResult(votingResult);
+        }
+
+        return VotingMapper.INSTANCE.toDto(byIdOptional.get());
+    }
+
+    private void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
+        newEntity.setTitle(votingDTOCreate.getTitle());
+
+        Set<EventEntity> events;
+        if(newEntity.getEvents() != null) {
+            events = newEntity.getEvents();
+        } else {
+            events = new HashSet<>();
+        }
+
+        for(EventDTO event : votingDTOCreate.getEvents()) {
+            Optional<EventEntity> eventOptional = this.eventRepository.findByIdOptional(event.getEventId());
+            if(eventOptional.isEmpty()){
+                throw new RuntimeException("no event with id "+ event.getEventId());
+            } else {
+                EventEntity eventEntity = EventMapper.INSTANCE.toEntity(event);
+                events.add(eventEntity);
+            }
+        }
+
+        newEntity.setEvents(events);
+
+        if(newEntity.isEditable() !=  votingDTOCreate.isEditable() && newEntity.getVotingId() != null) {
+            throw new RuntimeException("IsEditable can't be changed");
+        }
+
+        if(newEntity.isActive() !=  votingDTOCreate.isActive() && newEntity.getVotingId() != null) {
+            throw new RuntimeException("IsActive can't be changed");
+        }
+
+        //TODO this is a quick hack cause default values doesn't seem to work (pls fix)
+        if(newEntity.getVotingId() == null) {
+            newEntity.setEditable(true);
+            newEntity.setActive(false);
+        }
+    }
+
     public static void validateVoting(VotingDTO votingDTO){
         if (isNull(votingDTO.getTitle()) || votingDTO.getTitle().isEmpty()){
             throw new RuntimeException("Title must not be null or empty");
         }
 
-        if (isNull(votingDTO.isActive())){
-            throw new RuntimeException("isActive attribute missing");
+        if(votingDTO.getEvents().size() < 2) {
+            throw new RuntimeException("There has to be at least to events for a voting");
         }
-
-        if(isNull(votingDTO.isEditable())){
-            throw new RuntimeException("isEditable attribute missing");
-        }
-
-        //TODO: Validate rest of the fields after merge
     }
 
 }

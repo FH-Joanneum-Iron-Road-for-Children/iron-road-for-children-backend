@@ -34,4 +34,8 @@ public class VotingPartialResultEntity {
 
     @Column
     private Double percentage;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_voting_result", nullable = false)
+    private VotingResultEntity votingResult;
 }

@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author moe@softwaregaertner.at
@@ -26,10 +28,10 @@ public class EventEntity {
       strategy = GenerationType.SEQUENCE,
       generator = "event_id_seq"
   )
-  @Column(name = "event_id")
+  @Column(name = "event_id", nullable = false)
   private Long eventId;
 
-  @Column
+  @Column(nullable = false)
   private String title;
 
   @OneToOne(cascade = CascadeType.ALL)
@@ -40,10 +42,10 @@ public class EventEntity {
   @JoinColumn(name = "fk_picture", referencedColumnName = "picture_id")
   private PictureEntity picture;
 
-  @Column(name = "start_date_time_in_utc")
+  @Column(name = "start_date_time_in_utc", nullable = false)
   private long startDateTimeInUTC;
 
-  @Column(name = "end_date_time_in_utc")
+  @Column(name = "end_date_time_in_utc", nullable = false)
   private long endDateTimeInUTC;
 
   @ManyToOne
@@ -54,6 +56,9 @@ public class EventEntity {
   @JoinColumn(name = "fk_event_category", nullable = false)
   private EventCategoryEntity eventCategory;
 
-  //@Column(name =  "is_editable")
-  // private boolean isEditable; //TODO create Task and Implement
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events")
+  private Set<VotingEntity> votings = new HashSet<>();
+
+  @OneToMany(mappedBy = "event")
+  private Set<VoteEntity> votes;
 }

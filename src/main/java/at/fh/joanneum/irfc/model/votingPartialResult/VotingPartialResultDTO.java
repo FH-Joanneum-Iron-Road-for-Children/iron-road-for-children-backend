@@ -1,4 +1,4 @@
-package at.fh.joanneum.irfc.model.event;
+package at.fh.joanneum.irfc.model.votingPartialResult;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;

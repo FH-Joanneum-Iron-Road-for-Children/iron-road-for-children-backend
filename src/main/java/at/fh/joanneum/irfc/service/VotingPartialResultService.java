@@ -1,7 +1,7 @@
 package at.fh.joanneum.irfc.service;
 
-import at.fh.joanneum.irfc.model.event.VotingPartialResultDTO;
-import at.fh.joanneum.irfc.model.event.VotingPartialResultMapper;
+import at.fh.joanneum.irfc.model.votingPartialResult.VotingPartialResultDTO;
+import at.fh.joanneum.irfc.model.votingPartialResult.VotingPartialResultMapper;
 import at.fh.joanneum.irfc.persistence.entiy.VotingPartialResultEntity;
 import at.fh.joanneum.irfc.persistence.repository.VotingPartialResultRepository;
 

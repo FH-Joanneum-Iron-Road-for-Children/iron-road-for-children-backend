@@ -1,5 +1,7 @@
 package at.fh.joanneum.irfc.rest;
 
+import at.fh.joanneum.irfc.model.event.EventDTO;
+import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.service.PictureService;
@@ -11,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
@@ -27,12 +30,18 @@ public class PictureApi {
     public PictureDTO get(@PathParam("id") Long id){ return pictureService.get(id); }
 
     @GET
-    @Path("/search/{searchString}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public List<PictureDTO> getByTitle(@PathParam("searchString") String searchString){
-        return pictureService.search(searchString);
+    public List<PictureDTO> getAll(){
+        return pictureService.getAll();
     }
+
+//    @GET
+//    @Path("/search/{searchString}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public List<PictureDTO> getByTitle(@PathParam("searchString") String searchString){
+//        return pictureService.search(searchString);
+//    }
 
     @GET
     @Path("rootpath")
@@ -41,7 +50,7 @@ public class PictureApi {
         return pictureService.getRootpath();
     }
 
-    //TODO: there will be only MULTIPART as input with file and altText
+    // there will be only MULTIPART as input with file and altText
     // (see: https://quarkus.io/guides/rest-client-multipart)
     @POST
     @Produces(MediaType.APPLICATION_JSON)

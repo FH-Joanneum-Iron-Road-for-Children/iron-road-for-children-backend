@@ -10,4 +10,9 @@ import javax.enterprise.context.RequestScoped;
  **/
 @RequestScoped
 public class EventRepository implements PanacheRepository<EventEntity> {
+    public boolean hasActiveVoting(Long eventId) {
+        return find("id = ?1 and votings.isActive = true", eventId)
+                .firstResultOptional()
+                .isPresent();
+    }
 }

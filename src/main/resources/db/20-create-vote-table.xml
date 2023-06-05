@@ -12,8 +12,18 @@
             <column name="vote_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="vote_id_pk"/>
             </column>
-            <column name="event_id" type="bigint"/>
+            <column name="fk_voting" type="bigint"/>
+            <column name="fk_event" type="bigint"/>
             <column name="device_id" type="varchar(255)"/>
         </createTable>
+
+        <createSequence sequenceName="vote_id_seq"
+                        dataType="bigint"
+                        incrementBy="1"
+                        startValue="100"/>
+
+        <addUniqueConstraint columnNames="fk_voting, device_id"
+                             constraintName="vote_uniqe_constraint"
+                             tableName="vote"/>
     </changeSet>
 </databaseChangeLog>

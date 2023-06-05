@@ -16,10 +16,8 @@ import java.util.List;
 @RequestScoped
 @Path("event-locations")
 public class EventLocationApi {
-
     @Inject
     EventLocationService eventLocationService;
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.service.VotingService;
+import org.apache.commons.lang3.NotImplementedException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -46,6 +47,21 @@ public class VotingApi {
     @Path("/{id}")
     public VotingDTO update(@PathParam("id") Long id, VotingDTO votingResultDTO){
         return votingService.update(id, votingResultDTO);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/startVoting/{id}")
+    public VotingDTO startVoting(@PathParam("id") Long id){
+        return votingService.startVoting(id);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/endVoting/{id}")
+    public VotingDTO endVoting(@PathParam("id") Long id){
+        return votingService.endVoting(id);
+
     }
 
     @DELETE

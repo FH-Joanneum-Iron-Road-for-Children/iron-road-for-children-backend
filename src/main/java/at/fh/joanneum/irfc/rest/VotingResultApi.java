@@ -34,20 +34,20 @@ public class VotingResultApi {
         return votingResultService.get(id);
     }
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public VotingResultDTO create(VotingResultDTO votingResultDTOCreate){
-        return votingResultService.create(votingResultDTOCreate);
-    }
-
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
-    public VotingResultDTO update(@PathParam("id") Long id, VotingResultDTO votingResultDTO){
-        return votingResultService.update(id, votingResultDTO);
-    }
+//    @POST
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public VotingResultDTO create(VotingResultDTO votingResultDTOCreate){
+//        return votingResultService.create(votingResultDTOCreate);
+//    }
+//
+//    @PUT
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Path("/{id}")
+//    public VotingResultDTO update(@PathParam("id") Long id, VotingResultDTO votingResultDTO){
+//        return votingResultService.update(id, votingResultDTO);
+//    }
 
     @DELETE
     @Path("/{id}")

@@ -1,0 +1,46 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="53-add-fields" author="lion">
+
+        <addColumn tableName="voting">
+            <column name="fk_voting_result" type="bigint"/>
+        </addColumn>
+
+        <addColumn tableName="voting_partial_result">
+            <column name="fk_voting_result" type="bigint"/>
+        </addColumn>
+
+        <dropColumn tableName="event">
+            <column name="fk_category" type="boolean"/>
+        </dropColumn>
+
+        <createTable tableName="voting_event">
+            <column name="voting_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="voting_event" baseColumnNames="voting_id"
+                                 referencedTableName="voting" referencedColumnNames="voting_id"
+                                 constraintName="fk_voting_event_voting" onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="voting_event" baseColumnNames="event_id"
+                                 referencedTableName="event" referencedColumnNames="event_id"
+                                 constraintName="fk_voting_event_event" onDelete="CASCADE"/>
+        
+        <addUniqueConstraint tableName="voting_event" columnNames="voting_id, event_id"/>
+
+        <addUniqueConstraint columnNames="event_id, fk_event_info"
+                             constraintName="event_info_constraint"
+                             tableName="event"/>
+    </changeSet>
+</databaseChangeLog>

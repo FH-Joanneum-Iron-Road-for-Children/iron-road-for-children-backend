@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author dominik.jaeger@edu.fh-joanneum.at
@@ -17,12 +18,28 @@ import javax.persistence.*;
 public class VoteEntity {
 
     @Id
-    @Column(name = "vote_id")
-    private Long votingId;
+    @SequenceGenerator(
+            name = "vote_id_seq",
+            sequenceName = "vote_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "vote_id_seq"
+    )
+    @Column(name = "vote_id", nullable = false)
+    private Long voteId;
 
-    @Column(name = "event_id")
-    private Long eventId;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_voting", nullable = false)
+    private VotingEntity voting;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_event", nullable = false)
+    private EventEntity event;
 
     @Column(name = "device_id")
     private String deviceId;
-}
+    }
+

@@ -13,6 +13,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -34,6 +35,12 @@ public class EventInfoService {
             EventInfoEntity byId = byIdOptional.get();
             return EventInfoMapper.INSTANCE.toDto(byId);
         }
+    }
+
+    public List<EventInfoDTO> getAll() {
+        return eventInfoRepository.listAll().stream()
+                .map(EventInfoMapper.INSTANCE::toDto)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Transactional
@@ -69,19 +76,18 @@ public class EventInfoService {
     private void setValues(EventInfoDTO eventInfoDTO, EventInfoEntity newEntity) {
         newEntity.setInfoText(eventInfoDTO.getInfoText());
 
-        Set<PictureEntity> pictures;
-        if(newEntity.getPictures() != null) {
-            pictures = newEntity.getPictures();
-        } else {
+        Set<PictureEntity> pictures = newEntity.getPictures();
+        if (pictures == null) {
             pictures = new HashSet<>();
         }
 
-        for(PictureDTO picture : eventInfoDTO.getPictures()) {
+        for (PictureDTO picture : eventInfoDTO.getPictures()) {
             Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(picture.getPictureId());
-            if(pictureOptional.isEmpty()){
-                throw new RuntimeException("no Picture with id "+ picture.getPictureId());
+            if (pictureOptional.isEmpty()) {
+                throw new RuntimeException("No Picture with id " + picture.getPictureId());
             } else {
-                PictureEntity pictureEntity = PictureMapper.INSTANCE.toEntity(picture);
+                PictureEntity pictureEntity = pictureOptional.get();
+                pictureEntity.setEventInfo(newEntity);
                 pictures.add(pictureEntity);
             }
         }
