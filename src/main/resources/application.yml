@@ -60,7 +60,7 @@ quarkus:
 
 pictures:
   root_path: ${PICTURES_ROOT_PATH:C:/temp/pics/}
-  url: https://tmp.at/
+  url: ${PICTURES_URL:http:/env-var.failed}
 
 
 #    container-image:

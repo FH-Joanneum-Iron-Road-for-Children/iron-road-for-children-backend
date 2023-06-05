@@ -38,7 +38,5 @@ public class PictureEntity {
     @ManyToOne
     @JoinColumn(name = "fk_event_info")
     private EventInfoEntity eventInfo;
-
-    @OneToOne(mappedBy="picture", cascade = CascadeType.ALL)
-    private EventEntity event;
+    
 }
