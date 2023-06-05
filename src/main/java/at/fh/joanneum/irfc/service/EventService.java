@@ -36,9 +36,11 @@ public class EventService {
   EventInfoService eventInfoService;
 
   public List<EventDTO> getAll() { //TODO throws exception (pls fix)
-    return eventRepository.listAll().stream()
-        .map(EventMapper.INSTANCE::toDto)
-        .collect(Collectors.toUnmodifiableList());
+    List<EventEntity> all = eventRepository.listAll();
+    List<EventDTO> allMapped = all.stream()
+            .map(EventMapper.INSTANCE::toDto)
+            .collect(Collectors.toUnmodifiableList());
+    return allMapped;
   }
 
   public EventDTO get(Long id) {
