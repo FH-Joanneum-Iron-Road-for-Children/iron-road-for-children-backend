@@ -80,11 +80,11 @@ public class VoteService {
     }
 
     private static void validateDTOvalues(VoteDTO voteDTO) {
-        if(isNull(voteDTO.getVoting())){
-            throw new RuntimeException("Voting must not be null");
+        if(isNull(voteDTO.getVotingId())){
+            throw new RuntimeException("Voting Id must not be null");
         }
-        if(isNull(voteDTO.getEvent())){
-            throw new RuntimeException("Event must not be null");
+        if(isNull(voteDTO.getEventId())){
+            throw new RuntimeException("Event Id must not be null");
         }
         if(isNull(voteDTO.getDeviceId())){
             throw new RuntimeException("Device ID must not be null");
@@ -94,30 +94,22 @@ public class VoteService {
     private void setValues(VoteDTO voteDTO, VoteEntity newEntity) {
         newEntity.setDeviceId(voteDTO.getDeviceId());
 
-        if(voteDTO.getEvent() != null) {
-            Optional<EventEntity> eventOptional = this.eventRepository.findByIdOptional(voteDTO.getEvent().getEventId());
-            if (eventOptional.isEmpty()) {
-                throw new RuntimeException("no Event with id " + voteDTO.getEvent().getEventId());
-            } else {
-                newEntity.setEvent(eventOptional.get());
-            }
+        Optional<EventEntity> eventOptional = this.eventRepository.findByIdOptional(voteDTO.getEventId());
+        if (eventOptional.isEmpty()) {
+            throw new RuntimeException("no Event with id " + voteDTO.getEventId());
         } else {
-            throw new RuntimeException("no Event");
+            newEntity.setEvent(eventOptional.get());
         }
 
-        if(voteDTO.getVoting() != null) {
-            Optional<VotingEntity> votingOptional = this.votingRepository.findByIdOptional(voteDTO.getVoting().getVotingId());
-            if (votingOptional.isEmpty()) {
-                throw new RuntimeException("no Voting with id " + voteDTO.getVoting().getVotingId());
-            } else {
-                VotingEntity voting = votingOptional.get();
-                if(this.votingRepository.containsEventId(voting, voteDTO.getEvent().getEventId()) && voting.isActive()){
-                    newEntity.setVoting(votingOptional.get());
-                } else {
-                    throw new RuntimeException("Either Voting isn't running or the eventId isn't in the voting");                }
-            }
+        Optional<VotingEntity> votingOptional = this.votingRepository.findByIdOptional(voteDTO.getVotingId());
+        if (votingOptional.isEmpty()) {
+            throw new RuntimeException("no Voting with id " + voteDTO.getVotingId());
         } else {
-            throw new RuntimeException("no Voting");
+            VotingEntity voting = votingOptional.get();
+            if(this.votingRepository.containsEventId(voting, voteDTO.getEventId()) && voting.isActive()){
+                newEntity.setVoting(votingOptional.get());
+            } else {
+                throw new RuntimeException("Either Voting isn't running or the eventId isn't in the voting");                }
         }
     }
 }
