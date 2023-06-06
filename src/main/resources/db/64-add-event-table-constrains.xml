@@ -1,0 +1,33 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet  author="moe"  id="add_fk_category_constraint">
+        <addForeignKeyConstraint
+                constraintName="fk_event_event_category"
+                baseTableName="event"
+                baseColumnNames="fk_category"
+                referencedTableName="event_category"
+                referencedColumnNames="event_category_id"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"
+                validate="true"/>
+    </changeSet>
+
+    <changeSet  author="moe"  id="add_fk_event_location_constraint">
+        <addForeignKeyConstraint
+                constraintName="fk_event_event_location"
+                baseTableName="event"
+                baseColumnNames="fk_event_location"
+                referencedTableName="event_location"
+                referencedColumnNames="event_location_id"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"
+                validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>
