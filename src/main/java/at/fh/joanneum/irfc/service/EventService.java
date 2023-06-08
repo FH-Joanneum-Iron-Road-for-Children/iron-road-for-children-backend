@@ -62,6 +62,10 @@ public class EventService {
 
     @Transactional
     public EventDTO update(Long id, EventDTO eventDTO) {
+        if (!eventRepository.isEventEditable(id)) {
+            throw new RuntimeException("Can't update a Event with active votings");
+        }
+
         Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
 
         checkDTOvalues(eventDTO);
