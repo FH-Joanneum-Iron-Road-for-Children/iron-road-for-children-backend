@@ -10,7 +10,7 @@
         <addForeignKeyConstraint
                 constraintName="fk_event_event_category"
                 baseTableName="event"
-                baseColumnNames="fk_category"
+                baseColumnNames="fk_event_category"
                 referencedTableName="event_category"
                 referencedColumnNames="event_category_id"
                 onDelete="RESTRICT"
