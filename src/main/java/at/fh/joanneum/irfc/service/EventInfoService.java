@@ -1,9 +1,12 @@
 package at.fh.joanneum.irfc.service;
 
+import at.fh.joanneum.irfc.model.event.EventDTO;
+import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoMapper;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.model.picture.PictureMapper;
+import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
 import at.fh.joanneum.irfc.persistence.entiy.EventInfoEntity;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
@@ -81,16 +84,32 @@ public class EventInfoService {
             pictures = new HashSet<>();
         }
 
+        Set<Long> dtoPictureIds = new HashSet<>();
         for (PictureDTO picture : eventInfoDTO.getPictures()) {
-            Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(picture.getPictureId());
-            if (pictureOptional.isEmpty()) {
-                throw new RuntimeException("No Picture with id " + picture.getPictureId());
-            } else {
-                PictureEntity pictureEntity = pictureOptional.get();
-                pictureEntity.setEventInfo(newEntity);
-                pictures.add(pictureEntity);
+            dtoPictureIds.add(picture.getPictureId());
+        }
+
+        Iterator<PictureEntity> iterator = pictures.iterator();
+        while (iterator.hasNext()) {
+            PictureEntity pictureEntity = iterator.next();
+            Long pictureId = pictureEntity.getPictureId();
+            if (!dtoPictureIds.contains(pictureId)) {
+                iterator.remove();
             }
         }
+
+        for (PictureDTO picture : eventInfoDTO.getPictures()) {
+            if (!this.pictureRepository.isPictureIdInList(pictures, picture.getPictureId())) {
+                Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(picture.getPictureId());
+                if (pictureOptional.isEmpty()) {
+                    throw new RuntimeException("No Picture with id " + picture.getPictureId());
+                } else {
+                    PictureEntity pictureEntity = pictureOptional.get();
+                    pictures.add(pictureEntity);
+                }
+            }
+        }
+
         newEntity.setPictures(pictures);
     }
 

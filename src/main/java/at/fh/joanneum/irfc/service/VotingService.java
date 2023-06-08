@@ -68,6 +68,9 @@ public class VotingService {
 
     @Transactional
     public VotingDTO update(Long id, VotingDTO votingResultDTO) {
+        if(!votingRepository.isVotingEditable(id)) {
+            throw new RuntimeException("Can't update a voting which is Active");
+        }
         /// Check for empty vals first
         validateVoting(votingResultDTO);
 
@@ -86,6 +89,10 @@ public class VotingService {
 
     @Transactional
     public void delete(Long id) {
+        if(votingRepository.isVotingActive(id)) {
+            throw new RuntimeException("Please stop the voting before you delete it");
+        }
+
         if(!votingRepository.deleteById(id)){
             throw new RuntimeException("Voting with id " + id + " not found");
         }
@@ -152,20 +159,34 @@ public class VotingService {
     private void setValues(VotingDTO votingDTOCreate, VotingEntity newEntity) {
         newEntity.setTitle(votingDTOCreate.getTitle());
 
-        Set<EventEntity> events;
-        if(newEntity.getEvents() != null) {
-            events = newEntity.getEvents();
-        } else {
+        Set<EventEntity> events = newEntity.getEvents();
+        if (events == null) {
             events = new HashSet<>();
         }
 
-        for(EventDTO event : votingDTOCreate.getEvents()) {
-            Optional<EventEntity> eventOptional = this.eventRepository.findByIdOptional(event.getEventId());
-            if(eventOptional.isEmpty()){
-                throw new RuntimeException("no event with id "+ event.getEventId());
-            } else {
-                EventEntity eventEntity = EventMapper.INSTANCE.toEntity(event);
-                events.add(eventEntity);
+        Set<Long> dtoEventIds = new HashSet<>();
+        for (EventDTO event : votingDTOCreate.getEvents()) {
+            dtoEventIds.add(event.getEventId());
+        }
+
+        Iterator<EventEntity> iterator = events.iterator();
+        while (iterator.hasNext()) {
+            EventEntity eventEntity = iterator.next();
+            Long eventId = eventEntity.getEventId();
+            if (!dtoEventIds.contains(eventId)) {
+                iterator.remove();
+            }
+        }
+
+        for (EventDTO event : votingDTOCreate.getEvents()) {
+            if (!this.eventRepository.isEventIdInList(events, event.getEventId())) {
+                Optional<EventEntity> eventOptional = this.eventRepository.findByIdOptional(event.getEventId());
+                if (eventOptional.isEmpty()) {
+                    throw new RuntimeException("No Event with id " + event.getEventId());
+                } else {
+                    EventEntity eventEntity = eventOptional.get();
+                    events.add(eventEntity);
+                }
             }
         }
 

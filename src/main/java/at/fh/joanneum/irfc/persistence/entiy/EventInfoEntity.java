@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,8 +34,11 @@ public class EventInfoEntity {
     @Column(name = "event_info_text")
     private String infoText;
 
-    @OneToMany(mappedBy = "eventInfo")
-    private Set<PictureEntity> pictures;
+    @ManyToMany
+    @JoinTable(name = "picture_event_info",
+            joinColumns = @JoinColumn(name = "event_info_id"),
+            inverseJoinColumns = @JoinColumn(name = "picture_id"))
+    private Set<PictureEntity> pictures = new HashSet<>();
 
     @OneToOne(mappedBy="eventInfo", cascade = CascadeType.ALL)
     private EventEntity eventEntity;

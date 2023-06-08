@@ -38,7 +38,7 @@ public class EventEntity {
   @JoinColumn(name = "fk_event_info", referencedColumnName = "event_info_id")
   private EventInfoEntity eventInfo;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   @JoinColumn(name = "fk_picture", referencedColumnName = "picture_id")
   private PictureEntity picture;
 

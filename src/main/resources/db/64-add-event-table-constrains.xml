@@ -30,4 +30,35 @@
                 validate="true"/>
     </changeSet>
 
+    <changeSet  author="lion" id="remove_fk_event_info_from_picture">
+        <dropColumn tableName="picture">
+            <column name="fk_event_info" type="boolean"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet author="lion" id="add_picture_event_info_relation">
+        <createTable tableName="picture_event_info">
+            <column name="picture_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_info_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="picture_event_info" columnNames="picture_id, event_info_id"/>
+
+        <addForeignKeyConstraint baseTableName="picture_event_info"
+                                 baseColumnNames="picture_id"
+                                 constraintName="fk_picture_event_info_picture"
+                                 referencedTableName="picture"
+                                 referencedColumnNames="picture_id"/>
+
+        <addForeignKeyConstraint baseTableName="picture_event_info"
+                                 baseColumnNames="event_info_id"
+                                 constraintName="fk_picture_event_info_event_info"
+                                 referencedTableName="event_info"
+                                 referencedColumnNames="event_info_id"/>
+    </changeSet>
+
 </databaseChangeLog>
