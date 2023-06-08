@@ -1,10 +1,10 @@
 package at.fh.joanneum.irfc.persistence.entiy;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 /**
  * @author https://github.com/GoldNova
@@ -29,7 +29,7 @@ public class VotingPartialResultEntity {
     @Column(name = "voting_partial_result_id")
     private Long votingPartialResultId;
 
-    @Column(name="event_name")
+    @Column(name = "event_name")
     private String eventName;
 
     @Column

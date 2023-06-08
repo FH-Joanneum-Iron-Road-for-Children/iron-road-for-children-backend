@@ -1,0 +1,64 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet  author="moe"  id="add_fk_category_constraint">
+        <addForeignKeyConstraint
+                constraintName="fk_event_event_category"
+                baseTableName="event"
+                baseColumnNames="fk_event_category"
+                referencedTableName="event_category"
+                referencedColumnNames="event_category_id"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"
+                validate="true"/>
+    </changeSet>
+
+    <changeSet  author="moe"  id="add_fk_event_location_constraint">
+        <addForeignKeyConstraint
+                constraintName="fk_event_event_location"
+                baseTableName="event"
+                baseColumnNames="fk_event_location"
+                referencedTableName="event_location"
+                referencedColumnNames="event_location_id"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"
+                validate="true"/>
+    </changeSet>
+
+    <changeSet  author="lion" id="remove_fk_event_info_from_picture">
+        <dropColumn tableName="picture">
+            <column name="fk_event_info" type="boolean"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet author="lion" id="add_picture_event_info_relation">
+        <createTable tableName="picture_event_info">
+            <column name="picture_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_info_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="picture_event_info" columnNames="picture_id, event_info_id"/>
+
+        <addForeignKeyConstraint baseTableName="picture_event_info"
+                                 baseColumnNames="picture_id"
+                                 constraintName="fk_picture_event_info_picture"
+                                 referencedTableName="picture"
+                                 referencedColumnNames="picture_id"/>
+
+        <addForeignKeyConstraint baseTableName="picture_event_info"
+                                 baseColumnNames="event_info_id"
+                                 constraintName="fk_picture_event_info_event_info"
+                                 referencedTableName="event_info"
+                                 referencedColumnNames="event_info_id"/>
+    </changeSet>
+
+</databaseChangeLog>

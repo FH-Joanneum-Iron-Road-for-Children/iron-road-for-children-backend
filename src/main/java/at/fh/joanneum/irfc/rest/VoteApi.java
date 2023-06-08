@@ -7,8 +7,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
 
 /**
  * @author dominik.jaeger@edu.fh-joanneum.at
@@ -23,7 +21,7 @@ public class VoteApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public VoteDTO create(VoteDTO voteDTO){
+    public VoteDTO create(VoteDTO voteDTO) {
         return voteService.create(voteDTO);
     }
 }

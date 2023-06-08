@@ -3,8 +3,10 @@ package at.fh.joanneum.irfc.persistence.entiy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
@@ -35,8 +37,7 @@ public class PictureEntity {
     @Column(name = "path")
     private String path;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_event_info")
-    private EventInfoEntity eventInfo;
-    
+    @ManyToMany(mappedBy = "pictures")
+    private Set<EventInfoEntity> eventInfos = new HashSet<>();
+
 }

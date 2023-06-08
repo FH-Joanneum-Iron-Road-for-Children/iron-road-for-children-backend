@@ -22,7 +22,7 @@ public class VotingResultApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<VotingResultDTO> getAll(){
+    public List<VotingResultDTO> getAll() {
         return votingResultService.getAll();
     }
 
@@ -30,7 +30,7 @@ public class VotingResultApi {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public VotingResultDTO get(@PathParam("id") Long id){
+    public VotingResultDTO get(@PathParam("id") Long id) {
         return votingResultService.get(id);
     }
 
@@ -51,9 +51,9 @@ public class VotingResultApi {
 
     @DELETE
     @Path("/{id}")
-    public Response delete(@PathParam("id") Long id){
+    public Response delete(@PathParam("id") Long id) {
         votingResultService.delete(id);
-        String message = "VotingResult with id "+id+" deleted";
+        String message = "VotingResult with id " + id + " deleted";
         return Response
                 .status(200, message)
                 .build();

@@ -1,7 +1,5 @@
 package at.fh.joanneum.irfc.rest;
 
-import at.fh.joanneum.irfc.model.event.EventDTO;
-import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.service.PictureService;
@@ -13,7 +11,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author gregor.wakonig@edu.fh-joanneum.at
@@ -27,11 +24,13 @@ public class PictureApi {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public PictureDTO get(@PathParam("id") Long id){ return pictureService.get(id); }
+    public PictureDTO get(@PathParam("id") Long id) {
+        return pictureService.get(id);
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PictureDTO> getAll(){
+    public List<PictureDTO> getAll() {
         return pictureService.getAll();
     }
 
@@ -46,7 +45,7 @@ public class PictureApi {
     @GET
     @Path("rootpath")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getRootPath(){
+    public String getRootPath() {
         return pictureService.getRootpath();
     }
 
@@ -55,15 +54,15 @@ public class PictureApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public PictureDTO create(@MultipartForm MultipartBody data){
+    public PictureDTO create(@MultipartForm MultipartBody data) {
         return pictureService.create(data);
     }
 
     @DELETE
     @Path("/{id}")
-    public Response delete(@PathParam("id") Long id){
+    public Response delete(@PathParam("id") Long id) {
         pictureService.delete(id);
-        String message = "Picture with id "+id+" deleted";
+        String message = "Picture with id " + id + " deleted";
         return Response
                 .status(200, message)
                 .build();

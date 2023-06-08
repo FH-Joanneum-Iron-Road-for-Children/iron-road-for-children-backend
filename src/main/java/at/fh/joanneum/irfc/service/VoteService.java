@@ -3,7 +3,6 @@ package at.fh.joanneum.irfc.service;
 import at.fh.joanneum.irfc.model.vote.VoteDTO;
 import at.fh.joanneum.irfc.model.vote.VoteMapper;
 import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
-import at.fh.joanneum.irfc.persistence.entiy.EventLocationEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VoteEntity;
 import at.fh.joanneum.irfc.persistence.entiy.VotingEntity;
 import at.fh.joanneum.irfc.persistence.repository.EventRepository;
@@ -62,7 +61,7 @@ public class VoteService {
 
         validateDTOvalues(voteDTO);
 
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("Voting with id " + id + " not found");
         } else {
             VoteEntity byId = byIdOptional.get();
@@ -74,19 +73,19 @@ public class VoteService {
 
     @Transactional
     public void delete(Long id) {
-        if(!voteRepository.deleteById(id)){
+        if (!voteRepository.deleteById(id)) {
             throw new RuntimeException("Voting with id " + id + " not found");
         }
     }
 
     private static void validateDTOvalues(VoteDTO voteDTO) {
-        if(isNull(voteDTO.getVotingId())){
+        if (isNull(voteDTO.getVotingId())) {
             throw new RuntimeException("Voting Id must not be null");
         }
-        if(isNull(voteDTO.getEventId())){
+        if (isNull(voteDTO.getEventId())) {
             throw new RuntimeException("Event Id must not be null");
         }
-        if(isNull(voteDTO.getDeviceId())){
+        if (isNull(voteDTO.getDeviceId())) {
             throw new RuntimeException("Device ID must not be null");
         }
     }
@@ -106,10 +105,11 @@ public class VoteService {
             throw new RuntimeException("no Voting with id " + voteDTO.getVotingId());
         } else {
             VotingEntity voting = votingOptional.get();
-            if(this.votingRepository.containsEventId(voting, voteDTO.getEventId()) && voting.isActive()){
+            if (this.votingRepository.containsEventId(voting, voteDTO.getEventId()) && voting.isActive()) {
                 newEntity.setVoting(votingOptional.get());
             } else {
-                throw new RuntimeException("Either Voting isn't running or the eventId isn't in the voting");                }
+                throw new RuntimeException("Either Voting isn't running or the eventId isn't in the voting");
+            }
         }
     }
 }

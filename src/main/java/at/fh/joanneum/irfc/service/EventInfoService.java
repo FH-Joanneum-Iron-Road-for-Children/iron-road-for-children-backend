@@ -3,7 +3,6 @@ package at.fh.joanneum.irfc.service;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoMapper;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
-import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.persistence.entiy.EventInfoEntity;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
@@ -29,7 +28,7 @@ public class EventInfoService {
 
     public EventInfoDTO get(Long id) {
         Optional<EventInfoEntity> byIdOptional = eventInfoRepository.findByIdOptional(id);
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("EventInfo with id " + id + " not found");
         } else {
             EventInfoEntity byId = byIdOptional.get();
@@ -53,7 +52,7 @@ public class EventInfoService {
     }
 
     private static void checkDTOvalues(EventInfoDTO eventInfoDTO) {
-        if(isNull(eventInfoDTO.getInfoText()) || eventInfoDTO.getInfoText().isBlank()){
+        if (isNull(eventInfoDTO.getInfoText()) || eventInfoDTO.getInfoText().isBlank()) {
             throw new RuntimeException("Info Text must be provided");
         }
     }
@@ -62,7 +61,7 @@ public class EventInfoService {
     public EventInfoDTO update(Long id, EventInfoDTO eventInfoDTO) {
         Optional<EventInfoEntity> byIdOptional = eventInfoRepository.findByIdOptional(id);
 
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("EventInfo with id " + id + " not found");
         } else {
             checkDTOvalues(eventInfoDTO);
@@ -81,22 +80,38 @@ public class EventInfoService {
             pictures = new HashSet<>();
         }
 
+        Set<Long> dtoPictureIds = new HashSet<>();
         for (PictureDTO picture : eventInfoDTO.getPictures()) {
-            Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(picture.getPictureId());
-            if (pictureOptional.isEmpty()) {
-                throw new RuntimeException("No Picture with id " + picture.getPictureId());
-            } else {
-                PictureEntity pictureEntity = pictureOptional.get();
-                pictureEntity.setEventInfo(newEntity);
-                pictures.add(pictureEntity);
+            dtoPictureIds.add(picture.getPictureId());
+        }
+
+        Iterator<PictureEntity> iterator = pictures.iterator();
+        while (iterator.hasNext()) {
+            PictureEntity pictureEntity = iterator.next();
+            Long pictureId = pictureEntity.getPictureId();
+            if (!dtoPictureIds.contains(pictureId)) {
+                iterator.remove();
             }
         }
+
+        for (PictureDTO picture : eventInfoDTO.getPictures()) {
+            if (!this.pictureRepository.isPictureIdInList(pictures, picture.getPictureId())) {
+                Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(picture.getPictureId());
+                if (pictureOptional.isEmpty()) {
+                    throw new RuntimeException("No Picture with id " + picture.getPictureId());
+                } else {
+                    PictureEntity pictureEntity = pictureOptional.get();
+                    pictures.add(pictureEntity);
+                }
+            }
+        }
+
         newEntity.setPictures(pictures);
     }
 
     @Transactional
     public void delete(Long id) {
-        if(!eventInfoRepository.deleteById(id)){
+        if (!eventInfoRepository.deleteById(id)) {
             throw new RuntimeException("EventInfo with id " + id + " not found");
         }
 

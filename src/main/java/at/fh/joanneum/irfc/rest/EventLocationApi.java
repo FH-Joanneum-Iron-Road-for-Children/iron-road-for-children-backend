@@ -35,7 +35,7 @@ public class EventLocationApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public EventLocationDTO create(EventLocationDTO eventLocationDTO){
+    public EventLocationDTO create(EventLocationDTO eventLocationDTO) {
         return eventLocationService.create(eventLocationDTO);
     }
 
@@ -43,15 +43,15 @@ public class EventLocationApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public EventLocationDTO update(@PathParam("id") Long id, EventLocationDTO eventLocationDTO){
+    public EventLocationDTO update(@PathParam("id") Long id, EventLocationDTO eventLocationDTO) {
         return eventLocationService.update(id, eventLocationDTO);
     }
 
     @DELETE
     @Path("{id}")
-    public Response delete(@PathParam("id") Long id){
+    public Response delete(@PathParam("id") Long id) {
         eventLocationService.delete(id);
-        String message = "EventLocation with id "+ id + "deleted";
+        String message = "EventLocation with id " + id + "deleted";
         return Response
                 .status(200, message)
                 .build();

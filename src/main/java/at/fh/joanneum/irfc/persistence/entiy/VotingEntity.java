@@ -42,13 +42,13 @@ public class VotingEntity {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id")
+    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id", insertable = false, updatable = false)
     private VotingResultEntity votingResult;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "voting_event", joinColumns = @JoinColumn(name = "voting_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<EventEntity> events = new HashSet<>();
 
-     @OneToMany(mappedBy = "voting")
+    @OneToMany(mappedBy = "voting")
     private Set<VoteEntity> votes;
 }

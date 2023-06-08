@@ -1,13 +1,11 @@
 package at.fh.joanneum.irfc.model.eventInfo;
 
-import at.fh.joanneum.irfc.model.event.EventDTO;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

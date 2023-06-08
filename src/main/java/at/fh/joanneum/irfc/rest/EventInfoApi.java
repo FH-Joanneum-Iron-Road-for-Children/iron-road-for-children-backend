@@ -1,8 +1,8 @@
 package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
-import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.service.EventInfoService;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -23,20 +23,20 @@ public class EventInfoApi {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public EventInfoDTO get(@PathParam("id") Long id){
+    public EventInfoDTO get(@PathParam("id") Long id) {
         return eventInfoService.get(id);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<EventInfoDTO> getAll(){
+    public List<EventInfoDTO> getAll() {
         return eventInfoService.getAll();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public EventInfoDTO create(EventInfoDTO eventInfoDTO){
+    public EventInfoDTO create(EventInfoDTO eventInfoDTO) {
         return eventInfoService.create(eventInfoDTO);
     }
 
@@ -44,15 +44,15 @@ public class EventInfoApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public EventInfoDTO update(@PathParam("id") Long id, EventInfoDTO eventInfoDTO){
+    public EventInfoDTO update(@PathParam("id") Long id, EventInfoDTO eventInfoDTO) {
         return eventInfoService.update(id, eventInfoDTO);
     }
 
     @DELETE
     @Path("/{id}")
-    public Response delete(@PathParam("id") Long id){
+    public Response delete(@PathParam("id") Long id) {
         eventInfoService.delete(id);
-        String message = "EventInfo with id "+id+" deleted";
+        String message = "EventInfo with id " + id + " deleted";
         return Response
                 .status(200, message)
                 .build();
