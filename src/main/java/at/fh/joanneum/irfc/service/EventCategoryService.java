@@ -20,65 +20,66 @@ import static java.util.Objects.isNull;
 @RequestScoped
 public class EventCategoryService {
 
-  @Inject
-  EventCategoryRepository eventCategoryRepository;
-  public List<EventCategoryDTO> getAll() {
-    return eventCategoryRepository.listAll().stream()
-        .map(EventCategoryMapper.INSTANCE::toDto)
-        .collect(Collectors.toUnmodifiableList());
-  }
+    @Inject
+    EventCategoryRepository eventCategoryRepository;
 
-  public EventCategoryDTO get(Long id) {
-    Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
-    if(byIdOptional.isEmpty()){
-      throw new RuntimeException("Event category with id " + id + " not found");
-    } else {
-      EventCategoryEntity byId = byIdOptional.get();
-      return EventCategoryMapper.INSTANCE.toDto(byId);
+    public List<EventCategoryDTO> getAll() {
+        return eventCategoryRepository.listAll().stream()
+                .map(EventCategoryMapper.INSTANCE::toDto)
+                .collect(Collectors.toUnmodifiableList());
     }
-  }
 
-  @Transactional
-  public EventCategoryDTO create(EventCategoryDTO eventCategoryDTO) {
-
-    validateDTOvalues(eventCategoryDTO);
-
-    EventCategoryEntity newEntity = new EventCategoryEntity();
-    setValues(eventCategoryDTO, newEntity);
-    eventCategoryRepository.persist(newEntity);
-    return EventCategoryMapper.INSTANCE.toDto(newEntity);
-  }
-
-  @Transactional
-  public EventCategoryDTO update(Long id, EventCategoryDTO eventCategoryDTO) {
-    Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
-
-    validateDTOvalues(eventCategoryDTO);
-
-    if(byIdOptional.isEmpty()){
-      throw new RuntimeException("Event category with id " + id + " not found");
-    } else {
-      EventCategoryEntity byId = byIdOptional.get();
-      setValues(eventCategoryDTO, byId);
-      eventCategoryRepository.persistAndFlush(byId);
-      return EventCategoryMapper.INSTANCE.toDto(byId);
+    public EventCategoryDTO get(Long id) {
+        Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
+        if (byIdOptional.isEmpty()) {
+            throw new RuntimeException("Event category with id " + id + " not found");
+        } else {
+            EventCategoryEntity byId = byIdOptional.get();
+            return EventCategoryMapper.INSTANCE.toDto(byId);
+        }
     }
-  }
 
-  @Transactional
-  public void delete(Long id) {
-    if(!eventCategoryRepository.deleteById(id)){
-      throw new RuntimeException("Event category with id " + id + " not found");
+    @Transactional
+    public EventCategoryDTO create(EventCategoryDTO eventCategoryDTO) {
+
+        validateDTOvalues(eventCategoryDTO);
+
+        EventCategoryEntity newEntity = new EventCategoryEntity();
+        setValues(eventCategoryDTO, newEntity);
+        eventCategoryRepository.persist(newEntity);
+        return EventCategoryMapper.INSTANCE.toDto(newEntity);
     }
-  }
 
-  private static void validateDTOvalues(EventCategoryDTO eventCategoryDTO) {
-    if(isNull(eventCategoryDTO.getName())|| eventCategoryDTO.getName().isBlank()){
-      throw new RuntimeException("Name must not be null or empty");
+    @Transactional
+    public EventCategoryDTO update(Long id, EventCategoryDTO eventCategoryDTO) {
+        Optional<EventCategoryEntity> byIdOptional = eventCategoryRepository.findByIdOptional(id);
+
+        validateDTOvalues(eventCategoryDTO);
+
+        if (byIdOptional.isEmpty()) {
+            throw new RuntimeException("Event category with id " + id + " not found");
+        } else {
+            EventCategoryEntity byId = byIdOptional.get();
+            setValues(eventCategoryDTO, byId);
+            eventCategoryRepository.persistAndFlush(byId);
+            return EventCategoryMapper.INSTANCE.toDto(byId);
+        }
     }
-  }
 
-  private static void setValues(EventCategoryDTO eventCategoryDTO, EventCategoryEntity newEntity) {
-    newEntity.setName(eventCategoryDTO.getName());
-  }
+    @Transactional
+    public void delete(Long id) {
+        if (!eventCategoryRepository.deleteById(id)) {
+            throw new RuntimeException("Event category with id " + id + " not found");
+        }
+    }
+
+    private static void validateDTOvalues(EventCategoryDTO eventCategoryDTO) {
+        if (isNull(eventCategoryDTO.getName()) || eventCategoryDTO.getName().isBlank()) {
+            throw new RuntimeException("Name must not be null or empty");
+        }
+    }
+
+    private static void setValues(EventCategoryDTO eventCategoryDTO, EventCategoryEntity newEntity) {
+        newEntity.setName(eventCategoryDTO.getName());
+    }
 }

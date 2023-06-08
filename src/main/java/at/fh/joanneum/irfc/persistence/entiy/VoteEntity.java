@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * @author dominik.jaeger@edu.fh-joanneum.at
@@ -41,5 +40,5 @@ public class VoteEntity {
 
     @Column(name = "device_id")
     private String deviceId;
-    }
+}
 

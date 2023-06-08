@@ -1,14 +1,10 @@
 package at.fh.joanneum.irfc.service;
 
 import at.fh.joanneum.irfc.model.event.EventDTO;
-import at.fh.joanneum.irfc.model.event.EventMapper;
-import at.fh.joanneum.irfc.model.picture.PictureDTO;
-import at.fh.joanneum.irfc.model.picture.PictureMapper;
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.model.voting.VotingMapper;
 import at.fh.joanneum.irfc.persistence.entiy.*;
 import at.fh.joanneum.irfc.persistence.repository.*;
-import org.apache.james.mime4j.dom.datetime.DateTime;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -43,15 +39,12 @@ public class VotingService {
 
         List<VotingEntity> resultSet = votingRepository.listAll();
 
-        List<VotingDTO> collect = resultSet.stream()
-                .map(VotingMapper.INSTANCE::toDto)
-                .collect(Collectors.toUnmodifiableList());
+        List<VotingDTO> collect = resultSet.stream().map(VotingMapper.INSTANCE::toDto).collect(Collectors.toUnmodifiableList());
         return collect;
     }
 
     public VotingDTO get(Long id) {
-        VotingEntity votingEntity = votingRepository.findByIdOptional(id)
-                .orElseThrow(() -> new RuntimeException("Voting with id " + id + " not found"));
+        VotingEntity votingEntity = votingRepository.findByIdOptional(id).orElseThrow(() -> new RuntimeException("Voting with id " + id + " not found"));
 
         return VotingMapper.INSTANCE.toDto(votingEntity);
     }
@@ -68,7 +61,7 @@ public class VotingService {
 
     @Transactional
     public VotingDTO update(Long id, VotingDTO votingResultDTO) {
-        if(!votingRepository.isVotingEditable(id)) {
+        if (!votingRepository.isVotingEditable(id)) {
             throw new RuntimeException("Can't update a voting which is Active");
         }
         /// Check for empty vals first
@@ -77,7 +70,7 @@ public class VotingService {
         // get entity by id
         Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
 
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("Voting with id " + id + " not found");
         } else {
             VotingEntity byId = byIdOptional.get();
@@ -89,11 +82,11 @@ public class VotingService {
 
     @Transactional
     public void delete(Long id) {
-        if(votingRepository.isVotingActive(id)) {
+        if (votingRepository.isVotingActive(id)) {
             throw new RuntimeException("Please stop the voting before you delete it");
         }
 
-        if(!votingRepository.deleteById(id)){
+        if (!votingRepository.deleteById(id)) {
             throw new RuntimeException("Voting with id " + id + " not found");
         }
     }
@@ -102,11 +95,11 @@ public class VotingService {
     public VotingDTO startVoting(Long id) {
         Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
 
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("Voting with id " + id + " not found");
         } else {
             VotingEntity byId = byIdOptional.get();
-            if(byId.isActive() == true || byId.isEditable() == false) {
+            if (byId.isActive() == true || byId.isEditable() == false) {
                 throw new RuntimeException("Voting can't be started because it's either already started or has already been endet");
             }
             byId.setActive(true);
@@ -120,11 +113,11 @@ public class VotingService {
     public VotingDTO endVoting(Long id) {
         Optional<VotingEntity> byIdOptional = votingRepository.findByIdOptional(id);
 
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("Voting with id " + id + " not found");
         } else {
             VotingEntity byId = byIdOptional.get();
-            if(byId.isActive() == false) {
+            if (byId.isActive() == false) {
                 throw new RuntimeException("Voting is not Active");
             }
             byId.setActive(false);
@@ -147,7 +140,6 @@ public class VotingService {
                 votingPartialResultRepository.persist(partialResult);
             }
             votingResult.setPartialResults(partialResults);
-
 
 
             byId.setVotingResult(votingResult);
@@ -192,27 +184,27 @@ public class VotingService {
 
         newEntity.setEvents(events);
 
-        if(newEntity.isEditable() !=  votingDTOCreate.isEditable() && newEntity.getVotingId() != null) {
+        if (newEntity.isEditable() != votingDTOCreate.isEditable() && newEntity.getVotingId() != null) {
             throw new RuntimeException("IsEditable can't be changed");
         }
 
-        if(newEntity.isActive() !=  votingDTOCreate.isActive() && newEntity.getVotingId() != null) {
+        if (newEntity.isActive() != votingDTOCreate.isActive() && newEntity.getVotingId() != null) {
             throw new RuntimeException("IsActive can't be changed");
         }
 
         //TODO this is a quick hack cause default values doesn't seem to work (pls fix)
-        if(newEntity.getVotingId() == null) {
+        if (newEntity.getVotingId() == null) {
             newEntity.setEditable(true);
             newEntity.setActive(false);
         }
     }
 
-    public static void validateVoting(VotingDTO votingDTO){
-        if (isNull(votingDTO.getTitle()) || votingDTO.getTitle().isEmpty()){
+    public static void validateVoting(VotingDTO votingDTO) {
+        if (isNull(votingDTO.getTitle()) || votingDTO.getTitle().isEmpty()) {
             throw new RuntimeException("Title must not be null or empty");
         }
 
-        if(votingDTO.getEvents().size() < 2) {
+        if (votingDTO.getEvents().size() < 2) {
             throw new RuntimeException("There has to be at least to events for a voting");
         }
     }

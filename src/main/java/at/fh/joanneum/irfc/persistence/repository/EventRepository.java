@@ -1,7 +1,6 @@
 package at.fh.joanneum.irfc.persistence.repository;
 
 import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
-import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.RequestScoped;
@@ -17,6 +16,7 @@ import java.util.Set;
 public class EventRepository implements PanacheRepository<EventEntity> {
     @Inject
     EntityManager entityManager;
+
     public boolean hasActiveVoting(Long eventId) {
         Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM event WHERE event_id = ?1 AND EXISTS (SELECT 1 FROM voting_event ve INNER JOIN voting v ON ve.voting_id = v.voting_id WHERE ve.event_id = ?1 AND v.is_active = true)");
 

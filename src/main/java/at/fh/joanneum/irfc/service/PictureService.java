@@ -1,7 +1,5 @@
 package at.fh.joanneum.irfc.service;
 
-import at.fh.joanneum.irfc.model.event.EventDTO;
-import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.model.picture.PictureMapper;
@@ -33,15 +31,15 @@ public class PictureService {
     @Inject
     PictureRepository pictureRepository;
 
-    @ConfigProperty(name="pictures.root_path")
+    @ConfigProperty(name = "pictures.root_path")
     String pictureRootPath;
 
-    @ConfigProperty(name="pictures.url") //TODO replace this with an .env var
+    @ConfigProperty(name = "pictures.url") //TODO replace this with an .env var
     String pictureUrl;
 
     public PictureDTO get(Long id) {
         Optional<PictureEntity> byIdOptional = pictureRepository.findByIdOptional(id);
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("Picture with id " + id + " not found");
         } else {
             PictureEntity byId = byIdOptional.get();
@@ -58,7 +56,7 @@ public class PictureService {
 
     public List<PictureDTO> search(String searchString) {
         List<PictureEntity> pictures = pictureRepository.listWhereTitleLike(searchString);
-        if(pictures.isEmpty()){
+        if (pictures.isEmpty()) {
             throw new RuntimeException("No Picture with search \"" + searchString + "\"  found");
         } else {
             List<PictureDTO> l = new ArrayList<PictureDTO>();
@@ -74,8 +72,8 @@ public class PictureService {
         newEntity.setPath(pictureDTO.getPath());
     }
 
-    private static void validateDto (PictureDTO pictureDTO) {
-        if(isNull(pictureDTO.getAltText()) || pictureDTO.getAltText().isBlank()){
+    private static void validateDto(PictureDTO pictureDTO) {
+        if (isNull(pictureDTO.getAltText()) || pictureDTO.getAltText().isBlank()) {
             throw new RuntimeException("Alt-Text must be provided");
         }
     }
@@ -83,26 +81,22 @@ public class PictureService {
     @Transactional
     public void delete(Long id) {
         var pictureDto = get(id);
-        try
-        {
+        try {
 
-            File f= new File(pictureDto.getPath().replace(pictureUrl, pictureRootPath));
-            if(!f.delete())
-            {
+            File f = new File(pictureDto.getPath().replace(pictureUrl, pictureRootPath));
+            if (!f.delete()) {
                 throw new RuntimeException("Picture with Path " + pictureDto.getPath() + " could not be deleted");
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException("Something went wrong deleting picture with path " + pictureDto.getPath() + ": " + e.getMessage());
         }
-        if(!pictureRepository.deleteById(id)){
+        if (!pictureRepository.deleteById(id)) {
             throw new RuntimeException("Picture with id " + id + " not found");
         }
     }
 
     @Transactional
-    public PictureDTO create(MultipartBody data)  {
+    public PictureDTO create(MultipartBody data) {
         PictureDTO pictureDTO = new PictureDTO();
         pictureDTO.setAltText(data.getAltText());
         validateDto(pictureDTO);

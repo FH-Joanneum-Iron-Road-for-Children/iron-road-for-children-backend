@@ -16,19 +16,19 @@ import javax.persistence.*;
 @Table(name = "event_category")
 public class EventCategoryEntity {
 
-  @Id
-  @SequenceGenerator(
-      name = "event_category_id_seq",
-      sequenceName = "event_category_id_seq",
-      allocationSize = 1
-  )
-  @GeneratedValue(
-      strategy = GenerationType.SEQUENCE,
-      generator = "event_category_id_seq"
-  )
-  @Column(name = "event_category_id")
-  private Long eventCategoryId;
+    @Id
+    @SequenceGenerator(
+            name = "event_category_id_seq",
+            sequenceName = "event_category_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "event_category_id_seq"
+    )
+    @Column(name = "event_category_id")
+    private Long eventCategoryId;
 
-  @Column(name = "event_category_name")
-  private String name;
+    @Column(name = "event_category_name")
+    private String name;
 }

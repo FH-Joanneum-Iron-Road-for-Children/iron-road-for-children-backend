@@ -48,7 +48,7 @@ public class EventLocationService {
 
         checkIfNameIsNullOrEmpty(eventLocationDTO);
 
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("EventLocation with id " + id + " not found");
         } else {
             EventLocationEntity eventLocationEntity = byIdOptional.get();
@@ -60,13 +60,13 @@ public class EventLocationService {
 
     @Transactional
     public void delete(Long id) {
-        if(!eventLocationRepository.deleteById(id)){
+        if (!eventLocationRepository.deleteById(id)) {
             throw new RuntimeException("EventLocation with id " + id + " not found");
         }
     }
 
     private static void checkIfNameIsNullOrEmpty(EventLocationDTO eventLocationDTO) {
-        if(isNull(eventLocationDTO.getName())|| eventLocationDTO.getName().isEmpty()){
+        if (isNull(eventLocationDTO.getName()) || eventLocationDTO.getName().isEmpty()) {
             throw new RuntimeException("EventLocation name must not be null");
         }
     }

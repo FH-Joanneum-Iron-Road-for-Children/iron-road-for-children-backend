@@ -1,12 +1,8 @@
 package at.fh.joanneum.irfc.service;
 
-import at.fh.joanneum.irfc.model.event.EventDTO;
-import at.fh.joanneum.irfc.model.event.EventMapper;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoMapper;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
-import at.fh.joanneum.irfc.model.picture.PictureMapper;
-import at.fh.joanneum.irfc.persistence.entiy.EventEntity;
 import at.fh.joanneum.irfc.persistence.entiy.EventInfoEntity;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
@@ -32,7 +28,7 @@ public class EventInfoService {
 
     public EventInfoDTO get(Long id) {
         Optional<EventInfoEntity> byIdOptional = eventInfoRepository.findByIdOptional(id);
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("EventInfo with id " + id + " not found");
         } else {
             EventInfoEntity byId = byIdOptional.get();
@@ -56,7 +52,7 @@ public class EventInfoService {
     }
 
     private static void checkDTOvalues(EventInfoDTO eventInfoDTO) {
-        if(isNull(eventInfoDTO.getInfoText()) || eventInfoDTO.getInfoText().isBlank()){
+        if (isNull(eventInfoDTO.getInfoText()) || eventInfoDTO.getInfoText().isBlank()) {
             throw new RuntimeException("Info Text must be provided");
         }
     }
@@ -65,7 +61,7 @@ public class EventInfoService {
     public EventInfoDTO update(Long id, EventInfoDTO eventInfoDTO) {
         Optional<EventInfoEntity> byIdOptional = eventInfoRepository.findByIdOptional(id);
 
-        if(byIdOptional.isEmpty()){
+        if (byIdOptional.isEmpty()) {
             throw new RuntimeException("EventInfo with id " + id + " not found");
         } else {
             checkDTOvalues(eventInfoDTO);
@@ -115,7 +111,7 @@ public class EventInfoService {
 
     @Transactional
     public void delete(Long id) {
-        if(!eventInfoRepository.deleteById(id)){
+        if (!eventInfoRepository.deleteById(id)) {
             throw new RuntimeException("EventInfo with id " + id + " not found");
         }
 

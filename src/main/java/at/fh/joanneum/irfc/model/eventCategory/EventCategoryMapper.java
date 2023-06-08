@@ -11,12 +11,12 @@ import org.mapstruct.factory.Mappers;
  **/
 @Mapper
 public interface EventCategoryMapper {
-  EventCategoryMapper INSTANCE = Mappers.getMapper(EventCategoryMapper.class);
+    EventCategoryMapper INSTANCE = Mappers.getMapper(EventCategoryMapper.class);
 
-  EventCategoryDTO toDto(EventCategoryEntity entity);
+    EventCategoryDTO toDto(EventCategoryEntity entity);
 
-  @InheritInverseConfiguration
-  EventCategoryEntity toEntity(EventCategoryDTO dto);
+    @InheritInverseConfiguration
+    EventCategoryEntity toEntity(EventCategoryDTO dto);
 
-  void update(EventCategoryDTO dto, @MappingTarget EventCategoryEntity entity);
+    void update(EventCategoryDTO dto, @MappingTarget EventCategoryEntity entity);
 }

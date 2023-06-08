@@ -21,138 +21,138 @@ import static java.util.Objects.isNull;
 @RequestScoped
 public class EventService {
 
-  @Inject
-  EventRepository eventRepository;
+    @Inject
+    EventRepository eventRepository;
 
-  @Inject
-  EventLocationRepository eventLocationRepository;
-  @Inject
-  PictureRepository pictureRepository;
-  @Inject
-  EventInfoRepository eventInfoRepository;
-  @Inject
-  EventCategoryRepository eventCategoryRepository;
-  @Inject
-  EventInfoService eventInfoService;
+    @Inject
+    EventLocationRepository eventLocationRepository;
+    @Inject
+    PictureRepository pictureRepository;
+    @Inject
+    EventInfoRepository eventInfoRepository;
+    @Inject
+    EventCategoryRepository eventCategoryRepository;
+    @Inject
+    EventInfoService eventInfoService;
 
-  public List<EventDTO> getAll() { //TODO throws exception (pls fix)
-    List<EventEntity> all = eventRepository.listAll();
-    List<EventDTO> allMapped = all.stream()
-            .map(EventMapper.INSTANCE::toDto)
-            .collect(Collectors.toUnmodifiableList());
-    return allMapped;
-  }
-
-  public EventDTO get(Long id) {
-    EventEntity eventEntity = eventRepository.findByIdOptional(id)
-        .orElseThrow(() -> new RuntimeException("Event with id " + id + " not found"));
-
-    return EventMapper.INSTANCE.toDto(eventEntity);
-  }
-
-  @Transactional
-  public EventDTO create(EventDTO eventDTO) {
-    checkDTOvalues(eventDTO);
-
-    EventEntity newEntity = new EventEntity();
-    setValues(eventDTO, newEntity);
-    eventRepository.persist(newEntity);
-    return EventMapper.INSTANCE.toDto(newEntity);
-  }
-
-  @Transactional
-  public EventDTO update(Long id, EventDTO eventDTO) {
-    Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
-
-    checkDTOvalues(eventDTO);
-
-    if(byIdOptional.isEmpty()){
-      throw new RuntimeException("Event with id " + id + " not found");
-    } else if(eventRepository.hasActiveVoting(id)) {
-      throw new RuntimeException("There is an active Voting running.");
-    }else {
-      EventEntity byId = byIdOptional.get();
-      setValues(eventDTO, byId);
-      eventRepository.persistAndFlush(byId);
-      return EventMapper.INSTANCE.toDto(byId);
-    }
-  }
-
-  @Transactional
-  public void delete(Long id) {
-    Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
-
-    if(eventRepository.hasActiveVoting(id)) {
-      throw new RuntimeException("There is an active Voting running.");
+    public List<EventDTO> getAll() { //TODO throws exception (pls fix)
+        List<EventEntity> all = eventRepository.listAll();
+        List<EventDTO> allMapped = all.stream()
+                .map(EventMapper.INSTANCE::toDto)
+                .collect(Collectors.toUnmodifiableList());
+        return allMapped;
     }
 
-    if(!eventRepository.deleteById(id)){
-      throw new RuntimeException("Event with id " + id + " not found");
-    }
-  }
+    public EventDTO get(Long id) {
+        EventEntity eventEntity = eventRepository.findByIdOptional(id)
+                .orElseThrow(() -> new RuntimeException("Event with id " + id + " not found"));
 
-  private static void checkDTOvalues(EventDTO eventDTO) {
-    if(isNull(eventDTO.getTitle())|| eventDTO.getTitle().isBlank()){
-      throw new RuntimeException("Title must not be null or empty");
-    }
-    if(eventDTO.getEndDateTimeInUTC() == 0L ||eventDTO.getStartDateTimeInUTC() == 0L){
-      throw new RuntimeException("Start and end date must not be null");
-    }
-    if(eventDTO.getStartDateTimeInUTC()> eventDTO.getEndDateTimeInUTC()){
-      throw new RuntimeException("Start date must be before end date");
-    }
-  }
-
-  private void setValues(EventDTO eventDTOCreate, EventEntity newEntity) {
-    newEntity.setTitle(eventDTOCreate.getTitle());
-    newEntity.setEndDateTimeInUTC(eventDTOCreate.getEndDateTimeInUTC());
-    newEntity.setStartDateTimeInUTC(eventDTOCreate.getStartDateTimeInUTC());
-    if(eventDTOCreate.getEventLocation() != null) {
-      Optional<EventLocationEntity> locationOptional = this.eventLocationRepository.findByIdOptional(eventDTOCreate.getEventLocation().getEventLocationId());
-      if (locationOptional.isEmpty()) {
-        throw new RuntimeException("no EventLocation with id " + eventDTOCreate.getEventLocation().getEventLocationId());
-      } else {
-        newEntity.setEventLocation(locationOptional.get());
-      }
-    } else {
-      throw new RuntimeException("no EventLocation");
+        return EventMapper.INSTANCE.toDto(eventEntity);
     }
 
-    if(eventDTOCreate.getPicture() != null) {
-      Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(eventDTOCreate.getPicture().getPictureId());
-      if (pictureOptional.isEmpty()) {
-        throw new RuntimeException("no Picture with id " + eventDTOCreate.getPicture().getPictureId());
-      } else {
-        newEntity.setPicture(pictureOptional.get());
-      }
-     }else {
-      throw new RuntimeException("no Picture");
+    @Transactional
+    public EventDTO create(EventDTO eventDTO) {
+        checkDTOvalues(eventDTO);
+
+        EventEntity newEntity = new EventEntity();
+        setValues(eventDTO, newEntity);
+        eventRepository.persist(newEntity);
+        return EventMapper.INSTANCE.toDto(newEntity);
     }
 
-    if(eventDTOCreate.getEventInfo() != null) {
-      Long eventInfoId = eventDTOCreate.getEventInfo().getEventInfoId();
-      if(isNull(eventInfoId)) {
-        eventInfoId = 0l;
-      }
-      Optional<EventInfoEntity> eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventInfoId);
-      if (eventInfoOptional.isEmpty()) {
-        EventInfoDTO eventInfoDto= this.eventInfoService.create(eventDTOCreate.getEventInfo());
-        eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventInfoDto.getEventInfoId());
-      }
-      newEntity.setEventInfo(eventInfoOptional.get());
-    } else {
-      throw new RuntimeException("no EventInfo");
+    @Transactional
+    public EventDTO update(Long id, EventDTO eventDTO) {
+        Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
+
+        checkDTOvalues(eventDTO);
+
+        if (byIdOptional.isEmpty()) {
+            throw new RuntimeException("Event with id " + id + " not found");
+        } else if (eventRepository.hasActiveVoting(id)) {
+            throw new RuntimeException("There is an active Voting running.");
+        } else {
+            EventEntity byId = byIdOptional.get();
+            setValues(eventDTO, byId);
+            eventRepository.persistAndFlush(byId);
+            return EventMapper.INSTANCE.toDto(byId);
+        }
     }
 
-    if(eventDTOCreate.getEventCategory() != null) {
-      Optional<EventCategoryEntity> eventCategoryOptional = this.eventCategoryRepository.findByIdOptional(eventDTOCreate.getEventCategory().getEventCategoryId());
-      if (eventCategoryOptional.isEmpty()) {
-        throw new RuntimeException("no EventCategory with id " + eventDTOCreate.getEventCategory().getEventCategoryId());
-      } else {
-        newEntity.setEventCategory(eventCategoryOptional.get());
-      }
-    } else {
-      throw new RuntimeException("no EventCategory");
+    @Transactional
+    public void delete(Long id) {
+        Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
+
+        if (eventRepository.hasActiveVoting(id)) {
+            throw new RuntimeException("There is an active Voting running.");
+        }
+
+        if (!eventRepository.deleteById(id)) {
+            throw new RuntimeException("Event with id " + id + " not found");
+        }
     }
-  }
+
+    private static void checkDTOvalues(EventDTO eventDTO) {
+        if (isNull(eventDTO.getTitle()) || eventDTO.getTitle().isBlank()) {
+            throw new RuntimeException("Title must not be null or empty");
+        }
+        if (eventDTO.getEndDateTimeInUTC() == 0L || eventDTO.getStartDateTimeInUTC() == 0L) {
+            throw new RuntimeException("Start and end date must not be null");
+        }
+        if (eventDTO.getStartDateTimeInUTC() > eventDTO.getEndDateTimeInUTC()) {
+            throw new RuntimeException("Start date must be before end date");
+        }
+    }
+
+    private void setValues(EventDTO eventDTOCreate, EventEntity newEntity) {
+        newEntity.setTitle(eventDTOCreate.getTitle());
+        newEntity.setEndDateTimeInUTC(eventDTOCreate.getEndDateTimeInUTC());
+        newEntity.setStartDateTimeInUTC(eventDTOCreate.getStartDateTimeInUTC());
+        if (eventDTOCreate.getEventLocation() != null) {
+            Optional<EventLocationEntity> locationOptional = this.eventLocationRepository.findByIdOptional(eventDTOCreate.getEventLocation().getEventLocationId());
+            if (locationOptional.isEmpty()) {
+                throw new RuntimeException("no EventLocation with id " + eventDTOCreate.getEventLocation().getEventLocationId());
+            } else {
+                newEntity.setEventLocation(locationOptional.get());
+            }
+        } else {
+            throw new RuntimeException("no EventLocation");
+        }
+
+        if (eventDTOCreate.getPicture() != null) {
+            Optional<PictureEntity> pictureOptional = this.pictureRepository.findByIdOptional(eventDTOCreate.getPicture().getPictureId());
+            if (pictureOptional.isEmpty()) {
+                throw new RuntimeException("no Picture with id " + eventDTOCreate.getPicture().getPictureId());
+            } else {
+                newEntity.setPicture(pictureOptional.get());
+            }
+        } else {
+            throw new RuntimeException("no Picture");
+        }
+
+        if (eventDTOCreate.getEventInfo() != null) {
+            Long eventInfoId = eventDTOCreate.getEventInfo().getEventInfoId();
+            if (isNull(eventInfoId)) {
+                eventInfoId = 0l;
+            }
+            Optional<EventInfoEntity> eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventInfoId);
+            if (eventInfoOptional.isEmpty()) {
+                EventInfoDTO eventInfoDto = this.eventInfoService.create(eventDTOCreate.getEventInfo());
+                eventInfoOptional = this.eventInfoRepository.findByIdOptional(eventInfoDto.getEventInfoId());
+            }
+            newEntity.setEventInfo(eventInfoOptional.get());
+        } else {
+            throw new RuntimeException("no EventInfo");
+        }
+
+        if (eventDTOCreate.getEventCategory() != null) {
+            Optional<EventCategoryEntity> eventCategoryOptional = this.eventCategoryRepository.findByIdOptional(eventDTOCreate.getEventCategory().getEventCategoryId());
+            if (eventCategoryOptional.isEmpty()) {
+                throw new RuntimeException("no EventCategory with id " + eventDTOCreate.getEventCategory().getEventCategoryId());
+            } else {
+                newEntity.setEventCategory(eventCategoryOptional.get());
+            }
+        } else {
+            throw new RuntimeException("no EventCategory");
+        }
+    }
 }
