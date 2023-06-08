@@ -42,7 +42,7 @@ public class VotingEntity {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id")
+    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id", insertable = false, updatable = false)
     private VotingResultEntity votingResult;
 
     @ManyToMany(fetch = FetchType.LAZY)
