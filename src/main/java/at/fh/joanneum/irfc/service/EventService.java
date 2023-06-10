@@ -84,8 +84,6 @@ public class EventService {
 
     @Transactional
     public void delete(Long id) {
-        Optional<EventEntity> byIdOptional = eventRepository.findByIdOptional(id);
-
         if (eventRepository.hasActiveVoting(id)) {
             throw new RuntimeException("There is an active Voting running.");
         }
