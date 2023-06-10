@@ -42,7 +42,7 @@ public class EventRepository implements PanacheRepository<EventEntity> {
     }
 
     public boolean isEventEditable(Long eventId) {
-        Query query = entityManager.createNativeQuery("SELECT is_editable FROM event WHERE event_id = ?1");
+        Query query = entityManager.createNativeQuery("SELECT is_editable FROM voting WHERE voting_id in (SELECT voting_id FROM voting_event WHERE event_id = ?1) and is_editable = true;");
         query.setParameter(1, eventId);
 
         Object result = query.getSingleResult();
