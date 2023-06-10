@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,10 +46,14 @@ public class EventRepository implements PanacheRepository<EventEntity> {
         Query query = entityManager.createNativeQuery("SELECT is_editable FROM voting WHERE voting_id in (SELECT voting_id FROM voting_event WHERE event_id = ?1) and is_editable = true;");
         query.setParameter(1, eventId);
 
-        Object result = query.getSingleResult();
+        List<Object> results = query.getResultList();
 
-        if (result instanceof Boolean) {
-            return (Boolean) result;
+        if(results.isEmpty()) {
+            return true;
+        }
+
+        if (results.get(0) instanceof Boolean) {
+            return (Boolean) results.get(0);
         }
 
         return false;
