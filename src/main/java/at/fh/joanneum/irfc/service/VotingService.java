@@ -86,6 +86,8 @@ public class VotingService {
             throw new RuntimeException("Please stop the voting before you delete it");
         }
 
+        votingResultRepository.NullifyFKVoting(id);
+
         if (!votingRepository.deleteById(id)) {
             throw new RuntimeException("Voting with id " + id + " not found");
         }
@@ -122,9 +124,11 @@ public class VotingService {
             }
             byId.setActive(false);
             VotingResultEntity votingResult = new VotingResultEntity();
+
             votingResult.setTitle(byId.getTitle());
             votingResult.setVoting(byId);
             votingResult.setEndDate(Instant.now().toEpochMilli()); //TODO check if this is correct
+            byId.setVotingResult(votingResult);
             votingResultRepository.persist(votingResult);
 
             Set<VotingPartialResultEntity> partialResults = new HashSet<>();
@@ -205,7 +209,7 @@ public class VotingService {
         }
 
         if (votingDTO.getEvents().size() < 2) {
-            throw new RuntimeException("There has to be at least to events for a voting");
+            throw new RuntimeException("There has to be at least two events for a voting");
         }
     }
 

@@ -16,4 +16,5 @@
     <include file="33-create-VotingPartialResult-table.xml" relativeToChangelogFile="true"/>
     <include file="53-add-fields.xml" relativeToChangelogFile="true"/>
     <include file="64-add-event-table-constrains.xml" relativeToChangelogFile="true"/>
+    <include file="64-fixed-voting-result-fk.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

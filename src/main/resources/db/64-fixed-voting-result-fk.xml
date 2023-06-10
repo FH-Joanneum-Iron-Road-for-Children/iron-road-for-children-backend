@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet  author="lion" id="64-fixed-voting-result-fk">
+        <dropColumn tableName="voting">
+            <column name="fk_voting_result" type="bigint"/>
+        </dropColumn>
+        <addColumn tableName="voting_result">
+            <column name="fk_voting" type="bigint">
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint
+                constraintName="fk_voting_voting_result"
+                baseTableName="voting_result"
+                baseColumnNames="fk_voting"
+                referencedTableName="voting"
+                referencedColumnNames="voting_id"
+                onDelete="SET NULL"
+                onUpdate="CASCADE"
+                validate="true"/>
+    </changeSet>
+</databaseChangeLog>
