@@ -14,7 +14,7 @@ import lombok.Setter;
 @RegisterForReflection
 public class VotingPartialResultDTO {
 
-    private Long id;
+    private Long votingPartialResultId;
     private String eventName;
     private Double percentage;
 

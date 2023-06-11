@@ -40,9 +40,7 @@ public class VotingEntity {
     @Column(name = "is_editable", nullable = false)
     private boolean isEditable;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_voting_result", referencedColumnName = "voting_result_id", insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "voting")
     private VotingResultEntity votingResult;
 
     @ManyToMany(fetch = FetchType.LAZY)

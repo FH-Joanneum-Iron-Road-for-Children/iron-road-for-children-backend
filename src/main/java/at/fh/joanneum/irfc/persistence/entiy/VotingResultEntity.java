@@ -36,9 +36,10 @@ public class VotingResultEntity {
     @Column(name = "end_date")
     private long endDate;
 
-    @OneToOne(mappedBy = "votingResult", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_voting", referencedColumnName = "voting_id")
     private VotingEntity voting;
 
-    @OneToMany(mappedBy = "votingResult")
+    @OneToMany(mappedBy = "votingResult", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VotingPartialResultEntity> partialResults;
 }

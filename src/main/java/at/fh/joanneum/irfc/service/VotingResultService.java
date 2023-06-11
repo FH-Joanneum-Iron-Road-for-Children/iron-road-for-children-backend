@@ -3,6 +3,7 @@ package at.fh.joanneum.irfc.service;
 import at.fh.joanneum.irfc.model.VotingResult.VotingResultDTO;
 import at.fh.joanneum.irfc.model.VotingResult.VotingResultMapper;
 import at.fh.joanneum.irfc.persistence.entiy.VotingResultEntity;
+import at.fh.joanneum.irfc.persistence.repository.VotingRepository;
 import at.fh.joanneum.irfc.persistence.repository.VotingResultRepository;
 
 import javax.enterprise.context.RequestScoped;
@@ -20,9 +21,11 @@ import static java.util.Objects.isNull;
 
 @RequestScoped
 public class VotingResultService {
-
     @Inject
     VotingResultRepository votingResultRepository;
+
+    @Inject
+    VotingRepository votingRepository;
     public List<VotingResultDTO> getAll() {
         return votingResultRepository.listAll().stream()
                 .map(VotingResultMapper.INSTANCE::toDto)
