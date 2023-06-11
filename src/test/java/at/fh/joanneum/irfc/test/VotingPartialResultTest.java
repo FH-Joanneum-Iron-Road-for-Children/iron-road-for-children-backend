@@ -25,15 +25,23 @@ public class VotingPartialResultTest {
 
 
 
+    @Test
+    // Test post functionality of service
+    public void TestPost () throws IllegalAccessException {
 
+        VotingPartialResultDTO dto = new VotingPartialResultDTO();
+        dto.setPercentage(50.0);
+        dto.setEventName("MyExample VotPartlResult");
 
+        VotingPartialResultDTO resultDto = votingPartialResultService.create(dto);
 
+//        Assert.assertTrue(EqualsBuilder.reflectionEquals(dto,resultDto));
+        Field[] fields = VotingPartialResultDTO.class.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            assertEquals(field.get(dto), field.get(resultDto));
+        }
 
-
-
-
-
-
-
+    }
 
 }
