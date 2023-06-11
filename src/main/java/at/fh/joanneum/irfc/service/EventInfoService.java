@@ -6,6 +6,7 @@ import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.persistence.entiy.EventInfoEntity;
 import at.fh.joanneum.irfc.persistence.entiy.PictureEntity;
 import at.fh.joanneum.irfc.persistence.repository.EventInfoRepository;
+import at.fh.joanneum.irfc.persistence.repository.EventRepository;
 import at.fh.joanneum.irfc.persistence.repository.PictureRepository;
 
 import javax.enterprise.context.RequestScoped;
@@ -59,6 +60,9 @@ public class EventInfoService {
 
     @Transactional
     public EventInfoDTO update(Long id, EventInfoDTO eventInfoDTO) {
+        if(eventInfoRepository.hasActiveVoting(id)) {
+            throw new RuntimeException("Can't update EventInfo if there are active Votings");
+        }
         Optional<EventInfoEntity> byIdOptional = eventInfoRepository.findByIdOptional(id);
 
         if (byIdOptional.isEmpty()) {
@@ -111,6 +115,10 @@ public class EventInfoService {
 
     @Transactional
     public void delete(Long id) {
+        if(eventInfoRepository.hasActiveVoting(id)) {
+            throw new RuntimeException("Can't delete EventInfo if there are active Votings");
+        }
+
         if (!eventInfoRepository.deleteById(id)) {
             throw new RuntimeException("EventInfo with id " + id + " not found");
         }

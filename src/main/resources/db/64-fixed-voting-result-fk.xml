@@ -24,5 +24,19 @@
                 onDelete="SET NULL"
                 onUpdate="CASCADE"
                 validate="true"/>
+
+        <addForeignKeyConstraint baseTableName="event"
+                                 baseColumnNames="fk_event_info"
+                                 constraintName="fk_event_event_info"
+                                 referencedTableName="event_info"
+                                 referencedColumnNames="event_info_id"
+                                 onDelete="CASCADE" />
+
+        <addNotNullConstraint tableName="event"
+                              columnName="fk_event_info"
+                              constraintName="nn_fk_event_info" />
+
+        <addUniqueConstraint tableName="event"
+                             constraintName="uk_event_info_id" columnNames="fk_event_info" />
     </changeSet>
 </databaseChangeLog>
