@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.eventInfo.EventInfoDTO;
 import at.fh.joanneum.irfc.service.EventInfoService;
+import io.quarkus.security.Authenticated;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -36,6 +37,7 @@ public class EventInfoApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Authenticated
     public EventInfoDTO create(EventInfoDTO eventInfoDTO) {
         return eventInfoService.create(eventInfoDTO);
     }
@@ -44,12 +46,14 @@ public class EventInfoApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
+    @Authenticated
     public EventInfoDTO update(@PathParam("id") Long id, EventInfoDTO eventInfoDTO) {
         return eventInfoService.update(id, eventInfoDTO);
     }
 
     @DELETE
     @Path("/{id}")
+    @Authenticated
     public Response delete(@PathParam("id") Long id) {
         eventInfoService.delete(id);
         String message = "EventInfo with id " + id + " deleted";

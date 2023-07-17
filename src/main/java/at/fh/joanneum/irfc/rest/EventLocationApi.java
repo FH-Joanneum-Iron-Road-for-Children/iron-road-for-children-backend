@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.eventlocation.EventLocationDTO;
 import at.fh.joanneum.irfc.service.EventLocationService;
+import io.quarkus.security.Authenticated;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -35,6 +36,7 @@ public class EventLocationApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Authenticated
     public EventLocationDTO create(EventLocationDTO eventLocationDTO) {
         return eventLocationService.create(eventLocationDTO);
     }
@@ -43,12 +45,14 @@ public class EventLocationApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
+    @Authenticated
     public EventLocationDTO update(@PathParam("id") Long id, EventLocationDTO eventLocationDTO) {
         return eventLocationService.update(id, eventLocationDTO);
     }
 
     @DELETE
     @Path("{id}")
+    @Authenticated
     public Response delete(@PathParam("id") Long id) {
         eventLocationService.delete(id);
         String message = "EventLocation with id " + id + "deleted";

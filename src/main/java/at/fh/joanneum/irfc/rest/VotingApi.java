@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.voting.VotingDTO;
 import at.fh.joanneum.irfc.service.VotingService;
+import io.quarkus.security.Authenticated;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -36,6 +37,7 @@ public class VotingApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Authenticated
     public VotingDTO create(VotingDTO votingDTOCreate) {
         return votingService.create(votingDTOCreate);
     }
@@ -44,6 +46,7 @@ public class VotingApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
+    @Authenticated
     public VotingDTO update(@PathParam("id") Long id, VotingDTO votingResultDTO) {
         return votingService.update(id, votingResultDTO);
     }
@@ -51,6 +54,7 @@ public class VotingApi {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/startVoting/{id}")
+    @Authenticated
     public VotingDTO startVoting(@PathParam("id") Long id) {
         return votingService.startVoting(id);
     }
@@ -58,6 +62,7 @@ public class VotingApi {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/endVoting/{id}")
+    @Authenticated
     public VotingDTO endVoting(@PathParam("id") Long id) {
         return votingService.endVoting(id);
 
@@ -65,6 +70,7 @@ public class VotingApi {
 
     @DELETE
     @Path("/{id}")
+    @Authenticated
     public Response delete(@PathParam("id") Long id) {
         votingService.delete(id);
         String message = "Voting with id " + id + " deleted";

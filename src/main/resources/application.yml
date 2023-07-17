@@ -8,7 +8,11 @@ quarkus:
   liquibase:
     migrate-at-start: true
 
-#  TODO: oidc
+  oidc:
+    client-id: backend-api
+    auth-server-url: https://irfc.eu.auth0.com/
+    token:
+      audience: https://backend.irfc.fh-joanneum.at/
 
   container-image:
     builder: jib

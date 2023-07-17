@@ -3,6 +3,7 @@ package at.fh.joanneum.irfc.rest;
 import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.picture.PictureDTO;
 import at.fh.joanneum.irfc.service.PictureService;
+import io.quarkus.security.Authenticated;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.enterprise.context.RequestScoped;
@@ -54,12 +55,14 @@ public class PictureApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Authenticated
     public PictureDTO create(@MultipartForm MultipartBody data) {
         return pictureService.create(data);
     }
 
     @DELETE
     @Path("/{id}")
+    @Authenticated
     public Response delete(@PathParam("id") Long id) {
         pictureService.delete(id);
         String message = "Picture with id " + id + " deleted";
