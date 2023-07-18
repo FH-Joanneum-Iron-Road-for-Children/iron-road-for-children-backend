@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.eventCategory.EventCategoryDTO;
 import at.fh.joanneum.irfc.service.EventCategoryService;
+import io.quarkus.security.Authenticated;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -29,6 +30,7 @@ public class EventCategoryApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Authenticated
     public EventCategoryDTO create(EventCategoryDTO eventCategoryDTO) {
         return eventCategoryService.create(eventCategoryDTO);
     }
@@ -44,12 +46,14 @@ public class EventCategoryApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
+    @Authenticated
     public EventCategoryDTO update(@PathParam("id") Long id, EventCategoryDTO eventCategoryDTO) {
         return eventCategoryService.update(id, eventCategoryDTO);
     }
 
     @DELETE
     @Path("/{id}")
+    @Authenticated
     public Response delete(@PathParam("id") Long id) {
         eventCategoryService.delete(id);
         String message = "Event category with id " + id + " deleted";

@@ -1,0 +1,15 @@
+POST http://localhost:8080/api/event-locations
+Content-Type: application/json
+
+{
+  "eventLocationId": 1,
+  "name": "authtest"
+}
+
+###
+
+GET http://localhost:8080/api/event-locations
+
+###
+
+DELETE http://localhost:8080/api/event-locations/101

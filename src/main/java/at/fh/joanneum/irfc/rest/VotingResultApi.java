@@ -2,6 +2,7 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.VotingResult.VotingResultDTO;
 import at.fh.joanneum.irfc.service.VotingResultService;
+import io.quarkus.security.Authenticated;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -51,6 +52,7 @@ public class VotingResultApi {
 
     @DELETE
     @Path("/{id}")
+    @Authenticated
     public Response delete(@PathParam("id") Long id) {
         votingResultService.delete(id);
         String message = "VotingResult with id " + id + " deleted";
