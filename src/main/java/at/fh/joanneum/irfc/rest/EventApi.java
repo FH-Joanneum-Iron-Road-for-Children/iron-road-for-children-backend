@@ -4,6 +4,7 @@ import at.fh.joanneum.irfc.model.event.EventDTO;
 import at.fh.joanneum.irfc.service.EventService;
 import io.quarkus.security.Authenticated;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -48,6 +49,7 @@ public class EventApi {
     @Path("/{id}")
     @Authenticated
     public EventDTO update(@PathParam("id") Long id, EventDTO eventDTO) {
+
         return eventService.update(id, eventDTO);
     }
 

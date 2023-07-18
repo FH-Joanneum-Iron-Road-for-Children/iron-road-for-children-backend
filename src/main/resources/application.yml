@@ -10,7 +10,8 @@ quarkus:
 
   oidc:
     client-id: backend-api
-    auth-server-url: https://irfc.eu.auth0.com/
+    auth-server-url: https://irfc.eu.auth0.com
+    application-type: web_app
     token:
       audience: https://backend.irfc.fh-joanneum.at/
 
