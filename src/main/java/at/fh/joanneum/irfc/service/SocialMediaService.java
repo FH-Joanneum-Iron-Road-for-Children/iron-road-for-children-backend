@@ -40,10 +40,8 @@ public class SocialMediaService {
 
     @Transactional
     public SocialMediaDTO create(SocialMediaDTO socialMediaDTO) {
-        checkDTOvalues(socialMediaDTO);
 
         SocialMediaEntity newEntity = new SocialMediaEntity();
-        setValues(socialMediaDTO, newEntity);
         socialMediaRepository.persist(newEntity);
         return SocialMediaMapper.INSTANCE.toDto(newEntity);
     }
@@ -53,13 +51,10 @@ public class SocialMediaService {
 
         Optional<SocialMediaEntity> byIdOptional = socialMediaRepository.findByIdOptional(id);
 
-        checkDTOvalues(socialMediaDTO);
-
         if (byIdOptional.isEmpty()) {
             throw new RuntimeException("SocialMedia with id " + id + " not found");
         } else {
             SocialMediaEntity byId = byIdOptional.get();
-            setValues(socialMediaDTO, byId);
             socialMediaRepository.persistAndFlush(byId);
             return SocialMediaMapper.INSTANCE.toDto(byId);
         }
