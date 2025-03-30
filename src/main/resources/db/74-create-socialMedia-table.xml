@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="74-create-socialmedia-table" author="moe">
+        <createTable tableName="socialmedia">
+            <column name="socialmedia_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="socialmedia_id_pk"/>
+            </column>
+            <column name="title" type="varchar(255)"/>
+            <column name="link" type="varchar(255)"/>
+        </createTable>
+
+        <createSequence sequenceName="socialmedia_id_seq"
+                        dataType="bigint"
+                        incrementBy="1"
+                        startValue="100"/>
+    </changeSet>
+</databaseChangeLog>
