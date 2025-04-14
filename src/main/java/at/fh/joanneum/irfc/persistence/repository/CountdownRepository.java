@@ -27,21 +27,4 @@ public class CountdownRepository implements PanacheRepository<CountdownEntity> {
         }
         return false;
     }
-
-    public boolean isCountdownEditable(Long countdownId) {
-        Query query = entityManager.createNativeQuery("SELECT is_editable FROM voting WHERE voting_id in (SELECT voting_id FROM voting_countdown WHERE countdown_id = ?1) and is_editable = true;");
-        query.setParameter(1, countdownId);
-
-        List<Object> results = query.getResultList();
-
-        if(results.isEmpty()) {
-            return true;
-        }
-
-        if (results.get(0) instanceof Boolean) {
-            return (Boolean) results.get(0);
-        }
-
-        return false;
-    }
 }

@@ -52,9 +52,6 @@ public class CountdownService {
 
     @Transactional
     public CountdownDTO update(Long id, CountdownDTO countdownDTO) {
-        if (!countdownRepository.isCountdownEditable(id)) {
-            throw new RuntimeException("Can't update a Countdown with active votings");
-        }
 
         Optional<CountdownEntity> byIdOptional = countdownRepository.findByIdOptional(id);
 
