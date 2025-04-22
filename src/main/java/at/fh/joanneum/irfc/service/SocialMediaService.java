@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.isNull;
-
 /**
  * @author Kainbacher Dominik
  **/
@@ -23,12 +21,10 @@ public class SocialMediaService {
     @Inject
     SocialMediaRepository socialMediaRepository;
 
-    public List<SocialMediaDTO> getAll() { //TODO throws exception (pls fix)
-        List<SocialMediaEntity> all = socialMediaRepository.listAll();
-        List<SocialMediaDTO> allMapped = all.stream()
+    public List<SocialMediaDTO> getAll() {
+        return socialMediaRepository.listAll().stream()
                 .map(SocialMediaMapper.INSTANCE::toDto)
-                .collect(Collectors.toUnmodifiableList());
-        return allMapped;
+                .collect(Collectors.toList());
     }
 
     public SocialMediaDTO get(Long id) {
@@ -40,21 +36,21 @@ public class SocialMediaService {
 
     @Transactional
     public SocialMediaDTO create(SocialMediaDTO socialMediaDTO) {
-
         SocialMediaEntity newEntity = new SocialMediaEntity();
+        setValues(socialMediaDTO, newEntity);
         socialMediaRepository.persist(newEntity);
         return SocialMediaMapper.INSTANCE.toDto(newEntity);
     }
 
     @Transactional
     public SocialMediaDTO update(Long id, SocialMediaDTO socialMediaDTO) {
-
         Optional<SocialMediaEntity> byIdOptional = socialMediaRepository.findByIdOptional(id);
 
         if (byIdOptional.isEmpty()) {
-            throw new RuntimeException("SocialMedia with id " + id + " not found");
+            throw new RuntimeException("Event with id " + id + " not found");
         } else {
             SocialMediaEntity byId = byIdOptional.get();
+            setValues(socialMediaDTO, byId);
             socialMediaRepository.persistAndFlush(byId);
             return SocialMediaMapper.INSTANCE.toDto(byId);
         }
@@ -68,4 +64,8 @@ public class SocialMediaService {
         }
     }
 
+    private void setValues(SocialMediaDTO socialMediaDTO, SocialMediaEntity socialMediaEntity) {
+        socialMediaEntity.setTitle(socialMediaDTO.getTitle());
+        socialMediaEntity.setLink(socialMediaDTO.getLink());
+    }
 }
