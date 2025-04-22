@@ -70,6 +70,15 @@ pictures:
   root_path: ${PICTURES_ROOT_PATH:C:/temp/pics/}
   url: ${PICTURES_URL:http:/env-var.failed}
 
+highlights:
+  root_path: ${HIGHLIGHTS_ROOT_PATH:C:/temp/highlights/}
+  url: ${HIGHLIGHTS_URL:http:/env-var.failed}
+  
+videos:
+    root_path: ${VIDEOS_ROOT_PATH:C:/temp/videos/}
+    url: ${VIDEOS_URL:http:/env-var.failed/}
+    intro_video_folder: ${INTRO_VIDEO_FOLDER:intro}
+    intro_video_file: ${INTRO_VIDEO_FILE:intro}
 
 #    container-image:
 #      build: false
