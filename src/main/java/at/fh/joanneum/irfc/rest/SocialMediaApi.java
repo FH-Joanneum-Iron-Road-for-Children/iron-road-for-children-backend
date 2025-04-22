@@ -22,7 +22,7 @@ public class SocialMediaApi {
     SocialMediaService socialMediaService;
 
     @GET
-//    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<SocialMediaDTO> getAll() {
         return socialMediaService.getAll();
     }
@@ -43,8 +43,8 @@ public class SocialMediaApi {
     }
 
     @PUT
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
     @Authenticated
     public SocialMediaDTO update(@PathParam("id") Long id, SocialMediaDTO socialMediaDTO) {
