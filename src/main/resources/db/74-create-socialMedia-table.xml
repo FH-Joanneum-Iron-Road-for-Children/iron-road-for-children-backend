@@ -7,7 +7,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="74-create-socialmedia-table" author="moe">
+    <changeSet id="74-create-socialmedia-table" author="dominik">
         <createTable tableName="socialmedia">
             <column name="socialmedia_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="socialmedia_id_pk"/>

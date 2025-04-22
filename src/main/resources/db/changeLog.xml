@@ -17,5 +17,5 @@
     <include file="53-add-fields.xml" relativeToChangelogFile="true"/>
     <include file="64-add-event-table-constrains.xml" relativeToChangelogFile="true"/>
     <include file="64-fixed-voting-result-fk.xml" relativeToChangelogFile="true"/>
-    <include file="74-create-socialMedia-table.xml" relativeToChangelogFile="true"/>
+    <include file="74-create-socialmedia-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

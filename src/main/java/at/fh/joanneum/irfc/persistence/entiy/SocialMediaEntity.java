@@ -13,25 +13,25 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "socialMedia")
+@Table(name = "socialmedia")
 public class SocialMediaEntity {
 
     @Id
     @SequenceGenerator(
-            name = "socialMedia_id_seq",
-            sequenceName = "socialMedia_id_seq",
+            name = "socialmedia_id_seq",
+            sequenceName = "socialmedia_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "socialMedia_id_seq"
+            generator = "socialmedia_id_seq"
     )
-    @Column(name = "socialMedia_id", nullable = false)
+    @Column(name = "socialmedia_id")
     private Long socialMediaId;
 
-    @Column(nullable = false)
+    @Column(name = "title")
     private String title;
 
-    @Column(nullable = false)
+    @Column(name = "link")
     private String link;
 }
