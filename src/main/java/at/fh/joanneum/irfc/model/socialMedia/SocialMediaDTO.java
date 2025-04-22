@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @RegisterForReflection
 public class SocialMediaDTO {
-    private Long socialMediatId;
+    private Long socialMediaId;
     private String title;
     private String link;
 }
