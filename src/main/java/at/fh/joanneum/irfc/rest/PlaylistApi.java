@@ -2,6 +2,9 @@ package at.fh.joanneum.irfc.rest;
 
 import at.fh.joanneum.irfc.model.playlist.PlaylistDTO;
 import at.fh.joanneum.irfc.service.PlaylistService;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
@@ -28,8 +31,23 @@ public class PlaylistApi {
             @APIResponse(responseCode = "200", description = "Playlist created or updated"),
             @APIResponse(responseCode = "400", description = "Invalid input")
     })
-    public PlaylistDTO createOrUpdate(PlaylistDTO playlistDTO) {
-        return playlistService.createOrUpdate(playlistDTO);
+    public PlaylistDTO createOrUpdate(
+            @RequestBody(
+                    description = "Playlist to create or update. 'playlistId' can be any value and will be overwritten if necessary. 'title' and 'spotifyPlaylistId' must not be empty. If any playlist already exists it gets overwritten.",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = PlaylistDTO.class
+                            )
+                    )
+            )
+            PlaylistDTO playlistDTO
+    ) {
+        try {
+            return playlistService.createOrUpdate(playlistDTO);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Invalid input: " + e.getMessage());
+        }
     }
 
     @GET
