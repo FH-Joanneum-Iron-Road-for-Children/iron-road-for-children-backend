@@ -19,4 +19,5 @@
     <include file="64-fixed-voting-result-fk.xml" relativeToChangelogFile="true"/>
     <include file="70-create-video-table.xml" relativeToChangelogFile="true"/>
     <include file="76-highlight-endpoint.xml" relativeToChangelogFile="true"/>
+    <include file="82-create-gallery-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
