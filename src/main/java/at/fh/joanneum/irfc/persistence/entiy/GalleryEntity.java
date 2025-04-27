@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author dominik.kainbacher@edu.fh-joanneum.at
@@ -37,8 +35,5 @@ public class GalleryEntity {
 
     @Column(name = "path")
     private String path;
-
-    @ManyToMany(mappedBy = "gallery")
-    private Set<EventInfoEntity> eventInfos = new HashSet<>();
 
 }

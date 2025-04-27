@@ -1,11 +1,7 @@
 package at.fh.joanneum.irfc.rest;
 
-import at.fh.joanneum.irfc.model.highlight.HighlightDTO;
-import at.fh.joanneum.irfc.model.multipartbody.HighlightMultipartBody;
 import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.gallery.GalleryDTO;
-import at.fh.joanneum.irfc.service.GalleryService;
-import at.fh.joanneum.irfc.service.HighlightService;
 import at.fh.joanneum.irfc.service.GalleryService;
 import io.quarkus.security.Authenticated;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;

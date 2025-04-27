@@ -7,7 +7,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="17-create-gallery-table" author="gregor">
+    <changeSet id="17-create-gallery-table" author="dominik">
         <createTable tableName="gallery">
             <column name="gallery_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="gallery_id_pk"/>
