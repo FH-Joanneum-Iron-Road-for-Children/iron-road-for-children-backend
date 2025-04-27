@@ -29,14 +29,14 @@ public class SocialMediaApi {
 
     @GET
     @Path("/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public SocialMediaDTO get(@PathParam("id") Long id) {
         return socialMediaService.get(id);
     }
 
     @POST
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Authenticated
     public SocialMediaDTO create(SocialMediaDTO socialMediaDTO) {
         return socialMediaService.create(socialMediaDTO);
