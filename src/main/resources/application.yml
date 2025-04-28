@@ -22,7 +22,6 @@ quarkus:
     group: fh-joanneum-iron-road-for-children
     build: true
     push: true
-    additional-tags: ["latest"]
 
   swagger-ui:
     always-include: true
@@ -73,7 +72,11 @@ pictures:
 highlights:
   root_path: ${HIGHLIGHTS_ROOT_PATH:C:/temp/highlights/}
   url: ${HIGHLIGHTS_URL:http:/env-var.failed}
-  
+
+gallery:
+  root_path: ${GALLERY_ROOT_PATH:C:/temp/gallery/}
+  url: ${GALLERY_URL:http:/env-var.failed}
+
 videos:
     root_path: ${VIDEOS_ROOT_PATH:C:/temp/videos/}
     url: ${VIDEOS_URL:http:/env-var.failed/}

@@ -20,4 +20,7 @@
     <include file="70-create-video-table.xml" relativeToChangelogFile="true"/>
     <include file="74-create-socialmedia-table.xml" relativeToChangelogFile="true"/>
     <include file="76-highlight-endpoint.xml" relativeToChangelogFile="true"/>
+    <include file="81-create-countdown-table.xml" relativeToChangelogFile="true"/>
+    <include file="82-create-gallery-table.xml" relativeToChangelogFile="true"/>
+    <include file="83-create-playlist-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
