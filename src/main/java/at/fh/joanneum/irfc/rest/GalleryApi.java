@@ -17,7 +17,7 @@ import java.util.List;
  * @author dominik.kainbacher@edu.fh-joanneum.at
  **/
 @RequestScoped
-@Path("/highlights")
+@Path("/gallery")
 public class GalleryApi {
 
     @Inject
