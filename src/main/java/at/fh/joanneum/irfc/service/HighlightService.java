@@ -31,10 +31,10 @@ public class HighlightService {
     @Inject
     HighlightRepository highlightRepository;
 
-    @ConfigProperty(name = "highlights.root_path")
+    @ConfigProperty(name = "pictures.root_path")
     String highlightRootPath;
 
-    @ConfigProperty(name = "highlights.url") // TODO replace this with an .env var
+    @ConfigProperty(name = "pictures.url") // TODO replace this with an .env var
     String highlightUrl;
 
     public HighlightDTO get(Long id) {
@@ -118,7 +118,7 @@ public class HighlightService {
             highlightDTO.setDescription(data.description);
             highlightDTO.setPath(highlightUrl + fileName);
         } catch (IOException e) {
-            throw new RuntimeException("Error storing Image");
+            throw new RuntimeException("Error storing Image" + e.getMessage());
         }
 
         setValues(highlightDTO, newEntity);

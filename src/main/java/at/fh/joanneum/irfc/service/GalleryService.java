@@ -36,10 +36,10 @@ public class GalleryService {
     @Inject
     GalleryRepository galleryRepository;
 
-    @ConfigProperty(name = "gallery.root_path")
+    @ConfigProperty(name = "pictures.root_path")
     String galleryRootPath;
 
-    @ConfigProperty(name = "gallery.url") //TODO replace this with an .env var
+    @ConfigProperty(name = "pictures.url") //TODO replace this with an .env var
     String galleryUrl;
 
     public GalleryDTO get(Long id) {
@@ -116,7 +116,7 @@ public class GalleryService {
             outStream.close();
             galleryDTO.setPath(galleryUrl + fileName);
         } catch (IOException e) {
-            throw new RuntimeException("Error storing Image");
+            throw new RuntimeException("Error storing Image" + e.getMessage());
         }
 
         setValues(galleryDTO, newEntity);
