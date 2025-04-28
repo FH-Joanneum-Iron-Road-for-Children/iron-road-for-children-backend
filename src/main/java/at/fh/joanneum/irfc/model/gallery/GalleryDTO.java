@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @RegisterForReflection
 public class GalleryDTO {
-    private Long pictureId;
+    private Long galleryId;
     private String altText;
     private String path;
 }
