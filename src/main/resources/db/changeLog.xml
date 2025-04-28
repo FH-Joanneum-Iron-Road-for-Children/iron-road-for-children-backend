@@ -18,6 +18,7 @@
     <include file="64-add-event-table-constrains.xml" relativeToChangelogFile="true"/>
     <include file="64-fixed-voting-result-fk.xml" relativeToChangelogFile="true"/>
     <include file="70-create-video-table.xml" relativeToChangelogFile="true"/>
+    <include file="74-create-socialmedia-table.xml" relativeToChangelogFile="true"/>
     <include file="76-highlight-endpoint.xml" relativeToChangelogFile="true"/>
     <include file="81-create-countdown-table.xml" relativeToChangelogFile="true"/>
     <include file="82-create-gallery-table.xml" relativeToChangelogFile="true"/>
