@@ -1,14 +1,9 @@
 package at.fh.joanneum.irfc.service;
 
-import at.fh.joanneum.irfc.model.highlight.HighlightDTO;
-import at.fh.joanneum.irfc.model.highlight.HighlightMapper;
-import at.fh.joanneum.irfc.model.multipartbody.HighlightMultipartBody;
 import at.fh.joanneum.irfc.model.multipartbody.MultipartBody;
 import at.fh.joanneum.irfc.model.gallery.GalleryDTO;
 import at.fh.joanneum.irfc.model.gallery.GalleryMapper;
-import at.fh.joanneum.irfc.persistence.entiy.HighlightEntity;
 import at.fh.joanneum.irfc.persistence.entiy.GalleryEntity;
-import at.fh.joanneum.irfc.persistence.repository.HighlightRepository;
 import at.fh.joanneum.irfc.persistence.repository.GalleryRepository;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
