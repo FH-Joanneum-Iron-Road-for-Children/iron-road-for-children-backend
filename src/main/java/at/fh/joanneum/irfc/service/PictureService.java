@@ -34,7 +34,7 @@ public class PictureService {
     @ConfigProperty(name = "pictures.root_path")
     String pictureRootPath;
 
-    @ConfigProperty(name = "pictures.url") //TODO replace this with an .env var
+    @ConfigProperty(name = "pictures.url") // TODO replace this with an .env var
     String pictureUrl;
 
     public PictureDTO get(Long id) {
@@ -111,7 +111,7 @@ public class PictureService {
             outStream.close();
             pictureDTO.setPath(pictureUrl + fileName);
         } catch (IOException e) {
-            throw new RuntimeException("Error storing Image");
+            throw new RuntimeException("Error storing Image" + e.getMessage());
         }
 
         setValues(pictureDTO, newEntity);
