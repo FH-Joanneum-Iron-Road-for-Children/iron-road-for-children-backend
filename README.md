@@ -53,12 +53,36 @@ In der Datenbank wird ein einzelner Datumswert gespeichert und verwendet. Dieser
 
 ## Event Location Api
 
-Endpunkt zur Abfrage oder Speichern eines Orts, an welchem ein jeweiliges Event stattfindet.
+Endpunkte zur Abfrage oder Speichern eines Orts, an welchem ein jeweiliges Event stattfindet.
 
 ## Event Category Api
 
-Endpunkt zur Abfrage oder Speichern der zugewiesenen Kategorie eines Events. Beispielsweise "Musik", "Tattoo" oder "Essen".
+Endpunkte zur Abfrage oder Speichern der zugewiesenen Kategorie eines Events. Beispielsweise "Musik", "Tattoo" oder "Essen".
 
 ## Event Info Api
 
-Endpunkt zur Abfrage oder Speichern von Informationen zu einzelnen Events.
+Endpunkte zur Abfrage oder Speichern von Informationen zu einzelnen Events.
+
+## Event Api
+
+Endpunkte für Events, welche aus einem picture, einer Kategorie, Ort, Info und einem Datum bestehen.
+
+## Gallery Api
+
+Endpunkte für die Gallery, welche in der App dargestellt wird.
+
+## Highlight Api
+
+Highlights werden in der App, im Main Screen angezeigt und können aus Bildern oder Videos bestehen.
+
+## Intro Video Api
+
+Endpunkte für das Teaser Video im Main Screen. Es kann derzeit immer nur ein einzelnes Video verwendet werden. **Wird dieses bearbeitet wird das vorhandene Intro Video entfernt!**
+
+## Picture Api
+
+Endpunkte für die Bilder, welche zu einem jeweiligen Event hinzugefügt werden.
+
+## Playlist Api
+
+Endpunkte zur Verwendung der Spotify playlist. Es kann derzeit nur eine einzelne playlist gespeichert werden. Dabei handelt es sich jedoch nur, um den **Link** zur verwendeten Spotify playlist. **Wird dieser bearbeitet wird die vorhandene Playlist entfernt!**
