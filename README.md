@@ -86,3 +86,19 @@ Endpunkte für die Bilder, welche zu einem jeweiligen Event hinzugefügt werden.
 ## Playlist Api
 
 Endpunkte zur Verwendung der Spotify playlist. Es kann derzeit nur eine einzelne playlist gespeichert werden. Dabei handelt es sich jedoch nur, um den **Link** zur verwendeten Spotify playlist. **Wird dieser bearbeitet wird die vorhandene Playlist entfernt!**
+
+## Social Media Api
+
+Endpunkte für Social Media Links, welche in der App als Verlinkungen verwendet werden.
+
+## Vote Api
+
+Endpunkt für eine einzelne Stimme (Vote), welche bei einem Vote abgegeben werden kann. Hierbei ist nur eine POST-Request für die Abgabe der Stimme verfügbar.
+
+## Voting Result Api
+
+Ergebnisse eines Votings können mit GET-Request abgefragt werden.
+
+## Voting Api
+
+Endpunkte für das erstellen oder abändern eines Votings zu einzelnen Events. Das Voting ist im Anschluss in der App in einem eigenen Tab verfügbar.
