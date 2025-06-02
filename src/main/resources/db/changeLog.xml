@@ -23,4 +23,5 @@
     <include file="81-create-countdown-table.xml" relativeToChangelogFile="true"/>
     <include file="82-create-gallery-table.xml" relativeToChangelogFile="true"/>
     <include file="83-create-playlist-table.xml" relativeToChangelogFile="true"/>
+    <include file="103-fix-event-info-text-size.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
