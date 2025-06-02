@@ -8,11 +8,7 @@ import at.fh.joanneum.irfc.persistence.repository.*;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static java.util.Objects.isNull;
 
 /**
  * @author Kainbacher Dominik
@@ -23,42 +19,26 @@ public class CountdownService {
     @Inject
     CountdownRepository countdownRepository;
 
-
-
-    public List<CountdownDTO> getAll() { //TODO throws exception (pls fix)
-        List<CountdownEntity> all = countdownRepository.listAll();
-        List<CountdownDTO> allMapped = all.stream()
-                .map(CountdownMapper.INSTANCE::toDto)
-                .collect(Collectors.toUnmodifiableList());
-        return allMapped;
-    }
-
-    public CountdownDTO get(Long id) {
-        CountdownEntity countdownEntity = countdownRepository.findByIdOptional(id)
-                .orElseThrow(() -> new RuntimeException("Countdown with id " + id + " not found"));
+    public CountdownDTO getCountdown() {
+        CountdownEntity countdownEntity = countdownRepository.listAll().stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No countdown found in the database"));
 
         return CountdownMapper.INSTANCE.toDto(countdownEntity);
     }
 
     @Transactional
-    public CountdownDTO create(CountdownDTO countdownDTO) {
-        checkDTOvalues(countdownDTO);
+    public CountdownDTO update(CountdownDTO countdownDTO) {
 
-        CountdownEntity newEntity = new CountdownEntity();
-        setValues(countdownDTO, newEntity);
-        countdownRepository.persist(newEntity);
-        return CountdownMapper.INSTANCE.toDto(newEntity);
-    }
-
-    @Transactional
-    public CountdownDTO update(Long id, CountdownDTO countdownDTO) {
-
-        Optional<CountdownEntity> byIdOptional = countdownRepository.findByIdOptional(id);
-
+        Optional<CountdownEntity> byIdOptional = countdownRepository.listAll().stream()
+                .findFirst();
         checkDTOvalues(countdownDTO);
 
         if (byIdOptional.isEmpty()) {
-            throw new RuntimeException("Countdown with id " + id + " not found");
+            CountdownEntity newEntity = new CountdownEntity();
+            setValues(countdownDTO, newEntity);
+            countdownRepository.persist(newEntity);
+            return CountdownMapper.INSTANCE.toDto(newEntity);
         } else {
             CountdownEntity byId = byIdOptional.get();
             setValues(countdownDTO, byId);
@@ -75,7 +55,7 @@ public class CountdownService {
     }
 
     private static void checkDTOvalues(CountdownDTO countdownDTO) {
-        if (countdownDTO.getEndDateTimeInUTC() == 0L ) {
+        if (countdownDTO.getEndDateTimeInUTC() == 0L) {
             throw new RuntimeException("End date must not be null");
         }
     }
